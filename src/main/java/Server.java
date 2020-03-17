@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class Server {
     //将接收到的socket变成一个集合
-    protected static   List<Socket> sockets = new Vector<>();
+    protected static List<Socket> sockets = new Vector<>();
     int port = 5200;
 
     public void serverStart(int port) throws IOException {
@@ -19,13 +19,14 @@ public class Server {
         //接受客户端请求
         while (flag){
             try {
-                //阻塞等待客户端的连接
-                Socket accept = server.accept();
+                //阻塞等待某一个客户端的连接
+                Socket singleSocket = server.accept();
+                //锁住sokcets数组，保证无法同时操作
                 synchronized (sockets){
-                    sockets.add(accept);
+                    sockets.add(singleSocket);
                 }
                 //多个服务器线程进行对客户端的响应
-                Thread thread = new Thread(new ServerThead(accept));
+                Thread thread = new Thread(new ServerThead(singleSocket));
                 thread.start();
                 //捕获异常。
             }catch (Exception e){

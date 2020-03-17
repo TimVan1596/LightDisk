@@ -31,6 +31,7 @@ public class  Client{
         }).start();
         //写信息给客户端
 
+        //TODO: 可以改为do-while结构    
         String  line = reader.readLine();
         while (!"end".equalsIgnoreCase(line)){
             //将从键盘获取的信息给到服务器

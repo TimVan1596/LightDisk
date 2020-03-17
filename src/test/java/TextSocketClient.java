@@ -16,6 +16,7 @@ public class TextSocketClient {// Socket客户端类
             Client client =  new Client();
             client.startClient(ip, port);
         } catch (Exception e) {
+            //TODO: 意外处理中对客户端socket进行关闭
             System.out.println("测试客户端连接出错：" + e.getMessage());
         }
     }

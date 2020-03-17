@@ -3,3 +3,12 @@
 
 2、https://blog.51cto.com/4577390/2114116
 BLOCKCHAIN 区块链的去中心化P2P服务的JAVA代码的实现
+
+
+3、https://www.jianshu.com/p/ad47595e7e4f
+比特币学习之-P2P网络
+
+
+4、https://blog.csdn.net/shangsongwww/article/details/89096460
+比特币的P2P网络协议
+

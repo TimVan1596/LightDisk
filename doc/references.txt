@@ -1,0 +1,5 @@
+1、https://www.cnblogs.com/jieerma666/p/10342435.html
+用JAVA分别实现WebSocket客户端与服务端
+
+2、https://blog.51cto.com/4577390/2114116
+BLOCKCHAIN 区块链的去中心化P2P服务的JAVA代码的实现

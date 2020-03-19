@@ -6,6 +6,7 @@ import net.lvsq.jgossip.model.GossipDigest;
 import net.lvsq.jgossip.model.GossipMember;
 import net.lvsq.jgossip.model.GossipState;
 import net.lvsq.jgossip.model.HeartbeatState;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.net.InetSocketAddress;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class TestAckMessage {
     AckMessage ackMessage = new AckMessage();
 
-
+    @Before
     public void init() {
         List<GossipDigest> olders = new ArrayList<>();
         Map<GossipMember, HeartbeatState> newers = new HashMap<>();
@@ -47,14 +48,12 @@ public class TestAckMessage {
 
     @Test
     public void encode() {
-        init();
         String j = JsonObject.mapFrom(ackMessage).encode();
         System.out.println(j);
     }
 
     @Test
     public void decode() {
-        init();
         String j = JsonObject.mapFrom(ackMessage).encode();
         AckMessage member1 = (new JsonObject(j)).mapTo(AckMessage.class);
         System.out.println(member1.getNewers());

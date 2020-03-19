@@ -12,3 +12,6 @@ BLOCKCHAIN 区块链的去中心化P2P服务的JAVA代码的实现
 4、https://blog.csdn.net/shangsongwww/article/details/89096460
 比特币的P2P网络协议
 
+
+5、https://lvsq.net/2019/12/jgossip/
+Jgossip - gossip协议的开源实现

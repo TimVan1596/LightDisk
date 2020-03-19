@@ -1,6 +1,5 @@
 package jgossip;
 
-import net.lvsq.jgossip.core.GossipService;
 import net.lvsq.jgossip.core.GossipSettings;
 import net.lvsq.jgossip.model.SeedMember;
 import org.junit.Test;
@@ -8,7 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestGossipService {
+public class GossipService {
 
     @Test
     public void startGossip() throws Exception {
@@ -23,21 +22,19 @@ public class TestGossipService {
         seedNodes.add(seed);
 
         for (int i = 0; i < 1; i++) {
-            GossipService gossipService = null;
+            net.lvsq.jgossip.core.GossipService gossipService = null;
             try {
-                gossipService = new GossipService(cluster, ipAddress, port + i, null, seedNodes, new GossipSettings(), (member, state) -> {
+                gossipService = new net.lvsq.jgossip.core.GossipService(cluster, ipAddress,
+                        port + i, null, seedNodes,
+                        new GossipSettings(), (member, state) -> {
                     System.out.println("member:" + member + "  state: " + state);
                 });
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             gossipService.start();
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        TestGossipService service = new TestGossipService();
-        service.startGossip();
-    }
+
 }

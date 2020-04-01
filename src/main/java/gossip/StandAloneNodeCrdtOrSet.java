@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package Gossip;
+package gossip;
 
 import org.apache.gossip.crdt.GrowOnlyCounter;
 import org.apache.gossip.crdt.OrSet;
@@ -23,7 +23,6 @@ import org.apache.gossip.manager.GossipManager;
 import org.apache.gossip.model.SharedDataMessage;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class StandAloneNodeCrdtOrSet extends StandAloneExampleBase {
 

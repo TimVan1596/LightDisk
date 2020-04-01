@@ -1,4 +1,4 @@
-import Gossip.StandAloneNodeCrdtOrSet;
+import gossip.StandAloneNodeCrdtOrSet;
 
 import java.io.IOException;
 import java.util.Scanner;

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package Gossip;
+package gossip;
 
 import org.apache.gossip.GossipSettings;
 import org.apache.gossip.LocalMember;
@@ -32,7 +32,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * */
 abstract class StandAloneExampleBase {
+
     private String lastInput = "{none}";
 
     private boolean clearTerminalScreen = true;
@@ -95,7 +99,8 @@ abstract class StandAloneExampleBase {
         new Thread(() -> {
             while (true) {
                 Date date = new Date();
-                SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat sim =
+                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String time = sim.format(date);
                 System.out.println("\n\n  --------------"+time+"：");
                 optionallyClearTerminal();

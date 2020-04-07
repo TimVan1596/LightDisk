@@ -98,4 +98,41 @@ abstract public class BaseGossipCommunicate  {
         return resJson;
     }
 
+
+    /**
+     * 向对应累加器名称，添加值
+     *
+     * @param val 待添加值
+     * @param key 对应命名空间名称
+     * @return 接口返回值
+     */
+    ResponseJson accAdd(long val, String key) {
+        ResponseJson resJson = new ResponseJson();
+        crdtMap.accAdd(val,key);
+        resJson.setCodeSuccessful();
+        return resJson;
+    }
+
+
+    /**
+     * 向对应主键命名空间，获取值
+     *
+     * @param key 对应命名空间名称
+     * @return 返回对应值
+     */
+    ResponseJson accGet(String key) {
+        ResponseJson resJson = new ResponseJson();
+        long value = crdtMap.accGet(key);
+        if (value> 0){
+            resJson.setCodeSuccessful();
+            resJson.setData(value);
+        }else{
+            resJson.setCodeFailed();
+            resJson.setMsg("获取失败，为空");
+        }
+
+        return resJson;
+    }
+
+
 }

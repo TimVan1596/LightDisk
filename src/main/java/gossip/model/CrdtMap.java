@@ -1,6 +1,7 @@
 package gossip.model;
 
 import gossip.impl.ImplCrdtOperator;
+import org.apache.gossip.crdt.GrowOnlyCounter;
 import org.apache.gossip.crdt.OrSet;
 import org.apache.gossip.manager.GossipManager;
 import org.apache.gossip.model.SharedDataMessage;
@@ -15,16 +16,18 @@ import java.util.*;
  * @date : 2020-04-01 16:53
  **/
 public class CrdtMap implements ImplCrdtOperator {
-    /** ALL_KEY_NAME_SPACE = 保存所有key名称的固定集合
-     * */
+    /**
+     * ALL_KEY_NAME_SPACE = 保存所有key名称的固定集合
+     */
     private final static String ALL_KEY_NAME_SPACE = "ALL_KEY_NAME_SPACE";
 
-    /** gossipService = gossip底层服务
-     * */
-    private GossipManager gossipService  = null;
+    /**
+     * gossipService = gossip底层服务
+     */
+    private GossipManager gossipService = null;
 
 
-    public CrdtMap(GossipManager gossipService){
+    public CrdtMap(GossipManager gossipService) {
         this.gossipService = gossipService;
     }
 
@@ -38,9 +41,9 @@ public class CrdtMap implements ImplCrdtOperator {
     @Override
     public boolean push(String val, String key) {
         boolean isSuccess = false;
-        if(isKeyEqualsToAllKeyNameSpace(key)){
+        if (isKeyEqualsToAllKeyNameSpace(key)) {
             isSuccess = false;
-        }else{
+        } else {
             addToAllKeyNameSpace(key);
             //讲添加信息封装为一个 SharedDataMessage
             SharedDataMessage message = new SharedDataMessage();
@@ -55,9 +58,6 @@ public class CrdtMap implements ImplCrdtOperator {
             isSuccess = true;
         }
 
-        System.out.println("进入 ：keySet() ");
-        keySet();
-        System.out.println("退出 ：keySet() ");
 
         return isSuccess;
     }
@@ -71,7 +71,10 @@ public class CrdtMap implements ImplCrdtOperator {
      */
     @Override
     public boolean remove(String val, String key) {
-        return false;
+        boolean isSuccess = false;
+        //TODO:删除功能暂未实现
+        System.out.println("删除功能暂未实现!!!!");
+        return isSuccess;
     }
 
     /**
@@ -82,7 +85,7 @@ public class CrdtMap implements ImplCrdtOperator {
      */
     @Override
     public String get(String key) {
-        return  (gossipService.findCrdt(key) == null
+        return (gossipService.findCrdt(key) == null
                 ? "" : gossipService.findCrdt(key).value().toString());
     }
 
@@ -96,7 +99,28 @@ public class CrdtMap implements ImplCrdtOperator {
      */
     @Override
     public boolean accAdd(long val, String key) {
-        return false;
+
+        boolean isSuccess = false;
+        if (isKeyEqualsToAllKeyNameSpace(key)) {
+            isSuccess = false;
+        } else {
+            addToAllKeyNameSpace(key);
+            GrowOnlyCounter c = (GrowOnlyCounter) gossipService.findCrdt(key);
+            Long l = Long.valueOf(val);
+            if (c == null) {
+                c = new GrowOnlyCounter(new GrowOnlyCounter.Builder(gossipService).increment((l)));
+            } else {
+                c = new GrowOnlyCounter(c, new GrowOnlyCounter.Builder(gossipService).increment((l)));
+            }
+            SharedDataMessage m = new SharedDataMessage();
+            m.setExpireAt(Long.MAX_VALUE);
+            m.setKey(key);
+            m.setPayload(c);
+            m.setTimestamp(System.currentTimeMillis());
+            gossipService.merge(m);
+        }
+
+        return isSuccess;
     }
 
     /**
@@ -107,33 +131,40 @@ public class CrdtMap implements ImplCrdtOperator {
      */
     @Override
     public long accGet(String key) {
-        return 0;
+        String val = (gossipService.findCrdt(key) == null
+                ? "" : gossipService.findCrdt(key).value().toString());
+
+        return Long.parseLong(val);
     }
 
     /**
      * 返回此映射中包含的键的 Set 视图
      */
-    public Set<String> keySet(){
+    public Set<String> keySet() {
         Set<String> keySet = new HashSet<>();
-        String keySetStr  =
+        String keySetStr =
                 (gossipService.findCrdt(ALL_KEY_NAME_SPACE) == null ?
                         "" : gossipService.findCrdt(ALL_KEY_NAME_SPACE)
                         .value().toString());
 
 
-        keySetStr = keySetStr.substring(1,keySetStr.length()-1);
+        keySetStr = keySetStr.substring(1, keySetStr.length() - 1);
         String[] strArray = keySetStr.split(",");
         Collections.addAll(keySet, strArray);
         return keySet;
     }
 
-    /** 检查是否对 ALL_KEY_NAME_SPACE 操作 */
-    private boolean isKeyEqualsToAllKeyNameSpace(String key){
+    /**
+     * 检查是否对 ALL_KEY_NAME_SPACE 操作
+     */
+    private boolean isKeyEqualsToAllKeyNameSpace(String key) {
         return key.equals(ALL_KEY_NAME_SPACE);
     }
 
-    /** 检查是否对 ALL_KEY_NAME_SPACE 操作 */
-    private void addToAllKeyNameSpace(String key){
+    /**
+     * 检查是否对 ALL_KEY_NAME_SPACE 操作
+     */
+    private void addToAllKeyNameSpace(String key) {
         //讲添加信息封装为一个 SharedDataMessage
         SharedDataMessage message = new SharedDataMessage();
         message.setExpireAt(Long.MAX_VALUE);

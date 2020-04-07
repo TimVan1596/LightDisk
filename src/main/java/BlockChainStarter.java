@@ -12,8 +12,6 @@ import java.util.Scanner;
  **/
 public class BlockChainStarter {
     public static void main(String[] args) throws IOException {
-
-
         //    udp://localhost:5400 0 udp://localhost:10000 0
 //netstat -aon|findstr "5400"
 // tasklist|findstr "2720"

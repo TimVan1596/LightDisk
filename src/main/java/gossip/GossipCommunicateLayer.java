@@ -31,6 +31,9 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
         System.out.println("2、启动2号节点");
         System.out.println("3、启动3号节点");
 
+        //    udp://localhost:5400 0 udp://localhost:10000 0
+//netstat -aon|findstr "5400"
+// tasklist|findstr "2720"
         NodeURI uri = null;
         NodeURI seedNode = new NodeURI("udp://localhost:5400","0");
 
@@ -65,6 +68,8 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
             System.out.println("\n\t 1、显示当前所有信息");
             System.out.println("\t 2、添加key-value");
             System.out.println("\t 3、根据key查value");
+            System.out.println("\t 4、添加累加器");
+            System.out.println("\t 5、根据key查累加器");
             System.out.println("------------------------------------");
             optionNum = scanner.nextInt();
 
@@ -92,6 +97,28 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
                     }
                     else{
                         System.out.println("无此键值");
+                    }
+
+                    break;
+                }
+                case 4:{
+                    System.out.println("请输入累加器名称");
+                    String key = scanner.next();
+                    System.out.println("请输入value");
+                    Long value = scanner.nextLong();
+                    gossip.accAdd(value,key);
+                    break;
+                }
+
+                case 5:{
+                    System.out.println("请输入累加器名称");
+                    String key = scanner.next();
+                    ResponseJson ret = gossip.accGet(key);
+                    if (ret.getCode() == 0){
+                        System.out.println(key+"=>"+ret.getData());
+                    }
+                    else{
+                        System.out.println("无此累加器");
                     }
 
                     break;

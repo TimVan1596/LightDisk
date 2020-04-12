@@ -1,10 +1,10 @@
 package com.timvanx.gossip.model;
 
 import com.timvanx.gossip.impl.ImplCrdtOperator;
-import org.apache.gossip.crdt.GrowOnlyCounter;
-import org.apache.gossip.crdt.OrSet;
-import org.apache.gossip.manager.GossipManager;
-import org.apache.gossip.model.SharedDataMessage;
+import org.apache.com.timvanx.gossip.crdt.GrowOnlyCounter;
+import org.apache.com.timvanx.gossip.crdt.OrSet;
+import org.apache.com.timvanx.gossip.manager.GossipManager;
+import org.apache.com.timvanx.gossip.model.SharedDataMessage;
 
 import java.util.*;
 

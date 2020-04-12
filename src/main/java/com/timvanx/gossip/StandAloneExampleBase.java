@@ -17,11 +17,11 @@
  */
 package com.timvanx.gossip;
 
-import org.apache.gossip.GossipSettings;
-import org.apache.gossip.LocalMember;
-import org.apache.gossip.RemoteMember;
-import org.apache.gossip.manager.GossipManager;
-import org.apache.gossip.manager.GossipManagerBuilder;
+import org.apache.com.timvanx.gossip.GossipSettings;
+import org.apache.com.timvanx.gossip.LocalMember;
+import org.apache.com.timvanx.gossip.RemoteMember;
+import org.apache.com.timvanx.gossip.manager.GossipManager;
+import org.apache.com.timvanx.gossip.manager.GossipManagerBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;

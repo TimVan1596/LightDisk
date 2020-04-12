@@ -4,10 +4,10 @@ import cn.hutool.core.util.StrUtil;
 import com.timvanx.gossip.model.CrdtMap;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.model.ResponseJson;
-import org.apache.gossip.GossipSettings;
-import org.apache.gossip.RemoteMember;
-import org.apache.gossip.manager.GossipManager;
-import org.apache.gossip.manager.GossipManagerBuilder;
+import org.apache.com.timvanx.gossip.GossipSettings;
+import org.apache.com.timvanx.gossip.RemoteMember;
+import org.apache.com.timvanx.gossip.manager.GossipManager;
+import org.apache.com.timvanx.gossip.manager.GossipManagerBuilder;
 
 import java.net.URI;
 import java.util.Collections;

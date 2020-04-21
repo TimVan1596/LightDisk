@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class Transaction {
     /**
      * version = 交易版本号
+     * publicKey = 发起交易者地址
      * scriptBytes = 交易的script数据
      * */
-    private long version;
+//    private long version;
+    private String publicKey;
     private byte[] scriptBytes;
 
 }

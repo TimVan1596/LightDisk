@@ -18,11 +18,13 @@ public class Block {
      * nonce = 随机数
      * hash = 本区块的块头hash
      * */
-    private long version;
+//    private long version;
+
     private Sha256Hash prevBlockHash;
     private Sha256Hash merkleRoot;
-    private long time;
-    private long difficultyTarget;
+//    private long time;
+//    private long difficultyTarget;
+
     private long nonce;
     private Sha256Hash hash;
 

@@ -122,7 +122,8 @@ public class ECKey {
     }
 
     /**
-     * 生成公私钥Map
+     * 生成公私钥对Map<>
+     * @return Map的key为publickey和privatekey
      */
     public static Map<String, String> genKeyPair() {
         KeyPairGenerator keyPairGenerator;

@@ -21,10 +21,12 @@ public class Transaction {
      * version = 交易版本号
      * publicKey = 发起交易者地址
      * scriptBytes = 交易的script数据
+     * recieveTime = 交易被接收到的时间
      * */
 //    private long version;
     private String publicKey;
     private byte[] scriptBytes;
+    private long timestamp;
 
     /** @param publicKey 公钥
      *  @param scriptBytes 需要存储交易数据（字节数组）
@@ -32,6 +34,7 @@ public class Transaction {
     public Transaction(String publicKey, byte[] scriptBytes) {
         this.publicKey = publicKey;
         this.scriptBytes = scriptBytes;
+        this.timestamp = System.currentTimeMillis();
     }
 
     /** @param publicKey 公钥
@@ -40,6 +43,7 @@ public class Transaction {
     public Transaction(String publicKey, String scriptStr) {
         this.publicKey = publicKey;
         this.scriptBytes = StrUtil.bytes(scriptStr);
+        this.timestamp = System.currentTimeMillis();
     }
 
     /** 返回交易的script数据(scriptBytes)的字符串消息

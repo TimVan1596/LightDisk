@@ -3,7 +3,9 @@ package lightdisk.model;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.crypto.digest.Digester;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import lombok.Data;
@@ -16,11 +18,10 @@ import java.util.List;
 /**
  * <h3>BlockChain</h3>
  * <p>默克尔树</p>
- *
+ *  使用自下而上的方法构建
  * @author : TimVan
  * @date : 2020-04-27 17:44
  **/
-
 @Getter
 public class MerkleTree {
 
@@ -123,8 +124,8 @@ public class MerkleTree {
     /**
      * 构建叶子节点
      *
-     * @param hash
-     * @return
+     * @param hash 叶子实体的hash
+     * @return 叶子节点
      */
     private static Node constructLeafNode(byte[] hash) {
         Node leaf = new Node();
@@ -135,9 +136,9 @@ public class MerkleTree {
     /**
      * 构建内部节点
      *
-     * @param leftChild
-     * @param rightChild
-     * @return
+     * @param leftChild 左节点
+     * @param rightChild 右节点
+     * @return 父节点
      */
     private Node constructInternalNode(Node leftChild, Node rightChild) {
         Node parent = new Node();
@@ -155,9 +156,9 @@ public class MerkleTree {
     /**
      * 计算内部（左右）节点Hash
      *
-     * @param leftChildHash
-     * @param rightChildHash
-     * @return
+     * @param leftChildHash 左节点的hash
+     * @param rightChildHash 右节点的hash
+     * @return 父节点hash
      */
     private byte[] internalHash(byte[] leftChildHash, byte[] rightChildHash) {
         byte[] mergedBytes = ArrayUtil.addAll(leftChildHash, rightChildHash);
@@ -166,7 +167,9 @@ public class MerkleTree {
 
     /** 仅获取根Hash值 */
     public static String getRootHash( List<Transaction> txs) {
-        return Base64.encode((new MerkleTree(txs).getRoot().getHash()));
+        //使用hutool封装的SHA256消息摘要
+        Digester sha256 = new Digester(DigestAlgorithm.SHA256);
+        return sha256.digestHex((new MerkleTree(txs).getRoot().getHash()));
     }
 
     /**

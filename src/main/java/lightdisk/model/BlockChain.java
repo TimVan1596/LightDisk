@@ -70,6 +70,9 @@ public class BlockChain {
 
         Block block = null;
         long nonce = 0;
+        //难度系数生成的0
+        final String targetDifficultStr = "000";
+
         //生成coinbase交易
         Transaction coinbase = new Transaction(publicKey, data);
         do {
@@ -77,12 +80,12 @@ public class BlockChain {
             block = new Block(getLastBlock().getHash(), currentHeight + 1);
             //打包coinbase交易
             block.addTransaction(coinbase);
-            //测试block
+            //改变block的nonce值
             block.setNonce(nonce);
             nonce++;
-        }while (!block.getHash().startsWith("000"));
+        }while (!POW.checkHashByDifficultTarget(block.getHash(),getLastBlock().getDifficultyTarget()));
 
-        if(block.getHash().startsWith("000")){
+        if(POW.checkHashByDifficultTarget(block.getHash(),getLastBlock().getDifficultyTarget())){
             System.out.println("经过"+nonce+"个nonce，挖出区块");
             addBlock(block);
         }
@@ -92,9 +95,10 @@ public class BlockChain {
 
     /**
      * 区块链的监控板
+     * @param isOpenTX 是否打开交易信息
      */
-    public void lightBoard() {
-        System.out.println("-------------LightDisk监控板------------");
+    public void lightBoard(boolean isOpenTX) {
+        System.out.println("-------------LightDisk监控板---------------");
         Date date = new Date();
         DateTime time = new DateTime(date);
         System.out.println("当前时间：" + time);
@@ -102,18 +106,24 @@ public class BlockChain {
         System.out.println("区块详细信息：");
 
         for (Block block : blockList) {
-            System.out.println("------");
+            System.out.println("----------");
             System.out.println("区块高度:" + block.getHeight());
             DateTime blockTime = new DateTime(block.getTimestamp());
             System.out.println("生成时间戳:" + block.getTimestamp() + "(" + blockTime + ")");
+            System.out.println("nonce:" + block.getNonce());
+            System.out.println("难度系数:" + block.getDifficultyTarget());
             System.out.println("前一个区块的Hash值:" + block.getPrevBlockHash());
             System.out.println("本区块的块头Hash值:" + block.getHash());
             System.out.println("Merkle Tree的Hash值:" + block.getMerkleRoot());
             System.out.println("交易数:" + block.getTransactions().size());
 
+            if (isOpenTX){
+                block.transactionBoard();
+            }
+            System.out.println("----------");
         }
 
-        System.out.println("----------------------------------------");
+        System.out.println("------------------------------------------");
 
 
     }
@@ -127,7 +137,7 @@ public class BlockChain {
                 "GpFyEqq57ciEB6jndDaFEmjKZt8WFmQBmKF4wM8";
 
         for (int i = 0; i < 3; i++) {
-            LightDisk.mineBlock(publickey1, "这是第" + i + "次挖矿的结果");
+            LightDisk.mineBlock(publickey1, "这是第" + (i+1) + "次挖矿的结果");
 
 //            try {
 //                //程序暂停1000 毫秒，也就是1秒.
@@ -136,8 +146,9 @@ public class BlockChain {
 //                Thread.currentThread().interrupt();
 //            }
         }
-
-        LightDisk.lightBoard();
+        boolean isOpenTX = true;
+//        boolean isOpenTX = false;
+        LightDisk.lightBoard(isOpenTX);
 
     }
 }

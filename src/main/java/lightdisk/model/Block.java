@@ -1,15 +1,13 @@
 package lightdisk.model;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
 import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <h3>BlockChain</h3>
@@ -46,16 +44,17 @@ public class Block {
     @Getter
     private String hash;
     @Getter
-    private List<Transaction> transactions = new ArrayList<>();
-    //private long difficultyTarget;
+    private final List<Transaction> transactions = new ArrayList<>();
+    @Getter @Setter
+    private long difficultyTarget = 3;
     //private long version;
 
     /**
      * 常量
-     * BLOCK_HEADER_NUM = 块头包含的字段
+     * BLOCK_HEADER_NUM = 块头包含的字段（由此取哈希）
      *
      */
-    private final static int BLOCK_HEADER_NUM = 5;
+    private final static int BLOCK_HEADER_NUM = 6;
 
 
     public Block(String prevBlockHash,long height) {
@@ -77,6 +76,7 @@ public class Block {
         blockHeader.put("merkleRoot", this.merkleRoot);
         blockHeader.put("time", this.timestamp);
         blockHeader.put("nonce", this.nonce);
+        blockHeader.put("difficultyTarget", this.difficultyTarget);
         blockHeader.put("height", this.height);
         Digester sha256 = new Digester(DigestAlgorithm.SHA256);
         this.hash = sha256.digestHex(JSON.toJSONString(blockHeader));
@@ -94,6 +94,33 @@ public class Block {
         this.timestamp = System.currentTimeMillis();
         this.merkleRoot = MerkleTree.getRootHash(transactions);
         generatorHash();
+    }
+
+    /**
+     * 取得铸币交易
+     * @return 返回铸币交易
+     */
+    private Transaction getCoinbaseTx(){
+        return transactions.get(0);
+    }
+
+    /**
+     * 交易的监控板
+     */
+    public void transactionBoard(){
+        System.out.println("--交易监控板----");
+
+        for (Transaction transaction : transactions) {
+            System.out.println("----");
+            DateTime blockTime = new DateTime(transaction.getTimestamp());
+            System.out.println("生成时间戳:" + transaction.getTimestamp() + "(" + blockTime + ")");
+            System.out.println("交易hash:" + transaction.getHash());
+            System.out.println("收款人:" + transaction.getPublicKey());
+            System.out.println("script字符串:" + transaction.getScriptString());
+            System.out.println("----");
+        }
+
+        System.out.println("-------");
     }
 
     public static void main(String[] args) {

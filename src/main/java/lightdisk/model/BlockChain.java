@@ -70,8 +70,6 @@ public class BlockChain {
 
         Block block = null;
         long nonce = 0;
-        //难度系数生成的0
-        final String targetDifficultStr = "000";
 
         //生成coinbase交易
         Transaction coinbase = new Transaction(publicKey, data);

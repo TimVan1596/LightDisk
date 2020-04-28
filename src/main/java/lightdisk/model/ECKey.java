@@ -146,6 +146,30 @@ public class ECKey {
         return keyPairMap;
     }
 
+
+    /**
+     * 公私钥是否符合
+     *
+     * @param publicKeyStr 公钥字符串
+     * @param privateKeyStr 私钥字符串
+     * @return 公私钥是否符合
+     */
+    public static boolean isKeyMatch(String publicKeyStr,String privateKeyStr){
+            boolean isMatch = false;
+            String sign = "The Times 03/Jan/2009 Chancellor on brink" +
+                    " of second bailout for banks.\n";
+            //私钥签名
+        try {
+            byte[] dest = signByPrivateKey(sign.getBytes(),privateKeyStr);
+            isMatch =  verifyByPublicKey(dest,sign.getBytes(),publicKeyStr);
+        } catch (Exception e) {
+            isMatch = false;
+            e.printStackTrace();
+        }
+        return isMatch;
+    }
+
+
     public static void main(String[] args) {
 //        byte[] arr = new byte[32];
 //        new Random(0).nextBytes(arr);

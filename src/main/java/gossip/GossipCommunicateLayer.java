@@ -24,6 +24,20 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
         super(uri, seedNodeURI);
     }
 
+    /**
+     * 构造函数
+     * @param uri 本节点URI
+     * @param seedNodeURI 种子节点URI
+     * @return 返回正在运行的Gossip对象
+     */
+    public static GossipCommunicateLayer getGossipExecute(NodeURI uri, NodeURI seedNodeURI){
+        GossipCommunicateLayer gossip =
+                new GossipCommunicateLayer(uri,seedNodeURI);
+        gossip.exec();
+
+        return gossip;
+    }
+
     /** 单元测试用例*/
     public static void main(String[] args) {
         System.out.println("通信层测试 - 请输入启动节点列表编号");

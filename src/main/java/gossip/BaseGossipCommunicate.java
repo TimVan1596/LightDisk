@@ -70,7 +70,7 @@ abstract public class BaseGossipCommunicate  {
      * @param key 对应命名空间名称
      * @return 接口返回值
      */
-    ResponseJson add(String val, String key) {
+    public ResponseJson add(String val, String key) {
         ResponseJson resJson = new ResponseJson();
         crdtMap.push(val,key);
         resJson.setCodeSuccessful();
@@ -84,7 +84,7 @@ abstract public class BaseGossipCommunicate  {
      * @param key 对应命名空间名称
      * @return 返回对应值
      */
-    ResponseJson get(String key) {
+    public ResponseJson get(String key) {
         ResponseJson resJson = new ResponseJson();
         String value = crdtMap.get(key);
         if (value.length() > 0){
@@ -94,7 +94,6 @@ abstract public class BaseGossipCommunicate  {
             resJson.setCodeFailed();
             resJson.setMsg("获取失败，为空");
         }
-
         return resJson;
     }
 
@@ -106,7 +105,7 @@ abstract public class BaseGossipCommunicate  {
      * @param key 对应命名空间名称
      * @return 接口返回值
      */
-    ResponseJson accAdd(long val, String key) {
+    public ResponseJson accAdd(long val, String key) {
         ResponseJson resJson = new ResponseJson();
         crdtMap.accAdd(val,key);
         resJson.setCodeSuccessful();
@@ -120,7 +119,7 @@ abstract public class BaseGossipCommunicate  {
      * @param key 对应命名空间名称
      * @return 返回对应值
      */
-    ResponseJson accGet(String key) {
+    public ResponseJson accGet(String key) {
         ResponseJson resJson = new ResponseJson();
         long value = crdtMap.accGet(key);
         if (value> 0){

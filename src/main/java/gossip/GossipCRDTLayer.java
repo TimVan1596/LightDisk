@@ -24,7 +24,7 @@ import org.apache.gossip.model.SharedDataMessage;
 
 import java.io.IOException;
 
-public class StandAloneNodeCrdtOrSet extends StandAloneExampleBase {
+public class GossipCRDTLayer extends StandAloneExampleBase {
 
   private static final String INDEX_KEY_FOR_SET = "abc";
 
@@ -35,7 +35,7 @@ public class StandAloneNodeCrdtOrSet extends StandAloneExampleBase {
 
   }
 
-  public StandAloneNodeCrdtOrSet(String[] args) {
+  public GossipCRDTLayer(String[] args) {
     args = super.checkArgsForClearFlag(args);
     super.initGossipManager(args);
   }

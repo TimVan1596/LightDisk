@@ -20,9 +20,9 @@ public class ResponseJson {
      * */
     private int code;
     private String msg;
-    private Object data;
+    private String data;
 
-    public ResponseJson(int code, String msg, Object data) {
+    public ResponseJson(int code, String msg, String data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -54,12 +54,20 @@ public class ResponseJson {
         this.msg = msg;
     }
 
-    public Object getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(String data) {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "ResponseJson{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

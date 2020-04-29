@@ -17,7 +17,8 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
 
     /**
      * 构造函数
-     * @param uri 本节点URI
+     *
+     * @param uri         本节点URI
      * @param seedNodeURI 种子节点URI
      */
     public GossipCommunicateLayer(NodeURI uri, NodeURI seedNodeURI) {
@@ -26,19 +27,54 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
 
     /**
      * 构造函数
-     * @param uri 本节点URI
+     *
+     * @param uri         本节点URI
      * @param seedNodeURI 种子节点URI
      * @return 返回正在运行的Gossip对象
      */
-    public static GossipCommunicateLayer getGossipExecute(NodeURI uri, NodeURI seedNodeURI){
+    public static GossipCommunicateLayer getGossipExecute(NodeURI uri, NodeURI seedNodeURI) {
         GossipCommunicateLayer gossip =
-                new GossipCommunicateLayer(uri,seedNodeURI);
+                new GossipCommunicateLayer(uri, seedNodeURI);
         gossip.exec();
 
         return gossip;
     }
 
-    /** 单元测试用例*/
+
+    /**
+     * 封装版的获取键值对
+     *
+     * @param key 键
+     * @return 获取值，若无键值返回null
+     */
+    public String getKey(String key) {
+        String value = null;
+
+        ResponseJson ret = this.get(key);
+        if (ret.getCode() == 0) {
+            value = (String) ret.getData();
+        }
+        return value;
+    }
+
+    /**
+     * 封装版的获取ACC累加器
+     *
+     * @param accName acc名称
+     * @return 获取值，若无键值返回null
+     */
+    public String getAcc(String accName) {
+        String value = null;
+        ResponseJson ret = this.accGet(accName);
+        if (ret.getCode() == 0) {
+            value = ret.getData();
+        }
+        return  value;
+    }
+
+    /**
+     * 单元测试用例
+     */
     public static void main(String[] args) {
         System.out.println("通信层测试 - 请输入启动节点列表编号");
         System.out.println("1、种子节点");
@@ -49,36 +85,36 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
 //netstat -aon|findstr "5400"
 // tasklist|findstr "2720"
         NodeURI uri = null;
-        NodeURI seedNode = new NodeURI("udp://localhost:5400","0");
+        NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
 
         Scanner scanner = new Scanner(System.in);
         int optionNum = scanner.nextInt();
-        switch (optionNum){
-            case 1:{
-                 uri = new NodeURI("udp://localhost:5400","0");
+        switch (optionNum) {
+            case 1: {
+                uri = new NodeURI("udp://localhost:5400", "0");
                 break;
             }
-            case 2:{
-                uri = new NodeURI("udp://localhost:5402","2");
+            case 2: {
+                uri = new NodeURI("udp://localhost:5402", "2");
                 break;
             }
-            case 3:{
-                uri = new NodeURI("udp://localhost:5403","3");
+            case 3: {
+                uri = new NodeURI("udp://localhost:5403", "3");
                 break;
             }
-            default:{
-                uri = new NodeURI("udp://localhost:5403","3");
+            default: {
+                uri = new NodeURI("udp://localhost:5403", "3");
             }
         }
 
         GossipCommunicateLayer gossip =
-                new GossipCommunicateLayer(uri,seedNode);
+                new GossipCommunicateLayer(uri, seedNode);
         gossip.exec();
 
         //进入测试通信层主界面
-        do{
+        do {
             System.out.println("------------------------------------");
-            System.out.println("我的ID="+uri.getId());
+            System.out.println("我的ID=" + uri.getId());
             System.out.println("\n\t 1、显示当前所有信息");
             System.out.println("\t 2、添加key-value");
             System.out.println("\t 3、根据key查value");
@@ -87,61 +123,60 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
             System.out.println("------------------------------------");
             optionNum = scanner.nextInt();
 
-            switch (optionNum){
-                case 1:{
+            switch (optionNum) {
+                case 1: {
                     ResponseJson ret = gossip.get("ALL_KEY_NAME_SPACE");
                     System.out.println((String) ret.getData());
                     break;
                 }
 
-                case 2:{
+                case 2: {
                     System.out.println("请输入key");
                     String key = scanner.next();
                     System.out.println("请输入value");
                     String value = scanner.next();
-                    gossip.add(value,key);
+                    gossip.add(value, key);
                     break;
                 }
-                case 3:{
+                case 3: {
                     System.out.println("请输入key");
                     String key = scanner.next();
                     ResponseJson ret = gossip.get(key);
-                    if (ret.getCode() == 0){
-                        System.out.println(key+"=>"+ret.getData());
-                    }
-                    else{
+                    if (ret.getCode() == 0) {
+                        System.out.println(key + "=>" + ret.getData());
+                    } else {
                         System.out.println("无此键值");
                     }
 
                     break;
                 }
-                case 4:{
+                case 4: {
                     System.out.println("请输入累加器名称");
                     String key = scanner.next();
                     System.out.println("请输入value");
                     Long value = scanner.nextLong();
-                    gossip.accAdd(value,key);
+                    gossip.accAdd(String.valueOf(value), key);
+
+
                     break;
                 }
 
-                case 5:{
+                case 5: {
                     System.out.println("请输入累加器名称");
                     String key = scanner.next();
                     ResponseJson ret = gossip.accGet(key);
-                    if (ret.getCode() == 0){
-                        System.out.println(key+"=>"+ret.getData());
-                    }
-                    else{
+                    if (ret.getCode() == 0) {
+                        System.out.println(key + "=>" + ret.getData());
+                    } else {
                         System.out.println("无此累加器");
                     }
 
                     break;
                 }
-                default:{
+                default: {
 
                 }
             }
-
 
 
         }

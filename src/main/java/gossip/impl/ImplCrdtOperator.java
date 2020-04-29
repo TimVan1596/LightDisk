@@ -33,11 +33,11 @@ public interface ImplCrdtOperator {
      * @param key 对应命名空间名称
      * @return 是否添加成功
      * * */
-    boolean accAdd(long val , String key);
+    boolean accAdd(String val , String key);
 
     /** 向对应累加器，获取值
      * @param key 对应命名空间名称
      * @return 获取的值     * */
-    long accGet(String key);
+    String accGet(String key);
 
 }

@@ -3,10 +3,8 @@ package cmd;
 import cn.hutool.core.date.DateTime;
 import gossip.GossipCommunicateLayer;
 import gossip.model.NodeURI;
-import lightdisk.model.Block;
 import lightdisk.model.BlockChain;
 import lightdisk.model.ECKey;
-import model.ResponseJson;
 
 import java.util.Date;
 import java.util.Map;
@@ -59,14 +57,17 @@ public class Launcher {
                     DateTime time = new DateTime(date);
                     System.out.println("当前时间：" + time);
                     System.out.println("Gossip区块链高度="
-                            +gossip.accGet("height"));
+                            + gossip.getAcc("height"));
                     break;
                 }
                 case 2: {
+                    System.out.println("请输出您需要存储的信息");
                     String data = scanner.next();
+                    System.out.println("+++++挖矿中....");
                     LightDisk.mineBlock(publicKey, data);
+                    System.out.println("+++++成功挖出");
                     long height = LightDisk.getCurrentHeight();
-                    gossip.accAdd(height,"height");
+                    gossip.accAdd(String.valueOf(height), "height");
                     break;
                 }
 

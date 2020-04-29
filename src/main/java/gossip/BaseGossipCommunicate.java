@@ -1,5 +1,6 @@
 package gossip;
 
+import cn.hutool.core.util.StrUtil;
 import gossip.model.CrdtMap;
 import gossip.model.NodeURI;
 import model.ResponseJson;
@@ -105,7 +106,7 @@ abstract public class BaseGossipCommunicate  {
      * @param key 对应命名空间名称
      * @return 接口返回值
      */
-    public ResponseJson accAdd(long val, String key) {
+    public ResponseJson accAdd(String val, String key) {
         ResponseJson resJson = new ResponseJson();
         crdtMap.accAdd(val,key);
         resJson.setCodeSuccessful();
@@ -120,9 +121,10 @@ abstract public class BaseGossipCommunicate  {
      * @return 返回对应值
      */
     public ResponseJson accGet(String key) {
+
         ResponseJson resJson = new ResponseJson();
-        long value = crdtMap.accGet(key);
-        if (value> 0){
+        String value = crdtMap.get(key);
+        if (!StrUtil.hasEmpty(value)){
             resJson.setCodeSuccessful();
             resJson.setData(value);
         }else{

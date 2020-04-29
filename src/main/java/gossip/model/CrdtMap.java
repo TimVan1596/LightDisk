@@ -92,49 +92,50 @@ public class CrdtMap implements ImplCrdtOperator {
     /**
      * 向对应累加器，添加数字, acc = accumulator(累加器)
      *
-     * @param val 待添加值
+     * @param value 待添加值
      * @param key 对应命名空间名称
      * @return 是否添加成功
      * *
      */
     @Override
-    public boolean accAdd(long val, String key) {
+    public boolean accAdd(String value, String key) {
 
         boolean isSuccess = false;
         if (isKeyEqualsToAllKeyNameSpace(key)) {
             isSuccess = false;
         } else {
             addToAllKeyNameSpace(key);
-            GrowOnlyCounter c = (GrowOnlyCounter) gossipService.findCrdt(key);
-            Long l = Long.valueOf(val);
-            if (c == null) {
-                c = new GrowOnlyCounter(new GrowOnlyCounter.Builder(gossipService).increment((l)));
+            GrowOnlyCounter counter = (GrowOnlyCounter) gossipService.findCrdt(key);
+            Long aLong = Long.valueOf(value);
+            if (counter == null) {
+                counter = new GrowOnlyCounter(new GrowOnlyCounter
+                        .Builder(gossipService).increment((aLong)));
             } else {
-                c = new GrowOnlyCounter(c, new GrowOnlyCounter.Builder(gossipService).increment((l)));
+                counter = new GrowOnlyCounter(counter, new GrowOnlyCounter
+                        .Builder(gossipService).increment((aLong)));
             }
-            SharedDataMessage m = new SharedDataMessage();
-            m.setExpireAt(Long.MAX_VALUE);
-            m.setKey(key);
-            m.setPayload(c);
-            m.setTimestamp(System.currentTimeMillis());
-            gossipService.merge(m);
+            SharedDataMessage message = new SharedDataMessage();
+            message.setExpireAt(Long.MAX_VALUE);
+            message.setKey(key);
+            message.setPayload(counter);
+            message.setTimestamp(System.currentTimeMillis());
+            gossipService.merge(message);
         }
 
         return isSuccess;
     }
 
     /**
-     * 向对应累加器，获取值
+     * (弃用)向对应累加器，获取值
      *
      * @param key 对应命名空间名称
      * @return 获取的值
      */
-    @Override
-    public long accGet(String key) {
-        String val = (gossipService.findCrdt(key) == null
+    @Override @Deprecated
+    public String accGet(String key) {
+        return (gossipService.findCrdt(key) == null
                 ? "" : gossipService.findCrdt(key).value().toString());
 
-        return Long.parseLong(val);
     }
 
     /**

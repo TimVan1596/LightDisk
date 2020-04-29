@@ -1,10 +1,9 @@
-package lightdisk.model;
+package blockchain.model;
 
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.crypto.digest.DigestAlgorithm;
-import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.crypto.digest.Digester;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;

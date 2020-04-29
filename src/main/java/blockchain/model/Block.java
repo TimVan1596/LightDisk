@@ -1,9 +1,10 @@
-package lightdisk.model;
+package blockchain.model;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,25 +40,27 @@ public class Block {
     private String merkleRoot;
     @Getter
     private long timestamp;
-    @Getter @Setter
+    @Getter
+    @Setter
     private long nonce;
     @Getter
     private String hash;
     @Getter
-    private final List<Transaction> transactions = new ArrayList<>();
-    @Getter @Setter
+    @Setter
+    private List<Transaction> transactions = new ArrayList<>();
+    @Getter
+    @Setter
     private long difficultyTarget = 3;
     //private long version;
 
     /**
      * 常量
      * BLOCK_HEADER_NUM = 块头包含的字段（由此取哈希）
-     *
      */
     private final static int BLOCK_HEADER_NUM = 6;
 
 
-    public Block(String prevBlockHash,long height) {
+    public Block(String prevBlockHash, long height) {
         this.prevBlockHash = prevBlockHash;
         this.height = height;
         this.merkleRoot = "0";
@@ -85,7 +88,7 @@ public class Block {
     public void addTransaction(Transaction tx) {
         transactions.add(tx);
         this.timestamp = System.currentTimeMillis();
-        this.merkleRoot =  MerkleTree.getRootHash(transactions);
+        this.merkleRoot = MerkleTree.getRootHash(transactions);
         generatorHash();
     }
 
@@ -98,16 +101,17 @@ public class Block {
 
     /**
      * 取得铸币交易
+     *
      * @return 返回铸币交易
      */
-    private Transaction getCoinbaseTx(){
+    private Transaction getCoinbaseTx() {
         return transactions.get(0);
     }
 
     /**
      * 交易的监控板
      */
-    public void transactionBoard(){
+    public void transactionBoard() {
         System.out.println("--交易监控板----");
 
         for (Transaction transaction : transactions) {
@@ -123,13 +127,31 @@ public class Block {
         System.out.println("-------");
     }
 
+    /**
+     * 从JSON数据获得Block
+     *
+     * @return 返回JSON生成的block
+     */
+    public static Block getBlockFromJson(String json) {
+        JSONObject jsonObject = JSONObject.parseObject(json);
+        Block block = JSON.parseObject(json, Block.class);
+//        block.se
+//           String txListStr =;
+//        Transation  JSONObject.parseArray(gameListStr, Game.class);
+        List<Transaction> txList = JSONObject.parseArray(jsonObject
+                .getString("transactions"), Transaction.class);
+        block.setTransactions(txList);
+
+        return block;
+    }
+
     public static void main(String[] args) {
         String publickey1 = "aSq9DsNNvGhYxYyqA9wd2e" +
                 "duEAZ5AXWgJTbTKRS3hMqtXzj6gpne4s5RBEbRNN7yk3g1qs3j4PE7tJyh8RGg8" +
                 "GpFyEqq57ciEB6jndDaFEmjKZt8WFmQBmKF4wM8";
         String str1 = "我是第一条信息";
 
-        Block block = new Block("0",0);
+        Block block = new Block("0", 0);
         block.addTransaction(publickey1, str1);
         String str3 = " success(res) {  console.log(res); let msg = '';";
         block.addTransaction(new Transaction(publickey1, str3));

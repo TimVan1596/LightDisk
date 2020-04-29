@@ -1,4 +1,4 @@
-package lightdisk.model;
+package blockchain.model;
 
 import io.github.novacrypto.base58.Base58;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;

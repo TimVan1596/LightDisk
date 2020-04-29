@@ -1,4 +1,4 @@
-package lightdisk.model;
+package blockchain.model;
 
 import cn.hutool.core.date.DateTime;
 import lombok.Getter;
@@ -61,8 +61,9 @@ public class BlockChain {
      *
      * @param publicKey 挖矿者公钥字符串
      * @param data      矿工待存入数据
+     * @return 被挖出的区块
      */
-    public void mineBlock(String publicKey, String data) {
+    public Block mineBlock(String publicKey, String data) {
         //如果链为空，默认放置创世块
         if (currentHeight == -1) {
             addBlock(generatorGenesisBlock());
@@ -88,7 +89,7 @@ public class BlockChain {
             addBlock(block);
         }
 
-
+        return block;
     }
 
     /**

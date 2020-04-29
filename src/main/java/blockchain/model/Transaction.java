@@ -1,4 +1,4 @@
-package lightdisk.model;
+package blockchain.model;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestAlgorithm;

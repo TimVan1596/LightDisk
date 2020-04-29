@@ -1,4 +1,4 @@
-package lightdisk.model;
+package blockchain.model;
 
 /**
  * <h3>BlockChain</h3>

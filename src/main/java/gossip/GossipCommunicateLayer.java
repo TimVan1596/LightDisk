@@ -69,7 +69,85 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
         if (ret.getCode() == 0) {
             value = ret.getData();
         }
-        return  value;
+        return value;
+    }
+
+    /**
+     * gossip监控（命令行版本）
+     */
+    public void gossipBoardCMD() {
+        Scanner scanner = new Scanner(System.in);
+        int optionNum = 0;
+        //进入测试通信层主界面
+        do {
+            System.out.println("------------------------------------");
+            System.out.println("\n\t 1、显示当前所有信息");
+            System.out.println("\t 2、添加key-value");
+            System.out.println("\t 3、根据key查value");
+            System.out.println("\t 4、添加累加器");
+            System.out.println("\t 5、根据key查累加器");
+            System.out.println("\t 输入-1退出gossip监控");
+            System.out.println("------------------------------------");
+            optionNum = scanner.nextInt();
+
+            switch (optionNum) {
+                case 1: {
+                    ResponseJson ret = this.get("ALL_KEY_NAME_SPACE");
+                    System.out.println((String) ret.getData());
+                    break;
+                }
+
+                case 2: {
+                    System.out.println("请输入key");
+                    String key = scanner.next();
+                    System.out.println("请输入value");
+                    String value = scanner.next();
+                    this.add(value, key);
+                    break;
+                }
+                case 3: {
+                    System.out.println("请输入key");
+                    String key = scanner.next();
+                    ResponseJson ret = this.get(key);
+                    if (ret.getCode() == 0) {
+                        System.out.println(key + "=>" + ret.getData());
+                    } else {
+                        System.out.println("无此键值");
+                    }
+
+                    break;
+                }
+                case 4: {
+                    System.out.println("请输入累加器名称");
+                    String key = scanner.next();
+                    System.out.println("请输入value");
+                    Long value = scanner.nextLong();
+                    this.accAdd(String.valueOf(value), key);
+
+
+                    break;
+                }
+
+                case 5: {
+                    System.out.println("请输入累加器名称");
+                    String key = scanner.next();
+                    ResponseJson ret = this.accGet(key);
+                    if (ret.getCode() == 0) {
+                        System.out.println(key + "=>" + ret.getData());
+                    } else {
+                        System.out.println("无此累加器");
+                    }
+
+                    break;
+                }
+                default: {
+
+                }
+            }
+
+
+        }
+        while (optionNum != -1);
     }
 
     /**

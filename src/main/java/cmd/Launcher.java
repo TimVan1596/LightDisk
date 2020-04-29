@@ -3,8 +3,10 @@ package cmd;
 import cn.hutool.core.date.DateTime;
 import gossip.GossipCommunicateLayer;
 import gossip.model.NodeURI;
-import lightdisk.model.BlockChain;
-import lightdisk.model.ECKey;
+import blockchain.model.BlockChain;
+import blockchain.model.ECKey;
+import lightdisk.LightDisk;
+
 
 import java.util.Date;
 import java.util.Map;
@@ -35,9 +37,7 @@ public class Launcher {
 
         NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
 
-        GossipCommunicateLayer gossip = GossipCommunicateLayer
-                .getGossipExecute(uri, seedNode);
-        BlockChain LightDisk = new BlockChain();
+        LightDisk lightDisk = new LightDisk(uri, seedNode);
 
         //是否终止循环
         boolean isBreakLoop = false;
@@ -45,7 +45,7 @@ public class Launcher {
             System.out.println("-------------------");
             System.out.println("网络ID:" + uri.getId() + "=>" + uri.getIpAddress());
             System.out.println("我的公钥:" + publicKey);
-            System.out.println("\n\t 1、当前区块链高度");
+            System.out.println("\n\t 1、Gossip监控");
             System.out.println("\t 2、挖矿");
             System.out.println("\t 0、退出登录");
             Scanner scanner = new Scanner(System.in);
@@ -56,18 +56,16 @@ public class Launcher {
                     Date date = new Date();
                     DateTime time = new DateTime(date);
                     System.out.println("当前时间：" + time);
-                    System.out.println("Gossip区块链高度="
-                            + gossip.getAcc("height"));
+                    lightDisk.getGossip().gossipBoardCMD();
                     break;
                 }
                 case 2: {
                     System.out.println("请输出您需要存储的信息");
                     String data = scanner.next();
                     System.out.println("+++++挖矿中....");
-                    LightDisk.mineBlock(publicKey, data);
+                    lightDisk.mineBlock(publicKey,data);
                     System.out.println("+++++成功挖出");
-                    long height = LightDisk.getCurrentHeight();
-                    gossip.accAdd(String.valueOf(height), "height");
+                    System.out.println("最新区块高度为："+lightDisk.getLocalChainHeight());
                     break;
                 }
 

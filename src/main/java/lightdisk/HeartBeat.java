@@ -24,11 +24,11 @@ public class HeartBeat {
      * NORMAL_TYPE = 9-普通信息-种类
      * WRONG_TYPE = 0-发生错误
      */
-    private final static int PUBLISH_NEW_BLOCK_TYPE = 1;
-    private final static int REQUEST_BLOCK_TYPE = 2;
-    private final static int REQUEST_CHAIN_TYPE = 3;
-    private final static int NORMAL_TYPE = 9;
-    private final static int WRONG_TYPE = 0;
+    public final static int PUBLISH_NEW_BLOCK_TYPE = 1;
+    public final static int REQUEST_BLOCK_TYPE = 2;
+    public final static int REQUEST_CHAIN_TYPE = 3;
+    public final static int NORMAL_TYPE = 9;
+    public final static int WRONG_TYPE = 0;
 
     public HeartBeat(int type, String data) {
         this.type = type;

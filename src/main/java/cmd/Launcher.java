@@ -47,6 +47,7 @@ public class Launcher {
             System.out.println("我的公钥:" + publicKey);
             System.out.println("\n\t 1、Gossip监控");
             System.out.println("\t 2、挖矿");
+            System.out.println("\t 9、区块链监控");
             System.out.println("\t 0、退出登录");
             Scanner scanner = new Scanner(System.in);
             int optionNum = scanner.nextInt();
@@ -66,6 +67,21 @@ public class Launcher {
                     lightDisk.mineBlock(publicKey,data);
                     System.out.println("+++++成功挖出");
                     System.out.println("最新区块高度为："+lightDisk.getLocalChainHeight());
+                    break;
+                }
+                case 9: {
+                    Date date = new Date();
+                    DateTime time = new DateTime(date);
+                    System.out.println("当前时间：" + time);
+
+                    System.out.println("需要详细信息请输入1");
+                    int data = scanner.nextInt();
+                    //是否打开详细信息
+                    boolean isOpenTX = false;
+                    if (data == 1){
+                        isOpenTX =true;
+                    }
+                    lightDisk.lightBoard(isOpenTX);
                     break;
                 }
 

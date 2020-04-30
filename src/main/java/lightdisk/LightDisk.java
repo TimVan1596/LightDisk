@@ -36,7 +36,6 @@ public class LightDisk {
      */
     private final static String HEART_BEAT_KEY_PREFIX = "heartbeat-";
 
-
     /**
      * 构造函数的初始化
      */
@@ -51,7 +50,6 @@ public class LightDisk {
                 try {
                     long gossipHeartBeatID = getGossipHeartBeatID();
                     long diff = gossipHeartBeatID - heartBeatID;
-                    System.out.println("最新gossip上heartBeatID=" + gossipHeartBeatID);
                     if (diff > 0) {
                         System.out.println("------------------listenThread监听器-------------------");
                         Date date = new Date();
@@ -64,15 +62,15 @@ public class LightDisk {
                             heartBeatID++;
                             System.out.println("------消息ID=" + heartBeatID);
                             HeartBeat heartBeat = getHeartBeatFromID(heartBeatID);
-
+                            processHeartBeatSortHandle(heartBeat);
 //                            System.out.println("type=" + heartBeat.getType());
 //                            System.out.println("message=" + heartBeat.getData());
                         }
-                        System.out.println("------------------监听结束-------------------");
+                        System.out.println("------------------listenThread监听结束-------------------");
 
                     }
 
-                    sleep(1000);
+                    sleep(500);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -83,6 +81,74 @@ public class LightDisk {
         listenThread.start();
 
 
+    }
+
+    /**
+     * 处理收到的心跳消息的分拣器
+     *
+     * @param heartBeat 接收的心跳消息
+     */
+    private void processHeartBeatSortHandle(HeartBeat heartBeat) {
+        int type = heartBeat.getType();
+        /*  心跳消息的类型
+         * PUBLISH_NEW_BLOCK_TYPE = 1-发布新区块-种类
+         * REQUEST_BLOCK_TYPE = 2-请求某一区块-种类
+         * REQUEST_CHAIN_TYPE = 3-请求整个链的信息-种类
+         * NORMAL_TYPE = 9-普通信息-种类
+         * WRONG_TYPE = 0-发生错误
+         */
+        switch (type) {
+            case HeartBeat.PUBLISH_NEW_BLOCK_TYPE: {
+                processNewBlockHeartBeatHandle(heartBeat);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    /**
+     * 处理收到的新区块的心跳消息
+     * PUBLISH_NEW_BLOCK_TYPE = 1-发布新区块-种类
+     *
+     * @param heartBeat 接收的心跳消息
+     */
+    private boolean processNewBlockHeartBeatHandle(HeartBeat heartBeat) {
+        Block block = Block.getBlockFromJson(heartBeat.getData());
+        boolean isLegalBlock = verifyBlock(block);
+        if (isLegalBlock) {
+            blockChain.addBlock(block);
+        }
+        return isLegalBlock;
+    }
+
+    /**
+     * 检查区块是否含创世块，若无创世块则挖出创世块并发布
+     *
+     */
+    private void verifyHasGenesisBlock(){
+        //如果链为空，默认放置创世块
+        if (blockChain.getCurrentHeight() == -1) {
+            Block genesisBlock = BlockChain.generatorGenesisBlock();
+            blockChain.addBlock(genesisBlock);
+            String json = JSON.toJSONString(genesisBlock);
+            String base64 = HeartBeat.packPublishNewBlockBase64(json);
+            //向所有的节点发送这个消息
+            sendAllNodeHeartMsg(base64);
+        }
+    }
+
+    /**
+     * 验证区块是否合法
+     * PUBLISH_NEW_BLOCK_TYPE = 1-发布新区块-种类
+     *
+     * @param block 待验证的区块
+     */
+    private boolean verifyBlock(Block block) {
+        boolean isLegalBlock = false;
+        isLegalBlock = true;
+        return isLegalBlock;
     }
 
     /**
@@ -108,6 +174,8 @@ public class LightDisk {
      * 挖矿
      */
     public void mineBlock(String publicKey, String data) {
+        /* 检查是否有创世块 */
+        verifyHasGenesisBlock();
         Block block = blockChain.mineBlock(publicKey, data);
         String json = JSON.toJSONString(block);
         String base64 = HeartBeat.packPublishNewBlockBase64(json);
@@ -168,6 +236,14 @@ public class LightDisk {
         } else {
             return 0;
         }
+    }
+
+    /**
+     *
+     * */
+    public void lightBoard(boolean isOpenTX){
+        //是否打开详细交易信息
+        blockChain.blockChainBoard(isOpenTX);
     }
 
     public static void main(String[] args) {

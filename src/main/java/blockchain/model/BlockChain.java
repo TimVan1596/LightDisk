@@ -29,7 +29,8 @@ public class BlockChain {
      *
      * @param block 向此链中添加的新区块
      */
-    private void addBlock(Block block) {
+    public void addBlock(Block block) {
+
         if (block.getHeight() == currentHeight + 1) {
             blockList.add(block);
             currentHeight++;
@@ -52,7 +53,7 @@ public class BlockChain {
      *
      * @return 返回创世区块
      */
-    private Block generatorGenesisBlock() {
+    public static Block generatorGenesisBlock() {
         return new Block("0", 0L);
     }
 
@@ -64,11 +65,6 @@ public class BlockChain {
      * @return 被挖出的区块
      */
     public Block mineBlock(String publicKey, String data) {
-        //如果链为空，默认放置创世块
-        if (currentHeight == -1) {
-            addBlock(generatorGenesisBlock());
-        }
-
         Block block = null;
         long nonce = 0;
 
@@ -96,8 +92,8 @@ public class BlockChain {
      * 区块链的监控板
      * @param isOpenTX 是否打开交易信息
      */
-    public void lightBoard(boolean isOpenTX) {
-        System.out.println("-------------LightDisk监控板---------------");
+    public void blockChainBoard(boolean isOpenTX) {
+        System.out.println("-------------blockChainBoard监控板---------------");
         Date date = new Date();
         DateTime time = new DateTime(date);
         System.out.println("当前时间：" + time);
@@ -122,7 +118,7 @@ public class BlockChain {
             System.out.println("----------");
         }
 
-        System.out.println("------------------------------------------");
+        System.out.println("-----------------blockChainBoard监控结束-------------------------");
 
 
     }
@@ -147,7 +143,7 @@ public class BlockChain {
         }
         boolean isOpenTX = true;
 //        boolean isOpenTX = false;
-        LightDisk.lightBoard(isOpenTX);
+        LightDisk.blockChainBoard(isOpenTX);
 
     }
 }

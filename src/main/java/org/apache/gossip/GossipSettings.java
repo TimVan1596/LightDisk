@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class GossipSettings {
 
-  /** Time between gossip'ing in ms. Default is 1 second. */
+  /** Time between com.timvanx.gossip'ing in ms. Default is 1 second. */
   private int gossipInterval = 10;
 
   /** Time between cleanups in ms. Default is 10 seconds. */
@@ -45,10 +45,10 @@ public class GossipSettings {
   
   private String distribution = "normal";
   
-  private String activeGossipClass = "org.apache.gossip.manager.SimpleActiveGossiper";
+  private String activeGossipClass = "org.apache.com.timvanx.gossip.manager.SimpleActiveGossiper";
 
-  private String transportManagerClass = "org.apache.gossip.transport.udp.UdpTransportManager";
-  private String protocolManagerClass = "org.apache.gossip.protocol.json.JacksonProtocolManager";
+  private String transportManagerClass = "org.apache.com.timvanx.gossip.transport.udp.UdpTransportManager";
+  private String protocolManagerClass = "org.apache.com.timvanx.gossip.protocol.json.JacksonProtocolManager";
   
   private Map<String,String> activeGossipProperties = new HashMap<>();
   
@@ -82,7 +82,7 @@ public class GossipSettings {
    * Construct GossipSettings with given settings.
    * 
    * @param gossipInterval
-   *          The gossip interval in ms.
+   *          The com.timvanx.gossip interval in ms.
    * @param cleanupInterval
    *          The cleanup interval in ms.
    */
@@ -98,10 +98,10 @@ public class GossipSettings {
   }
 
   /**
-   * Set the gossip interval. This is the time between a gossip message is send.
+   * Set the com.timvanx.gossip interval. This is the time between a com.timvanx.gossip message is send.
    * 
    * @param gossipInterval
-   *          The gossip interval in ms.
+   *          The com.timvanx.gossip interval in ms.
    */
   public void setGossipTimeout(int gossipInterval) {
     this.gossipInterval = gossipInterval;
@@ -119,9 +119,9 @@ public class GossipSettings {
   }
 
   /**
-   * Get the gossip interval.
+   * Get the com.timvanx.gossip interval.
    * 
-   * @return The gossip interval in ms.
+   * @return The com.timvanx.gossip interval in ms.
    */
   public int getGossipInterval() {
     return gossipInterval;

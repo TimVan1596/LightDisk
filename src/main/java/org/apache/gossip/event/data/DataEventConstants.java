@@ -21,13 +21,13 @@ public class DataEventConstants {
   
   // MetricRegistry
   public static final String PER_NODE_DATA_SUBSCRIBERS_SIZE
-          = "gossip.event.data.pernode.subscribers.size";
+          = "com.timvanx.gossip.event.data.pernode.subscribers.size";
   public static final String PER_NODE_DATA_SUBSCRIBERS_QUEUE_SIZE
-          = "gossip.event.data.pernode.subscribers.queue.size";
+          = "com.timvanx.gossip.event.data.pernode.subscribers.queue.size";
   public static final String SHARED_DATA_SUBSCRIBERS_SIZE
-          = "gossip.event.data.shared.subscribers.size";
+          = "com.timvanx.gossip.event.data.shared.subscribers.size";
   public static final String SHARED_DATA_SUBSCRIBERS_QUEUE_SIZE
-          = "gossip.event.data.shared.subscribers.queue.size";
+          = "com.timvanx.gossip.event.data.shared.subscribers.queue.size";
   
   // Thread pool
   public static final int PER_NODE_DATA_QUEUE_SIZE = 64;

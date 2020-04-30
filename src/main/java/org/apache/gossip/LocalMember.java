@@ -23,8 +23,8 @@ import java.net.URI;
 import java.util.Map;
 
 /**
- * This object represent a gossip member with the properties known locally. These objects are stored
- * in the local list of gossip members.
+ * This object represent a com.timvanx.gossip member with the properties known locally. These objects are stored
+ * in the local list of com.timvanx.gossip members.
  * 
  */
 public class LocalMember extends Member {

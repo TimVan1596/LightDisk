@@ -44,8 +44,8 @@ public class LockManager {
   private final AtomicInteger numberOfNodes;
   private final Set<String> lockKeys;
   // For MetricRegistry
-  public static final String LOCK_KEY_SET_SIZE = "gossip.lock.key_set_size";
-  public static final String LOCK_TIME = "gossip.lock.time";
+  public static final String LOCK_KEY_SET_SIZE = "com.timvanx.gossip.lock.key_set_size";
+  public static final String LOCK_TIME = "com.timvanx.gossip.lock.time";
   private final Timer lockTimeMetric;
 
   public LockManager(GossipManager gossipManager, final LockManagerSettings lockManagerSettings,

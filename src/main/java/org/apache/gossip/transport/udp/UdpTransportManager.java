@@ -41,7 +41,7 @@ public class UdpTransportManager extends AbstractTransportManager implements Run
   
   public static final Logger LOGGER = Logger.getLogger(UdpTransportManager.class);
   
-  /** The socket used for the passive thread of the gossip service. */
+  /** The socket used for the passive thread of the com.timvanx.gossip service. */
   private final DatagramSocket server;
   
   private final int soTimeout;

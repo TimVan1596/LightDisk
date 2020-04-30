@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.Map;
 
 /**
- * An abstract class representing a gossip member.
+ * An abstract class representing a com.timvanx.gossip member.
  * 
  */
 public abstract class Member implements Comparable<Member> {
@@ -84,7 +84,7 @@ public abstract class Member implements Comparable<Member> {
   }
 
   /**
-   * Get the heartbeat of this gossip member.
+   * Get the heartbeat of this com.timvanx.gossip member.
    * 
    * @return The current heartbeat.
    */
@@ -93,7 +93,7 @@ public abstract class Member implements Comparable<Member> {
   }
 
   /**
-   * Set the heartbeat of this gossip member.
+   * Set the heartbeat of this com.timvanx.gossip member.
    * 
    * @param heartbeat
    *          The new heartbeat.

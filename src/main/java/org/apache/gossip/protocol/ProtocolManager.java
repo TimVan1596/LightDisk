@@ -34,7 +34,7 @@ public interface ProtocolManager {
   /**
    * Reads the next message from a byte source.
    * @param buf
-   * @return a gossip message.
+   * @return a com.timvanx.gossip message.
    * @throws IOException
    */
   Base read(byte[] buf) throws IOException;

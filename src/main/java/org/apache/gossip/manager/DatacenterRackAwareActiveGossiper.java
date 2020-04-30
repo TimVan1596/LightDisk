@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * Sends gossip traffic at different rates to other racks and data-centers.
- * This implementation controls the rate at which gossip traffic is shared. 
+ * Sends com.timvanx.gossip traffic at different rates to other racks and data-centers.
+ * This implementation controls the rate at which com.timvanx.gossip traffic is shared.
  * There are two constructs Datacenter and Rack. It is assumed that bandwidth and latency is higher
  * in the rack than in the the datacenter. We can adjust the rate at which we send messages to each group.
  * 

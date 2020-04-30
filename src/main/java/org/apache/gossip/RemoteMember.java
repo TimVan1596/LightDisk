@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The object represents a gossip member with the properties as received from a remote gossip
+ * The object represents a com.timvanx.gossip member with the properties as received from a remote com.timvanx.gossip
  * member.
  * 
  */

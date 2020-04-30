@@ -244,7 +244,7 @@ public abstract class AbstractActiveGossiper {
    *
    * @param memberList
    *          An immutable list
-   * @return The chosen LocalGossipMember to gossip with.
+   * @return The chosen LocalGossipMember to com.timvanx.gossip with.
    */
   protected LocalMember selectPartner(List<LocalMember> memberList) {
     LocalMember member = null;

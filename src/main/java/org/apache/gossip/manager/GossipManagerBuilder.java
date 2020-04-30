@@ -113,7 +113,7 @@ public class GossipManagerBuilder {
     public GossipManager build() {
       checkArgument(id != null, "You must specify an id");
       checkArgument(cluster != null, "You must specify a cluster name");
-      checkArgument(settings != null, "You must specify gossip settings");
+      checkArgument(settings != null, "You must specify com.timvanx.gossip settings");
       checkArgument(uri != null, "You must specify a uri");
       if (registry == null){
         registry = new MetricRegistry();

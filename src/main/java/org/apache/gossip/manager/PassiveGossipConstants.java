@@ -18,6 +18,6 @@
 package org.apache.gossip.manager;
 
 public interface PassiveGossipConstants {
-  String SIGNED_MESSAGE = "gossip.passive.signed_message";
-  String UNSIGNED_MESSAGE = "gossip.passive.unsigned_message";
+  String SIGNED_MESSAGE = "com.timvanx.gossip.passive.signed_message";
+  String UNSIGNED_MESSAGE = "com.timvanx.gossip.passive.unsigned_message";
 }

@@ -158,7 +158,7 @@ public abstract class GossipManager {
   }
 
   /**
-   * Starts the client. Specifically, start the various cycles for this protocol. Start the gossip
+   * Starts the client. Specifically, start the various cycles for this protocol. Start the com.timvanx.gossip
    * thread and start the receiver thread.
    */
   public void init() {
@@ -178,7 +178,7 @@ public abstract class GossipManager {
         new Object[] { this, gossipCore }
     );
     
-    // start processing gossip messages.
+    // start processing com.timvanx.gossip messages.
     transportManager.startEndpoint();
     transportManager.startActiveGossiper();
     
@@ -221,7 +221,7 @@ public abstract class GossipManager {
   }
 
   /**
-   * Shutdown the gossip service.
+   * Shutdown the com.timvanx.gossip service.
    */
   public void shutdown() {
     gossipServiceRunning.set(false);

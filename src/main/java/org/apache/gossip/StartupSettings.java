@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /**
- * This object represents the settings used when starting the gossip service.
+ * This object represents the settings used when starting the com.timvanx.gossip service.
  * 
  */
 public class StartupSettings {
@@ -43,10 +43,10 @@ public class StartupSettings {
   
   private String cluster;
 
-  /** The gossip settings used at startup. */
+  /** The com.timvanx.gossip settings used at startup. */
   private final GossipSettings gossipSettings;
 
-  /** The list with gossip members to start with. */
+  /** The list with com.timvanx.gossip members to start with. */
   private final List<Member> gossipMembers;
 
   /** Default setting values */
@@ -128,7 +128,7 @@ public class StartupSettings {
   }
 
   /**
-   * Add a gossip member to the list of members to start with.
+   * Add a com.timvanx.gossip member to the list of members to start with.
    * 
    * @param member
    *          The member to add.
@@ -138,16 +138,16 @@ public class StartupSettings {
   }
 
   /**
-   * Get the list with gossip members.
+   * Get the list with com.timvanx.gossip members.
    * 
-   * @return The gossip members.
+   * @return The com.timvanx.gossip members.
    */
   public List<Member> getGossipMembers() {
     return gossipMembers;
   }
 
   /**
-   * Parse the settings for the gossip service from a JSON file.
+   * Parse the settings for the com.timvanx.gossip service from a JSON file.
    * 
    * @param jsonFile
    *          The file object which refers to the JSON config file.

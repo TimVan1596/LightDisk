@@ -144,7 +144,7 @@ public class CrdtModule extends SimpleModule {
   private static final long serialVersionUID = 6134836523275023418L;
 
   public CrdtModule() {
-    super("CrdtModule", new Version(0, 0, 0, "0.0.0", "org.apache.gossip", "gossip"));
+    super("CrdtModule", new Version(0, 0, 0, "0.0.0", "org.apache.com.timvanx.gossip", "com/timvanx/gossip"));
   }
 
   @Override

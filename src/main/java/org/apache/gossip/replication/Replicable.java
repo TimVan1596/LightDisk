@@ -22,7 +22,7 @@ import org.apache.gossip.model.Base;
 
 /**
  * This interface is used to determine whether a data item needs to be replicated to
- * another gossip member.
+ * another com.timvanx.gossip member.
  *
  * @param <T> A subtype of the class {@link org.apache.gossip.model.Base} which uses this interface
  */

@@ -9,12 +9,19 @@
     "href": ""
   },
   "menuInfo": [
+
     {
-      "title": "常规管理",
+      "title": "工具",
       "icon": "fa fa-address-book",
       "href": "",
       "target": "_self",
       "child": [
+        {
+          "title": "概览",
+          "href": "page/welcome-3.html",
+          "icon": "fa fa-tachometer",
+          "target": "_self"
+        },
         {
           "title": "主页模板",
           "href": "",

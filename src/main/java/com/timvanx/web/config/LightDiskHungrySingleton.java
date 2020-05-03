@@ -2,6 +2,7 @@ package com.timvanx.web.config;
 
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.lightdisk.LightDisk;
+import lombok.Getter;
 
 /**
  * <h3>BlockChain</h3>
@@ -12,6 +13,7 @@ import com.timvanx.lightdisk.LightDisk;
  **/
 public class LightDiskHungrySingleton {
     private static final LightDiskHungrySingleton LAUGH_DISK_SINGLETON = new LightDiskHungrySingleton();
+    @Getter
     private static LightDisk lightDisk;
 
     private LightDiskHungrySingleton() {

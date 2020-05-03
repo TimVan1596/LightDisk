@@ -11,6 +11,7 @@ import lombok.Getter;
 import com.timvanx.model.ResponseJson;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
@@ -239,11 +240,18 @@ public class LightDisk {
     }
 
     /**
-     *
+     * LightBoard监控板
      * */
     public void lightBoard(boolean isOpenTX){
         //是否打开详细交易信息
         blockChain.blockChainBoard(isOpenTX);
+    }
+
+    /**
+     * 获取本地区块链上所有区块列表
+     */
+    public List<Block> getLocalBlockList(){
+        return blockChain.getBlockList();
     }
 
     public static void main(String[] args) {

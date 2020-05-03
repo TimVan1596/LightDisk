@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    function formatterTime(timestamp) {
+        // 传入时间戳
+        let date =  new Date(1588478049108);
+        let year = date.getFullYear();
+        let getMonth = date.getMonth();
+        let getDay = date.getDay();
+        let getHours = date.getHours();
+        let getMinutes = date.getMinutes();
+        let getSeconds = date.getSeconds();
+        return year+"-"+getMonth+"-"+getDay+" "+getHours+":"+getMinutes+":"+getSeconds;
+    }
+
+    let timestamp = formatterTime("1588478049108");
+    alert(timestamp)
+</script>
+
+</body>
+</html>

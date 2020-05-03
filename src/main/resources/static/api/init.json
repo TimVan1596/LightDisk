@@ -23,6 +23,13 @@
           "target": "_self"
         },
         {
+          "title": "区块浏览器",
+          "href": "page/lightboard.html",
+          "icon": "fa fa-laptop",
+          "target": "_self"
+        }
+      ,
+        {
           "title": "主页模板",
           "href": "",
           "icon": "fa fa-home",

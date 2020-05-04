@@ -174,7 +174,7 @@ public class LightDisk {
     /**
      * 挖矿
      */
-    public void mineBlock(String publicKey, String data) {
+    public Block mineBlock(String publicKey, String data) {
         /* 检查是否有创世块 */
         verifyHasGenesisBlock();
         Block block = blockChain.mineBlock(publicKey, data);
@@ -182,6 +182,8 @@ public class LightDisk {
         String base64 = HeartBeat.packPublishNewBlockBase64(json);
         //向所有的节点发送这个消息
         sendAllNodeHeartMsg(base64);
+
+        return block;
     }
 
     /**

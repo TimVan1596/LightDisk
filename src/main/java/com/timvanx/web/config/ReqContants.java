@@ -23,6 +23,7 @@ public class ReqContants {
     /**------------------------分类-区块 REQ_BLOCK-------------------------*/
     /** REQ_BLOCK_GET_BLOCK_LIST = 获得区块列表 */
     public static final String REQ_BLOCK_GET_BLOCK_LIST = "/GetBlockList";
+    public static final String REQ_BLOCK_MINE_BLOCK = "/mineBlock";
 
 
     // 进入登录页面 /login

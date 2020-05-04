@@ -23,16 +23,16 @@ $(function () {
 //获取账户信息
 function getWallet() {
     $.post("/common/GetWallet",
-        {
-
-        }
+        {}
         , function (ret) {
             ret = eval("(" + ret + ")");
             if (ret['code'] === 0) {
                 $("#public-key").text(ret["data"]["publickey"]);
                 $("#private-key").text(ret["data"]["privatekey"]);
             } else {
-                layer.msg('余额加载失败');
+                layer.msg('信息加载失败');
+                window.location.href = "http://localhost:8080/"; //在原有窗口打开
+
             }
         });
 }

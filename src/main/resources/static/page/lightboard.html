@@ -112,7 +112,7 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
-                    title: '添加用户',
+                    title: '挖矿操作',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
@@ -159,7 +159,14 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'view') {
-                console.log(parseParams(data))
+                // console.log(parseParams(data));
+
+                //【增】：向 block 表插入一个 data.height 字段
+                    layui.sessionData('block', {
+                    key: data.height+""
+                    ,value: data
+                });
+
                 var index = layer.open({
                     title: '区块详情',
                     type: 2,
@@ -167,7 +174,8 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/lightboard/txBoard.html?'+parseParams(data),
+                    content: '../page/lightboard/txBoard.html?' +"height="
+                        +data.height ,
                 });
 
                 $(window).on("resize", function () {

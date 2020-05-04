@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>zyupload上传实例</title>
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        .file-isready-false {
+            color: #c24f4a;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-box">
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">您的账户</div>
+                        <div class="layui-card-body" style="    word-break: break-all;
+    width: 65%;">
+
+                            <div>
+                                                     <span>
+                                            公钥：<span id="public-key"></span>
+                                            <br>
+                    </span>
+                                <span>
+                                                                    待上传文件是否就绪：<span id="file-isready"
+                                                                                    class="file-isready-false">未就绪</span>
+                                </span>
+
+                            </div>
+
+                            <div id="new-block-info" style="margin: 2% 0 2%">
+                                <div class="layui-upload-drag" id="test10">
+                                    <i class="layui-icon"></i>
+                                    <p>点击上传，或将文件拖拽到此处</p>
+                                    <div class="layui-hide" id="uploadDemoView">
+                                        <hr>
+                                        <img src="" alt="上传成功后渲染" style="max-width: 196px">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="margin: 4% 0 3%">
+                                <button class="layui-btn layui-btn-warm  layui-btn-radius
+                                layui-btn-fluid data-add-btn" lay-event="add" id="mine-block-btn"><i
+                                        class="layui-icon layui-icon-diamond"></i> 开始挖矿
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function () {
+        //获取账户信息
+        getWallet();
+
+
+    });
+
+    layui.use(['layer', 'upload'], function () {
+        var layer = layui.layer;
+        var $ = layui.jquery
+            , upload = layui.upload;
+
+        let fileBase64;
+
+        //拖拽上传
+        //选完文件后不自动上传
+        upload.render({
+            elem: '#test10'
+            , url: '/' //改成您自己的上传接口
+            , auto: false
+            , size: 500
+            , accept:"file"
+            //,multiple: true
+            , bindAction: '#mine-block-btn'
+            , choose: function (obj) {
+
+                $('#file-isready').text("已就绪");
+                $('#file-isready').css("color", "green");
+
+                //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                //上传loading
+                layer.load(1);
+
+                //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+                obj.preview(function (index, file, result) {
+
+                    let fileObj = {"filename":file.name,
+                        "data":result
+                    };
+
+                    $.post("/block/mineBlock",
+                        {
+                            data: JSON.stringify(fileObj)
+                        }
+                        , function (ret) {
+                            layer.closeAll('loading');
+                            $('#file-isready').text("未就绪");
+                            $('#file-isready').css("color", "red");
+
+                            ret = eval("(" + ret + ")");
+                            if (ret['code'] === 0) {
+                                // $("#public-key").text(ret["data"]["publickey"]);
+                                // $("#private-key").text(ret["data"]["privatekey"]);
+
+                                let data = ret["data"];
+                                //【增】：向 block 表插入一个 data.height 字段
+                                layui.sessionData('block', {
+                                    key: data.height
+                                    , value: data
+                                });
+
+                                var index = layer.open({
+                                    title: '恭喜！新区块已经挖出',
+                                    type: 2,
+                                    shade: 0.2,
+                                    maxmin: true,
+                                    shadeClose: true,
+                                    area: ['100%', '100%'],
+                                    content: '../page/lightboard/txBoard.html?' + "height="
+                                        + data.height,
+                                });
+
+                                $(window).on("resize", function () {
+                                    layer.full(index);
+                                });
+
+
+                            } else {
+                                layer.msg('信息加载失败');
+                                window.location.href = "http://localhost:8080/"; //在原有窗口打开
+
+                            }
+                        });
+                    //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+
+                    //这里还可以做一些 append 文件列表 DOM 的操作
+
+                    //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                    //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+                });
+                console.log("fileBase64=" + fileBase64);
+
+            }
+            , before: function (obj) {
+
+
+            }
+            , done: function (res) {
+
+                layer.msg('上传成功');
+                console.log(res)
+            }
+        });
+    });
+
+
+    //挖矿
+    function mineBlock() {
+
+        //加载层-风格4
+        layer.load(1);
+
+        layer.prompt({title: '输入需要存储的消息', formType: 2}, function (text, index) {
+            layer.close(index);
+            $.post("/block/mineBlock",
+                {
+                    data: text
+                }
+                , function (ret) {
+                    layer.closeAll('loading');
+                    ret = eval("(" + ret + ")");
+                    if (ret['code'] === 0) {
+                        // $("#public-key").text(ret["data"]["publickey"]);
+                        // $("#private-key").text(ret["data"]["privatekey"]);
+                        var index = layer.open({
+                            title: '恭喜！新区块已经挖出',
+                            type: 2,
+                            shade: 0.2,
+                            maxmin: true,
+                            shadeClose: true,
+                            area: ['100%', '100%'],
+                            content: '../page/lightboard/txBoard.html?' + parseParams(ret["data"]),
+                        });
+
+                        $(window).on("resize", function () {
+                            layer.full(index);
+                        });
+
+
+                    } else {
+                        layer.msg('信息加载失败');
+                        window.location.href = "http://localhost:8080/"; //在原有窗口打开
+
+                    }
+                });
+        });
+    }
+
+
+    //获取账户信息
+    function getWallet() {
+        $.post("/common/GetWallet",
+            {}
+            , function (ret) {
+                ret = eval("(" + ret + ")");
+                if (ret['code'] === 0) {
+                    $("#public-key").text(ret["data"]["publickey"]);
+                    $("#private-key").text(ret["data"]["privatekey"]);
+                } else {
+                    layer.msg('信息加载失败');
+                    window.location.href = "http://localhost:8080/"; //在原有窗口打开
+
+                }
+            });
+    }
+
+    function parseParams(data) {
+        try {
+            var tempArr = [];
+            for (var i in data) {
+                if (Object.prototype.toString.call(data[i]) === '[object Array]'
+                ) {
+
+                    var key = encodeURIComponent(i);
+                    var value = encodeURIComponent(JSON.stringify(data[i]));
+                    tempArr.push(key + '=' + value);
+                } else {
+                    var key = encodeURIComponent(i);
+                    var value = encodeURIComponent(data[i]);
+                    tempArr.push(key + '=' + value);
+                }
+
+            }
+            return tempArr.join('&');
+        } catch (err) {
+            return '';
+        }
+    }
+</script>
+
+</body>
+</html>

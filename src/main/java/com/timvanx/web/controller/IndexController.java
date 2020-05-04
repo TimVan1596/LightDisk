@@ -42,9 +42,9 @@ public class IndexController {
                 String publickey = (String) session.getAttribute("publicKey");
                 String privatekey = (String) session.getAttribute("privateKey");
 
-                System.out.println("in session");
-                System.out.println("publickey="+publickey);
-                System.out.println("privatekey="+privatekey);
+//                System.out.println("in session");
+//                System.out.println("publickey="+publickey);
+//                System.out.println("privatekey="+privatekey);
 
                 genMap(mjs, publickey, privatekey);
             } else {

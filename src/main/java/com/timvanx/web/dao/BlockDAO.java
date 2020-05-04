@@ -31,4 +31,18 @@ public class BlockDAO {
 
 
     }
+
+    public List<Block> mineBlock() {
+        LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
+
+        if(ObjectUtil.isNull(lightDisk)){
+            return null;
+        }
+        System.out.println("height="+lightDisk.getLocalChainHeight());
+
+        return lightDisk.getLocalBlockList();
+
+
+
+    }
 }

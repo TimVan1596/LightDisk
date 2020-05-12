@@ -26,6 +26,9 @@ public class ReqContants {
     public static final String REQ_BLOCK_MINE_BLOCK = "/mineBlock";
 
 
-    // 进入登录页面 /login
+    /** 进入登录页面 /login */
     public static final String REQ_LOGIN = "/login";
+
+    /** 注册/生成新钱包 /registry */
+    public static final String REQ_REGISTRY = "/registry";
 }

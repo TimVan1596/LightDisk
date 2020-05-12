@@ -92,6 +92,36 @@ public class LoginController {
         response.getWriter().write(json);
     }
 
+    /**
+     * 注册/生成新钱包 /registry
+     */
+    @PostMapping(ReqContants.REQ_REGISTRY)
+    public void registry(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
+
+        Map<String, Object> mjs = new LinkedHashMap<>();
+
+        Map<String, String> keyPairMap = ECKey.genKeyPair();
+
+        String publicKeyStr = keyPairMap.get("publickey");
+        String privateKeyStr = keyPairMap.get("privatekey");
+
+        Map<String, Object> dataMap = new LinkedHashMap<>();
+
+        dataMap.put("publicKey",publicKeyStr);
+        dataMap.put("privateKey",privateKeyStr);
+
+        mjs.put("code", 0);
+        mjs.put("msg", "获取成功");
+        mjs.put("data",keyPairMap);
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
+    }
+
     static void genKeyMap(String publicKey, String privateKey, Map<String, Object> mjs) {
         IndexController.genMap(mjs, publicKey, privateKey);
     }

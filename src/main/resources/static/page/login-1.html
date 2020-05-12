@@ -132,7 +132,7 @@
             background-color: #FBFBFB;
             overflow: hidden;
             box-sizing: border-box;
-            color:black;
+            color: black;
         }
     </style>
 </head>
@@ -157,7 +157,9 @@
                               autocomplete="off" class="layui-textarea"></textarea>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">选择线路</label>                    <div class="layui-input-block" style="width: 110px;top: -1px">
+                    <label class="layui-form-label" style="left: 0;top: 0;
+    width: 32%;line-height: 20px;color: #090707c9;">选择线路</label>
+                    <div class="layui-input-block">
                         <select name="uri" lay-filter="type">
                             <option value=""></option>
                             <option value="1">线路1</option>
@@ -165,16 +167,17 @@
                             <option value="3">线路3</option>
                         </select>
                         <div class="layui-unselect layui-form-select">
-                            <div class="layui-select-title">
-                                <input type="text" placeholder="请选择" value="线路2" readonly="" class="layui-input layui-unselect">
-                                <i class="layui-edge"></i></div>
-                            <dl class="layui-anim layui-anim-upbit" style="">
+                            <div class="layui-select-title"><input type="text" placeholder="请选择" value="线路2" readonly=""
+                                                                   class="layui-input layui-unselect"><i
+                                    class="layui-edge"></i></div>
+                            <dl class="layui-anim layui-anim-upbit">
                                 <dd lay-value="" class="layui-select-tips">请选择</dd>
                                 <dd lay-value="1" class="">线路1</dd>
                                 <dd lay-value="2" class="layui-this">线路2</dd>
                                 <dd lay-value="3" class="">线路3</dd>
                             </dl>
                         </div>
+
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -186,14 +189,17 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
-                </div>
-                <div class="layui-form-item">
                     <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit=""
                             lay-filter="login">登 入
                     </button>
                 </div>
             </form>
+            <div>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                        onclick="registry()">
+                    注册
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -235,7 +241,8 @@
             $.ajax({
                 type: "post",
                 url: "/login",
-                data: {userName: data.username
+                data: {
+                    userName: data.username
                     , passWord: data.password
                     , uriType: data.uri
                 },
@@ -260,6 +267,18 @@
             return false;
         });
     });
+
+    function registry() {
+        //iframe层
+        layer.open({
+            type: 2,
+            title: '生成新钱包，请牢记！',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['520px', '320px'],
+            content: ['page/newwallet.html']
+        });
+    }
 </script>
 </body>
 </html>

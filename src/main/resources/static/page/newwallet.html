@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成新钱包</title>
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+
+</head>
+<body>
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"
+                     style="color: #FD482C">请牢记您的账户</div>
+                <div class="layui-card-body" style="    word-break: break-all;
+    width: 400px;">
+
+                    <span>
+                                            公钥：<span id="public-key"></span>
+                                            <br>
+                    </span>
+
+                    <span>
+                                            私钥：<span id="private-key"></span>
+                                            <br>
+                    </span>
+
+<!--                    <div style="margin-top: 2%">-->
+<!--                        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal">-->
+<!--                            <i class="fa fa-clipboard"></i>-->
+<!--                            点击复制-->
+<!--                        </button>-->
+<!--                    </div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/dist/clipboard.min.js" charset="utf-8"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+    $(function () {
+        $.post("/registry"
+            ,function(ret){
+                ret = eval("(" + ret + ")");
+                if(ret['code']===0) {
+                    $("#public-key").text(ret["data"]["publickey"]);
+                    $("#private-key").text(ret["data"]["privatekey"]);
+                }else{
+                    layer.msg('加载失败');
+                }
+            });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -87,7 +87,7 @@
             , url: '/' //改成您自己的上传接口
             , auto: false
             , size: 500
-            , accept:"file"
+            , accept: "file"
             //,multiple: true
             , bindAction: '#mine-block-btn'
             , choose: function (obj) {
@@ -102,8 +102,9 @@
                 //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
                 obj.preview(function (index, file, result) {
 
-                    let fileObj = {"filename":file.name,
-                        "data":result
+                    let fileObj = {
+                        "filename": file.name,
+                        "data": result
                     };
 
                     $.post("/block/mineBlock",
@@ -169,6 +170,7 @@
                 console.log(res)
             }
         });
+
     });
 
 

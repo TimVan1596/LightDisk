@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <link rel="stylesheet" href="../../css/lightboard/txBoard.css" media="all">
+    <link rel="stylesheet" href="../../css/lightboard/46.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+
+        .ant-col-mistake {
+            margin-top: -18px;
+        }
+    </style>
+</head>
+<body style="background-color: #f5f6fa;">
+<div class="layui-form layuimini-form">
+
+
+    <!-- 交易详情   -->
+    <div class="single-pannel bg-sm-white">
+        <div class="bottom-content-container" style="margin-top: 20px;">
+            <div class="ant-card block-statistic-card ant-card-bordered">
+                <div class="ant-card-body">
+                    <ul class="ant-menu trade-statistic-menu trade-and-dress-card ant-menu-light ant-menu-root ant-menu-horizontal"
+                        role="menu">
+                        <li class="ant-menu-submenu ant-menu-submenu-horizontal ant-menu-overflowed-submenu"
+                            role="menuitem" style="display: none;">
+                            <div class="ant-menu-submenu-title" aria-expanded="false" aria-haspopup="true">
+                                <span>···</span><i class="ant-menu-submenu-arrow"></i></div>
+                        </li>
+                        <li class="ant-menu-item ant-menu-item-only-child ant-menu-item-selected" role="menuitem">交易
+                        </li>
+                        <li class="ant-menu-submenu ant-menu-submenu-horizontal ant-menu-overflowed-submenu"
+                            role="menuitem" style="display: none;">
+                            <div class="ant-menu-submenu-title" aria-expanded="false" aria-haspopup="true">
+                                <span>···</span><i class="ant-menu-submenu-arrow"></i></div>
+                        </li>
+
+                        <li class="ant-menu-submenu ant-menu-submenu-horizontal ant-menu-overflowed-submenu"
+                            role="menuitem" style="visibility: hidden; position: absolute; display: none;">
+                            <div class="ant-menu-submenu-title" aria-expanded="false" aria-haspopup="true">
+                                <span>···</span><i class="ant-menu-submenu-arrow"></i></div>
+                        </li>
+                    </ul>
+                    <ul class="address-info-trade-component">
+                        <li class="block-info-trade-item" style="padding-bottom: 2%;">
+                            <div class="top">哈希 <a class="ae-family ellipsis"
+                                          id="tx0-hash"      href="/btc/tx/bd1166e9e8f421a6d3e20b11d4ffa014ed21d706ef022b9374b787d93a328931">0</a>
+                                <div class="items font-12 font-lg-14">
+                                    <span class="time color-7B8293">
+                                    <span id="tx0-timestamp">0</span>
+                                        (<span id="tx0-date">0</span>)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="address-details">
+                                <div class="center font-12 font-lg-14">
+                                    <div class="left-items">
+                                        <div class="ant-row input-row">
+                                            <div class="ant-col input-address ellipsis"><span class="coinbase-tag">Coinbase</span>
+                                            </div>
+                                            <div class="ant-col input-balance"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mid-items"><span role="img" theme="filled" class="anticon"
+                                                                 style="font-size: 20px;"><svg width="1em" height="1em"
+                                                                                               fill="currentColor"
+                                                                                               aria-hidden="true"
+                                                                                               focusable="false"
+                                                                                               class=""><use
+                                            xlink:href="#icon-arrow-gray"></use></svg></span></div>
+                                    <div class="right-items">
+                                        <div class="ant-row output-row">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin: 1% 1% 3%;">
+                                    <h3>收款人</h3>
+                                    <div style="word-wrap:break-word;word-break:break-all; " id="tx0-publicKey">
+                                        0
+                                    </div>
+                                </div>
+
+                                <div class="ant-card scripts-container ant-card-bordered">
+                                    <div class="ant-card-head">
+                                        <div class="ant-card-head-wrapper">
+                                            <div class="ant-card-head-title" style="    padding-left: 2%;">输入脚本</div>
+                                            <div class="ant-card-extra">
+                                                <div>
+                                                    <button type="button" class="layui-btn layui-btn-primary" onclick="onClickDownloadFileBTN()"><i class="layui-icon layui-icon-download-circle"></i>立即下载</button>
+                                                </div>
+                                                <div class="drop-down drop-rotating"><span role="img" class="anticon"><svg
+                                                        width="1em" height="1em" fill="currentColor" aria-hidden="true"
+                                                        focusable="false" class=""><use
+                                                        xlink:href="#icon-dropdown_api1"></use></svg></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-card-body">
+                                        <div class="scripts-container-box" style="height: auto;">
+                                            <div class="script-list">
+                                                <ul class="script-list-item">
+                                                    <li class="script-data" style="    padding-left: 2%;">
+                                                        <div id="tx0-filename" style="margin-top: 1%;font-size: 16px;color: #4c78c6;">
+
+                                                        </div>
+                                                        <div style="word-break: break-all;font-size: 15px;padding-top: 1%;" id="tx0-data">
+
+
+                                                            0
+                                                        </div>
+
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="../../js/lightboard/txView.js"> </script>
+</body>
+</html>

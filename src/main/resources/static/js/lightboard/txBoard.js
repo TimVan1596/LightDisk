@@ -261,6 +261,7 @@ $(function () {
 
     let coinbaseTimestamp=  coinbase.timestamp;
     let tx0Date = formatterTime(parseInt(coinbaseTimestamp));
+    $("#tx0-data").text(coinbase.scriptString);
     let scriptBytes = Base64.decode(coinbase.scriptBytes);
     $("#tx0-publicKey").text(coinbase.publicKey);
     $("#tx0-hash").text(coinbase.hash);

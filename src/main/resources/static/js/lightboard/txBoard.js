@@ -1,57 +1,72 @@
-
-
 function dataURLtoBlob(dataurl) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
     while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
     }
-    return new Blob([u8arr], { type: mime });
+    return new Blob([u8arr], {type: mime});
 }
 
-function downloadFile(url,name='file'){
-    var a = document.createElement("a")
-    a.setAttribute("href",url)
-    a.setAttribute("download",name)
-    a.setAttribute("target","_blank")
-    let clickEvent = document.createEvent("MouseEvents");
-    clickEvent.initEvent("click", true, true);
-    a.dispatchEvent(clickEvent);
+function downloadFile(url, name = 'file') {
+    //prompt层
+    layer.prompt({title: '请输入文件秘钥', formType: 1}, function (pass, index) {
+        layer.close(index);
+
+
+
+        layer.msg('演示完毕！您的口令：' + pass + '<br>您最后写下了：' + text);
+
+        var index = layer.open({
+            title: '',
+            type: 2,
+            shade: 0.2,
+            maxmin: true,
+            shadeClose: true,
+            area: ['80%', '80%'],
+            content: '../page/lightboard/txView.html?' +"height="
+                +data.height ,
+        });
+
+    });
 }
 
 function onClickDownloadFileBTN() {
 
     let fileName = $("#tx0-filename").text();
-    let fileData =$("#tx0-data").text();
-    downloadFileByBase64(fileData,fileName);
+    let fileData = $("#tx0-data").text();
+    downloadFileByBase64(fileData, fileName);
 }
-function downloadFileByBase64(fileData,fileName){
+
+function downloadFileByBase64(fileData, fileName) {
     var myBlob = dataURLtoBlob(fileData)
     var myUrl = URL.createObjectURL(myBlob)
-    downloadFile(myUrl,fileName)
+    downloadFile(myUrl, fileName)
 }
 
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]); return null;
+    if (r != null) return unescape(r[2]);
+    return null;
 }
+
 function formatterTime(timestamp) {
     // 传入时间戳
-    let date =  new Date(timestamp);
+    let date = new Date(timestamp);
     let year = date.getFullYear();
-    let getMonth =formatZero(date.getMonth()+1);
+    let getMonth = formatZero(date.getMonth() + 1);
     let getDay = formatZero(date.getDate());
     let getHours = formatZero(date.getHours());
     let getMinutes = formatZero(date.getMinutes());
     let getSeconds = formatZero(date.getSeconds());
-    return year+"-"+getMonth+"-"+getDay+" "+getHours+":"+getMinutes+":"+getSeconds;
+    return year + "-" + getMonth + "-" + getDay + " " + getHours + ":" + getMinutes + ":" + getSeconds;
 }
-function formatZero(num){
+
+function formatZero(num) {
     return num < 10 ? ('0' + num) : num;
 }
 
-function timesFun (timesData) {
+function timesFun(timesData) {
     //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
     var dateBegin = new Date(timesData.replace(/-/g, "/"));//将-转化为/，使用new Date
     var dateEnd = new Date();//获取当前时间
@@ -105,8 +120,7 @@ let Base64 = {
 
             if (isNaN(chr2)) {
                 enc3 = enc4 = 64;
-            }
-            else if (isNaN(chr3)) {
+            } else if (isNaN(chr3)) {
                 enc4 = 64;
             }
 
@@ -165,12 +179,10 @@ let Base64 = {
 
             if (c < 128) {
                 utftext += String.fromCharCode(c);
-            }
-            else if ((c > 127) && (c < 2048)) {
+            } else if ((c > 127) && (c < 2048)) {
                 utftext += String.fromCharCode((c >> 6) | 192);
                 utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
+            } else {
                 utftext += String.fromCharCode((c >> 12) | 224);
                 utftext += String.fromCharCode(((c >> 6) & 63) | 128);
                 utftext += String.fromCharCode((c & 63) | 128);
@@ -194,13 +206,11 @@ let Base64 = {
             if (c < 128) {
                 string += String.fromCharCode(c);
                 i++;
-            }
-            else if ((c > 191) && (c < 224)) {
+            } else if ((c > 191) && (c < 224)) {
                 c2 = utftext.charCodeAt(i + 1);
                 string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
                 i += 2;
-            }
-            else {
+            } else {
                 c2 = utftext.charCodeAt(i + 1);
                 c3 = utftext.charCodeAt(i + 2);
                 string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
@@ -220,7 +230,7 @@ $(function () {
 
     //加载区块数据
     let height = getQueryString("height");
-    let blockData =  blockSession[height+""];
+    let blockData = blockSession[height + ""];
     // alert(data['hash']);
     //
     // eval("let value = blockSession."+hash+";");
@@ -259,27 +269,27 @@ $(function () {
     // console.log(transactions[0]);
     let coinbase = transactions[0];
 
-    let coinbaseTimestamp=  coinbase.timestamp;
+    let coinbaseTimestamp = coinbase.timestamp;
     let tx0Date = formatterTime(parseInt(coinbaseTimestamp));
     $("#tx0-data").text(coinbase.scriptString);
-    let scriptBytes = Base64.decode(coinbase.scriptBytes);
-    $("#tx0-publicKey").text(coinbase.publicKey);
-    $("#tx0-hash").text(coinbase.hash);
-    // $("#tx0-scriptString").text(scriptBytes);
-    let file =  $.parseJSON(scriptBytes);
-    let fileName = file.filename;
-    let fileData = file.data;
-
-    $("#tx0-filename").text(fileName);
-    $("#tx0-data").text(fileData);
-
+    // let scriptBytes = Base64.decode(coinbase.scriptBytes);
+    // $("#tx0-publicKey").text(coinbase.publicKey);
+    // $("#tx0-hash").text(coinbase.hash);
+    // // $("#tx0-scriptString").text(scriptBytes);
+    // let file =  $.parseJSON(scriptBytes);
+    // let fileName = file.filename;
+    // let fileData = file.data;
+    //
+    // $("#tx0-filename").text(fileName);
+    // $("#tx0-data").text(fileData);
+    //
     $("#tx0-timestamp").text(coinbaseTimestamp);
     $("#tx0-date").text(tx0Date);
 
 
     layui.data('block', {
-        key: height+""
-        ,remove: true
+        key: height + ""
+        , remove: true
     });
 
 });

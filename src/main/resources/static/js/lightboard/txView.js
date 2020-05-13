@@ -1,5 +1,3 @@
-
-//下载文件
 function downloadFile(url,name='file'){
     var a = document.createElement("a")
     a.setAttribute("href",url)
@@ -9,6 +7,33 @@ function downloadFile(url,name='file'){
     clickEvent.initEvent("click", true, true);
     a.dispatchEvent(clickEvent);
 }
+
+//通过Base64下载
+function downloadFileByBase64(fileData, fileName) {
+    var myBlob = dataURLtoBlob(fileData)
+    var myUrl = URL.createObjectURL(myBlob)
+    downloadFile(myUrl, fileName)
+}
+
+
+//下载文件调用JS
+function onClickDownloadFileBTN() {
+
+    let fileName = $("#tx0-filename").text();
+    let fileData = $("#tx0-data").text();
+    downloadFileByBase64(fileData, fileName);
+}
+
+//
+function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type: mime});
+}
+
 
 $(function () {
 

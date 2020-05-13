@@ -1,19 +1,7 @@
-function dataURLtoBlob(dataurl) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], {type: mime});
-}
-
-function downloadFile(url, name = 'file') {
+function onDownloadBTN() {
     //prompt层
     layer.prompt({title: '请输入文件秘钥', formType: 1}, function (pass, index) {
         layer.close(index);
-
-
-
         layer.msg('演示完毕！您的口令：' + pass + '<br>您最后写下了：' + text);
 
         var index = layer.open({
@@ -28,19 +16,6 @@ function downloadFile(url, name = 'file') {
         });
 
     });
-}
-
-function onClickDownloadFileBTN() {
-
-    let fileName = $("#tx0-filename").text();
-    let fileData = $("#tx0-data").text();
-    downloadFileByBase64(fileData, fileName);
-}
-
-function downloadFileByBase64(fileData, fileName) {
-    var myBlob = dataURLtoBlob(fileData)
-    var myUrl = URL.createObjectURL(myBlob)
-    downloadFile(myUrl, fileName)
 }
 
 function getQueryString(name) {

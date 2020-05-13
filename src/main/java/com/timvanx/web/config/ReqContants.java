@@ -23,12 +23,15 @@ public class ReqContants {
     /**------------------------分类-区块 REQ_BLOCK-------------------------*/
     /** REQ_BLOCK_GET_BLOCK_LIST = 获得区块列表 */
     public static final String REQ_BLOCK_GET_BLOCK_LIST = "/GetBlockList";
+    /**  REQ_BLOCK_MINE_BLOCK = 挖矿   */
     public static final String REQ_BLOCK_MINE_BLOCK = "/mineBlock";
+    /** REQ_DECODE_JSON_FROM_PRIVATE_KEY = 测试文件是否能用私钥解码成JSON格式 */
+    public static final String REQ_DECODE_JSON_FROM_PRIVATE_KEY = "/decodeJsonFromPrivateKey";
 
 
-    /** 进入登录页面 /login */
+    /** REQ_LOGIN = 进入登录页面 /login */
     public static final String REQ_LOGIN = "/login";
 
-    /** 注册/生成新钱包 /registry */
+    /** REQ_REGISTRY = 注册/生成新钱包 /registry */
     public static final String REQ_REGISTRY = "/registry";
 }

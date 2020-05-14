@@ -42,9 +42,13 @@ public class ECKey {
     //    public static final String SIGN_ALGORITHM = "SHA1withECDSA";
     public static final String SIGN_ALGORITHM = "SHA1WithRSA";
 
-    /**最大加密明文大小(用于分段加密)*/
+    /**
+     * 最大加密明文大小(用于分段加密)
+     */
     private static final int MAX_ENCRYPT_BLOCK = 117;
-    /** 最大解密密文大小*/
+    /**
+     * 最大解密密文大小
+     */
     private static final int MAX_DECRYPT_BLOCK = 128;
 
     /**
@@ -64,9 +68,9 @@ public class ECKey {
 //        return signature.sign();
 
 
-        PKCS8EncodedKeySpec priPKCS8    = new PKCS8EncodedKeySpec(decodeBASE64(privateKeyStr));
-        KeyFactory keyf  = KeyFactory.getInstance("RSA");
-        PrivateKey priKey  = keyf.generatePrivate(priPKCS8);
+        PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(decodeBASE64(privateKeyStr));
+        KeyFactory keyf = KeyFactory.getInstance("RSA");
+        PrivateKey priKey = keyf.generatePrivate(priPKCS8);
 
         java.security.Signature signature = java.security.Signature.getInstance(SIGN_ALGORITHM);
         signature.initSign(priKey);
@@ -101,8 +105,8 @@ public class ECKey {
                 .getInstance(SIGN_ALGORITHM);
 
         signature.initVerify(pubKey);
-        signature.update(src );
-        return signature.verify( dest );
+        signature.update(src);
+        return signature.verify(dest);
     }
 
 
@@ -398,7 +402,7 @@ public class ECKey {
         try {
             byte[] dest = signByPrivateKey("hello".getBytes(), privateKeyStr);
             boolean res = verifyByPublicKey(dest, "hello".getBytes(), publicKeyStr);
-            System.out.println("验证结果="+res);
+            System.out.println("验证结果=" + res);
         } catch (Exception e) {
             System.out.println("验证有误");
             e.printStackTrace();
@@ -414,6 +418,7 @@ public class ECKey {
     }
 
     /**
+     * 字节数组转Base64字符串
      * Base58编码方式 用于产生公私钥和地址的字符串
      * 相比Base64，Base58不使用数字"0"，字母大写"O"，
      * 字母大写"I"，和字母小写"l"，以及"+"和"/"符号。

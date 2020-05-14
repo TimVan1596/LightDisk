@@ -1,19 +1,52 @@
+layui.use('layer', function(){
+    var layer = layui.layer;
+
+});
+
 function onDownloadBTN() {
     //prompt层
-    layer.prompt({title: '请输入文件秘钥', formType: 1}, function (pass, index) {
+    layer.prompt({title: '请输入文件秘钥', formType: 1, maxlength: 1000}, function (pass, index) {
         layer.close(index);
-        layer.msg('演示完毕！您的口令：' + pass + '<br>您最后写下了：' + text);
 
-        var index = layer.open({
-            title: '',
-            type: 2,
-            shade: 0.2,
-            maxmin: true,
-            shadeClose: true,
-            area: ['80%', '80%'],
-            content: '../page/lightboard/txView.html?' +"height="
-                +data.height ,
+        let encrypString = $("#tx0-data").text();
+        let height = getQueryString("height");
+
+        $.ajax({
+            type: "post",
+            url: "/block/decodeJsonFromPrivateKey",
+            data: {
+                privateKey: pass
+                , data: encrypString
+            },
+            success: function (ret) {
+                ret = eval("(" + ret + ")");
+                if (ret['code'] === 0) {
+                    let decryptString = ret["data"];
+                    layui.sessionData('cache', {
+                        key: 'decodeJsonFromPrivateKey'
+                        ,value: decryptString
+                    });
+                    var newTab = layer.open({
+                        title: '',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['90%', '90%'],
+                        content: 'txView.html?'+"height="
+                            +height ,
+                    });
+                } else {
+                    layer.msg(ret['msg'], {
+                    });
+                }
+            },
+            error: function () {
+                layer.msg("检验私钥匹配请求错误");
+            }
         });
+
+
 
     });
 }
@@ -203,6 +236,7 @@ let blockSession = layui.sessionData('block');
 
 $(function () {
 
+
     //加载区块数据
     let height = getQueryString("height");
     let blockData = blockSession[height + ""];
@@ -246,7 +280,17 @@ $(function () {
 
     let coinbaseTimestamp = coinbase.timestamp;
     let tx0Date = formatterTime(parseInt(coinbaseTimestamp));
-    $("#tx0-data").text(coinbase.scriptString);
+    let scriptString = coinbase.scriptString;
+
+    //最长显示字符数字
+    let MAX_LENGTH = 600;
+    if(scriptString.length > MAX_LENGTH){
+        scriptString = scriptString.substring(0,MAX_LENGTH);
+        scriptString += "...";
+    }
+
+
+    $("#tx0-data").text(scriptString);
     // let scriptBytes = Base64.decode(coinbase.scriptBytes);
     // $("#tx0-publicKey").text(coinbase.publicKey);
     // $("#tx0-hash").text(coinbase.hash);
@@ -260,8 +304,8 @@ $(function () {
     //
     $("#tx0-timestamp").text(coinbaseTimestamp);
     $("#tx0-date").text(tx0Date);
-
-
+    $("#tx0-publicKey").text(coinbase.publicKey);
+    $("#tx0-hash").text(coinbase.hash);
     layui.data('block', {
         key: height + ""
         , remove: true

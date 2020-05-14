@@ -18,6 +18,20 @@
         .ant-col-mistake {
             margin-top: -18px;
         }
+        /*交易的script多行省略*/
+        .script-data-wrap{
+            /*height: 158px;*/
+            /*overflow:hidden;*/
+            /*text-overflow:ellipsis;*/
+            /*background: greenyellow;*/
+            /*display: -webkit-box;*/
+            /*-webkit-box-orient: vertical;*/
+            /*-webkit-line-clamp: 3;*/
+            /*overflow: hidden;*/
+            /*!*-webkit-line-clamp用来限制在一个块元素显示的文本的行数。 为了实现该效果，它需要组合其他的WebKit属性。常见结合属性：*/
+            /*display: -webkit-box; 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 。*/
+            /*-webkit-box-orient 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 。*!*/
+        }
     </style>
 </head>
 <body style="background-color: #f5f6fa;">
@@ -207,7 +221,7 @@
                                             <div class="script-list">
                                                 <ul class="script-list-item">
                                                     <li class="script-data" style="    padding-left: 2%;">
-                                                        <div style="word-break: break-all;font-size: 15px;padding-top: 1%;" id="tx0-data">
+                                                        <div class="script-data-wrap" style="word-break: break-all;font-size: 15px;padding-top: 1%;" id="tx0-data">
 
 
                                                             0

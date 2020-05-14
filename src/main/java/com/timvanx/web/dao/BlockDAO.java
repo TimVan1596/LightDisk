@@ -22,6 +22,7 @@ public class BlockDAO {
         LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
 
         if(ObjectUtil.isNull(lightDisk)){
+            System.out.println("lightDisk为空");
             return null;
         }
         System.out.println("height="+lightDisk.getLocalChainHeight());

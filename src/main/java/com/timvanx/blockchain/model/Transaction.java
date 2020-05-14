@@ -61,7 +61,11 @@ public class Transaction {
     /** 返回交易的script数据(scriptBytes)的字符串消息
      * */
     public String getScriptString(){
-        return new String( this.getScriptBytes());
+        if(this.getScriptBytes() == null){
+            return "";
+        }else{
+            return new String( this.getScriptBytes());
+        }
     }
 
     /**

@@ -114,29 +114,20 @@ public class Launcher {
         switch (optionNum) {
             case 1: {
                 uri = new NodeURI("udp://localhost:5400", "0");
-                publicKey = "aSq9DsNNvGhYxYyqA9wd2eduEAZ5AXWgJTbTF" +
-                        "DwRd8qauALGyVQxuTeycxYYdwo2zfHF1" +
-                        "H8SeR7GYS65yspJCJwCTrE1PUhfvrSE18CcvWRfQ795Tt3cb6kmCxTK";
-                privateKey = "2RxV4m78RGjpDZ5VV6TTtkSkRKgEC58qoYKq5rA4" +
-                        "jkjPUbhn8ttdF6mMUUcJ3nAQwqT4FsrChjkTBeikyT1UN7zjBiXC";
+                publicKey = "Vj75CuZgqYqhewfDfF9KQEdejjqbnoDiRjuXUnwD37fGGhG7DHdGK2DpmVUAZFteDRx8tkNWrsCy9nSTXeDrRUf7QHhf2DtMBpaSi9pu4ZeWpHc7TzRbWMUBiE94rTMJVzAJMfVM4MtfCES1Vn22ezZY7YiGhbEtVgjHotrtktBiNypaoQR9kWQzFxhdjhEKAsKK46aVC8hm1Q1NJ5bwFne4Ye3VA";
+                privateKey = "6TAzA5ZnZvXfnkvfgG5EZF978HcKn5QHT26e3r9GXrp2J1GDG2s63NeupL1bkBpextYMb8oc8994aQ3dBMx9ymjFCNLhQK33wssFuGSoHe6vpG4QybbxGc6v7qTYpuCgx4VXW6tZHUbGkWCS9MTvfTtd26Mq4ZQw2HPahgvFAvzZk1ZozznmUz6UbabVhs47tPjSqj33XWGZhfN5qvhc6sRtS93jfzfyD52hcF7jCYDrhPZZ2D51tSsXWT6XJ98nnQb78FMvCtjwg1tXEE5AsBLhKRJqRJNREpoVLrkyvNB9XRDjhfXACyZ85FrtNjqkTmd1pUXQ1Va5bXKN7G2PctvR39Ju93tXcK86n3yiGjh5ajVpKUALj19QEM823DPYGrqdbuyBdzsuQzKEwswYi8kHaYZgGyBShwRM3cV95eMyLdFTc4ARzqZS6x5vF75MUSsTZiNuKMiNZLvoNUfb9Md7h6PEUZt1UKUSSTK2Q38V5rCrngpKmtu26Tr6ywmranTv2wktsKM4huRFggGqaVJCFKyGJwhWsCVbPHzQW8k8t9uj1dFr1aeZEbEQy6JPgu2ihddNavhu5Q7fKoRw4sroxmMNW2GxPP9FAFB1c98pmJ8eLSMMiGtd3eqKaE3i8W89sBhCt7BQhjtL5q5ma7cTWYZLUBTqMDMrS1xNjNGT9jkt1JoXMMJ3Vg5xEhpaaXC4HkYKtNJ9YBQoYqRJT71wi9LnJBrUBTuAB1enh3Zb4MNFdr8EDmQGmZbs662GmDucRRoLJE8ZPJBYKciynEEhsUVEfVCbyfdmZXsS5YCm3GbG3uqcRAaREKDiaeoJ4G4k8cvegpRGUuujqFoVVVhJPta1HS4PX1";
                 break;
             }
             case 2: {
                 uri = new NodeURI("udp://localhost:5402", "2");
-                publicKey = "aSq9DsNNvGhYxYyqA9wd2eduEAZ5AXW" +
-                        "gJTbTJ91KtuDAStqNhnh68PM8MMhiX8yUAbLCzpEsgFRc7" +
-                        "baT4qg8W4ny6tWn4PtFuB1HqGGknyjGNRKwgrsyGokLJehD";
-                privateKey = "2RxV4m78RGjpDZ5VV6TTtkSkRKgEC58qoYKq5rA4" +
-                        "jkjPUbhnCQkzGwutagtHaMSDmrHqEj2NnBhMMPo7SBJ8f3a2dEnv";
+                publicKey = "Vj75CuZgqYqhewfDfF9KQEdejjqbnoDiRjuXUnwEvrF1HRD5uJpP2Po124MaKFucrzq8rBFS9RdzcGiFn5Shb6YMKP98rqK5erQeKb92J7h8VpcyHs2PExxC9hQ6Mc43ocz7NTVtZagDMdR6zEWvYPQUJS1Gns2G98SwGQPUPzJtvfZBkobUrNLqFfk5y28Wekwfoe4BZBquGMAMtusG36DzbxaGY";
+                privateKey = "2EdhbDGp6Ni449TvBMugXsBZKnr2Hq4gdg4NxnYhKDtPoMtqUidueUuQk88LzQ7SF4pL9UQ39ABESashwGy2mcHqvoTFyCeVHGg12D9ki2C9HgLLpBBPVanLJ8k2KM8aLSU5bzpJsfKnqRTmKn7VJbmPTjcikKpaT3SU32SFpLayWT5PFuEPHgPVHUPDoDFSvNk4TWsYBdtVz6Td7PmVymU2ZwdZononK8HDvCxGwUkx9GkD3pCEU3e9zMV2dURfX521rZiguKCBCSCwTuFDQcZLpkJBecTu3h2FUTA4RQzXBXmmTpmxqgZi6usW4qYPgLhWxYzBzkXKJQhcXg9EcDnLTpLenJNWABNnhLQgeLwN8LeYXv8uygVHyC7oETf7fPBQxPTKcH3neKvAUkSTaxpgWo7AdJNo3srwmdxe6NWyWEHiSykL3pg5gt1Qmh5UdPcLrT1WshxrkG1LrvjzXuPNy2DMaEvYrDYPGdV1dXZLxcXAQnd2FWZwcjpmJwJPZRKsCBsLvKPWNCMBpUWXGcrnsthtaR33pepSqCcy4zjkbHFkd4vGxdDwNiNhRCHMEoPZmwJmRZB7HG145D6tJQCzcbRwsoPF3cgPDA3WJKDLifwCm3JGTCqpQ12oH4g1kSztgSfJDSBjUG6ED5NKyff5PFNLRQYpPiBmR6GBjfcZjE3rq4REnmrT2YASZ3i3hnrZ1iWEPC31e3EXX6Qyfb3WAcj4MvHuE8Gb8jcaqwKtqGBP6DpjGKTTVCeun9MNC8ePbxfAUoaMCA2CDDZqXrQ3HKabF3JCZRaMaAZPwiEfXab4KpgLEygxSj7vBdQfLupqpdz3oc35Nbiy7MRhRQGffJ2b7f9vc";
                 break;
             }
             case 3: {
                 uri = new NodeURI("udp://localhost:5403", "3");
-                publicKey = "aSq9DsNNvGhYxYyqA9wd2eduEAZ5AXWgJTbTF" +
-                        "YwMxsJVcoU1VqUfWC2wTjEVNtqVzT7EYANzcQPzX4VUCKv" +
-                        "FSepmbp8hA8B4HwyLSZoMiwgsQebBRpV5n3V7x4Sh";
-                privateKey = "2RxV4m78RGjpDZ5VV6TTtkSkRKgEC58qoYKq5rA4jkjP" +
-                        "UbhnFFguqMWUwM9ab815dpDwLZiTL7dABYbyjYGPvw7u1P6g";
+                publicKey = "Vj75CuZgqYqhewfDfF9KQEdejjqbnoDiRjuXUnwFDsa5tP2JN5uKR2nMsM3LPtCcW5QH8J8sTjS9aHVTgUAPMGxvpj5baTwrtYng2XM8ozopQgScinkncaxJLAppao2RQqBFTNzB1RKd9CJNMvHa7FoAJmDrfYiehSj5AfGwAHTy5DjzRiNHKbqWpaje2pKu6knJMiXQVphp5wNpnfnWVVWmD43SQ";
+                privateKey = "2qCXjvtcr4nR8xRX2v7yEntuNKBonfFVT1PWVpAN1Zk9YvEWYr4b4aTexXkg48gExEhU8xBiBPcG5bKgM2jxxmN3h7CiYPP4wAo6UC1JDTmX87yWm6s94YCwYCZ8sFRof5yTGGxgbagdTDrvuaVjAmur48MmaGGJiZNfRsfQuu4nGGkGkJnTVQ7Whj4GnjXDy87Z6WzneuYfCZnN6BLcxn75pe8QHUzJeCVyJSfZ8gasZQM5ikWVVNcKEEKbpUVeGXRFkScfDXPc8NxvWcF71ZdeFdTBagMXdvQtiR1b7iiWGd6b9FoJYP6MRwvRmfMA8cbJ5V2XgN9uJZeXoJnJwguJjSSgLV8NirjUyt6e7piuWkCsK4wVDsEQ3fSPkT7jDfA3cmruCsQ7EWKa3UbeQk7thAUY3XhgA1F7CNNSnAR72qHB48WfgmqZVrQLVEA5LRmq9pWs6zwQNPWkmh8DtHtghY7AhhmcHKthVyxtry88u72xu9jC3Pwiy7tJPEYTAuvxdRS25v8fKAvdEWghTCcP95pqgwVUWStyfPCHofNJNNrEVGWRN7tKet3hSDRwoGo6ywDU7WsifrN976NvBDWCYB6RL7XbjnaGRUtuoEQEZoxP9cVcTfvYYqq4jKmJmuETuvRaMaPLeCbMkLGCoK5uGi5h1J7eZxRE5WegxdRdhjNje3tXwNuHUySXpt4Jzm7DinkH7bmiaTjDd6jyDn5FguWyHenTw3nnBkKEH6DFG5F5aB8JBGLmLhMxYTmVE5hbiKMxteb1gSWshXajEN5h9U8LBGnvTiFKmG3ZMn3twhwsNmhnvvQeAXRzXspcjp6EGB4VKmopfVqjTJWNq7TezKGPWG1fzV9RC";
                 break;
             }
             case 4: {
@@ -145,11 +136,8 @@ public class Launcher {
             }
             case 5: {
                 uri = new NodeURI("udp://localhost:5403", "3");
-                publicKey = "aSq9DsNNvGhYxXyqA9wd2eduEAZ5AXWgJTbTF" +
-                        "YwMxsJVcoU1VqUfWC2wTjEVNtqVzT7EYANzcQPzX4VUCKv" +
-                        "FSepmbp8hA8B4HwyLSZoMiwgsQebBRpV5n3V7x4Sh";
-                privateKey = "2RxV4m78RGjpDZ5VV6TTtkSkRKgEC58qoYKq5rA4jkjP" +
-                        "UbhnFFguqMWUwM9ab815dpDwLZiTL7dABYbyjYGPvw7u1P6g";
+                publicKey = "Vj75CuZgqYqhewfDfF9KQEdejjqbnoDiRjuXUnwFDsa5tP2JN5uKR2nMsM3LPtCcW5QH8J8sTjS9aHVTgUAPMGxvpj5baTwrtYng2XM8ozopQgScinkncaxJLAppao2RQqBFTNzB1RKd9CJNMvHa7FoAJmDrfYiehSj5AfGwAHTy5DjzRiNHKbqWpaje2pKu6knJMiXQVphp5wNpnfnWVVWmD43SQ";
+                privateKey = "2qCXjvtcr4nR8xRX2v7yEntuNKBonfFVT1PWVpAN1Zk9YvEWYr4b4aTexXkg48gExEhU8xBiBPcG5bKgM2jxxmN3h7CiYPP4wAo6UC1JDTmX87yWm6s94YCwYCZ8sFRof5yTGGxgbagdTDrvuaVjAmur48MmaGGJiZNfRsfQuu4nGGkGkJnTVQ7Whj4GnjXDy87Z6WzneuYfCZnN6BLcxn75pe8QHUzJeCVyJSfZ8gasZQM5ikWVVNcKEEKbpUVeGXRFkScfDXPc8NxvWcF71ZdeFdTBagMXdvQtiR1b7iiWGd6b9FoJYP6MRwvRmfMA8cbJ5V2XgN9uJZeXoJnJwguJjSSgLV8NirjUyt6e7piuWkCsK4wVDsEQ3fSPkT7jDfA3cmruCsQ7EWKa3UbeQk7thAUY3XhgA1F7CNNSnAR72qHB48WfgmqZVrQLVEA5LRmq9pWs6zwQNPWkmh8DtHtghY7AhhmcHKthVyxtry88u72xu9jC3Pwiy7tJPEYTAuvxdRS25v8fKAvdEWghTCcP95pqgwVUWStyfPCHofNJNNrEVGWRN7tKet3hSDRwoGo6ywDU7WsifrN976NvBDWCYB6RL7XbjnaGRUtuoEQEZoxP9cVcTfvYYqq4jKmJmuETuvRaMaPLeCbMkLGCoK5uGi5h1J7eZxRE5WegxdRdhjNje3tXwNuHUySXpt4Jzm7DinkH7bmiaTjDd6jyDn5FguWyHenTw3nnBkKEH6DFG5F5aB8JBGLmLhMxYTmVE5hbiKMxteb1gSWshXajEN5h9U8LBGnvTiFKmG3ZMn3twhwsNmhnvvQeAXRzXspcjp6EGB4VKmopfVqjTJWNq7TezKGPWG1fzV9R";
                 break;
             }
             default: {

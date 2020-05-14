@@ -1,3 +1,55 @@
+function formatterTime(timestamp) {
+    // 传入时间戳
+    let date = new Date(timestamp);
+    let year = date.getFullYear();
+    let getMonth = formatZero(date.getMonth() + 1);
+    let getDay = formatZero(date.getDate());
+    let getHours = formatZero(date.getHours());
+    let getMinutes = formatZero(date.getMinutes());
+    let getSeconds = formatZero(date.getSeconds());
+    return year + "-" + getMonth + "-" + getDay + " " + getHours + ":" + getMinutes + ":" + getSeconds;
+}
+
+function formatZero(num) {
+    return num < 10 ? ('0' + num) : num;
+}
+
+function timesFun(timesData) {
+    //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
+    var dateBegin = new Date(timesData.replace(/-/g, "/"));//将-转化为/，使用new Date
+    var dateEnd = new Date();//获取当前时间
+    var dateDiff = dateEnd.getTime() - dateBegin.getTime();//时间差的毫秒数
+    var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
+    var leave1 = dateDiff % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+    var hours = Math.floor(leave1 / (3600 * 1000))//计算出小时数
+    //计算相差分钟数
+    var leave2 = leave1 % (3600 * 1000)    //计算小时数后剩余的毫秒数
+    var minutes = Math.floor(leave2 / (60 * 1000))//计算相差分钟数
+    //计算相差秒数
+    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+    var seconds = Math.round(leave3 / 1000);
+    var timesString = '';
+
+    if (dayDiff != 0) {
+        timesString = dayDiff + '天前';
+    } else if (dayDiff == 0 && hours != 0) {
+        timesString = hours + '小时前';
+    } else if (dayDiff == 0 && hours == 0) {
+        timesString = minutes + '分钟前';
+    }
+
+    return {
+        timesString: timesString
+    }
+}
+
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
 function downloadFile(url,name='file'){
     var a = document.createElement("a")
     a.setAttribute("href",url)
@@ -33,26 +85,22 @@ function dataURLtoBlob(dataurl) {
     }
     return new Blob([u8arr], {type: mime});
 }
+let blockSession = layui.sessionData('block');
+let cacheSession = layui.sessionData('cache');
 
 
 $(function () {
 
+
+    let decryptString = cacheSession["decodeJsonFromPrivateKey"];
+    layui.sessionData('cache', {
+        key: 'decodeJsonFromPrivateKey'
+        ,remove: true
+    });
+
     //加载区块数据
     let height = getQueryString("height");
     let blockData =  blockSession[height+""];
-    // alert(data['hash']);
-    //
-    // eval("let value = blockSession."+hash+";");
-    // let value = blockSession.hash;
-    // console.log(value);
-    // alert(value);
-    // let command ="let value = blockSession."+"hash"+";";
-    // eval(command)
-    // alert(blockSession['hash']);
-    // console.log(value);
-    // alert(eval(command));
-    // alert(command);
-    // console.log(blockSession);
 
     let hash = blockData["hash"];
     let difficultyTarget = blockData["difficultyTarget"];
@@ -80,8 +128,15 @@ $(function () {
 
     let coinbaseTimestamp=  coinbase.timestamp;
     let tx0Date = formatterTime(parseInt(coinbaseTimestamp));
-    $("#tx0-data").text(coinbase.scriptString);
-    let scriptBytes = Base64.decode(coinbase.scriptBytes);
+    let scriptBytes = decryptString;
+
+    //最长显示字符数字
+    let MAX_LENGTH = 600;
+    if(scriptBytes.length > MAX_LENGTH){
+        scriptBytes = scriptBytes.substring(0,MAX_LENGTH);
+        scriptBytes += "...";
+    }
+
     $("#tx0-publicKey").text(coinbase.publicKey);
     $("#tx0-hash").text(coinbase.hash);
     // $("#tx0-scriptString").text(scriptBytes);

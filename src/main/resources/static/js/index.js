@@ -36,3 +36,9 @@ function getWallet() {
             }
         });
 }
+
+
+//退出登录
+function f() {
+
+}

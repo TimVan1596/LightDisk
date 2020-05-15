@@ -30,6 +30,11 @@ public class LightDisk {
     BlockChain blockChain = null;
     long heartBeatID;
 
+    /**
+     * THREAD_EXIT = 退出线程标志位
+     * volatile修饰符用来保证其它线程读取的总是该变量的最新的值
+     */
+    public volatile boolean THREAD_EXIT = false;
     Thread listenThread = null;
 
     /**
@@ -47,7 +52,7 @@ public class LightDisk {
         heartBeatID = 0;
 
         listenThread = new Thread(() -> {
-            while (true) {
+            while (!THREAD_EXIT) {
                 try {
                     long gossipHeartBeatID = getGossipHeartBeatID();
                     long diff = gossipHeartBeatID - heartBeatID;
@@ -82,6 +87,16 @@ public class LightDisk {
         listenThread.start();
 
 
+    }
+
+    /**
+     * 关闭LightDisk实例
+     */
+    public void shutDown() {
+        //修改线程标志位为 true
+        this.THREAD_EXIT = true;
+        //关闭gossip
+        gossip.close();
     }
 
     /**
@@ -126,9 +141,8 @@ public class LightDisk {
 
     /**
      * 检查区块是否含创世块，若无创世块则挖出创世块并发布
-     *
      */
-    private void verifyHasGenesisBlock(){
+    private void verifyHasGenesisBlock() {
         //如果链为空，默认放置创世块
         if (blockChain.getCurrentHeight() == -1) {
             Block genesisBlock = BlockChain.generatorGenesisBlock();
@@ -243,8 +257,8 @@ public class LightDisk {
 
     /**
      * LightBoard监控板
-     * */
-    public void lightBoard(boolean isOpenTX){
+     */
+    public void lightBoard(boolean isOpenTX) {
         //是否打开详细交易信息
         blockChain.blockChainBoard(isOpenTX);
     }
@@ -252,7 +266,7 @@ public class LightDisk {
     /**
      * 获取本地区块链上所有区块列表
      */
-    public List<Block> getLocalBlockList(){
+    public List<Block> getLocalBlockList() {
         return blockChain.getBlockList();
     }
 

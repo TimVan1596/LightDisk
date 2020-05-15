@@ -25,7 +25,7 @@ public class BlockDAO {
             System.out.println("lightDisk为空");
             return null;
         }
-        System.out.println("height="+lightDisk.getLocalChainHeight());
+//        System.out.println("height="+lightDisk.getLocalChainHeight());
 
         return lightDisk.getLocalBlockList();
 

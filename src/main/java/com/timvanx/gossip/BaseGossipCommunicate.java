@@ -136,4 +136,11 @@ abstract public class BaseGossipCommunicate  {
     }
 
 
+    /**
+     * 关闭Gossip
+     * */
+    public void close(){
+        gossipService.shutdown();
+    }
+
 }

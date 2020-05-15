@@ -1,13 +1,16 @@
 package com.timvanx.web.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.timvanx.blockchain.model.ECKey;
 import com.timvanx.gossip.model.NodeURI;
+import com.timvanx.lightdisk.LightDisk;
 import com.timvanx.web.config.LightDiskHungrySingleton;
 import com.timvanx.web.config.ReqContants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +37,32 @@ public class LoginController {
     public void index(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher("/page/login-1.html").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 关闭整个系统，回到登录页 /shutdown
+     */
+    @PostMapping(ReqContants.REQ_SHUTDOWN)
+    public void shutdown(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
+
+        if(ObjectUtil.isNull(lightDisk)){
+            System.out.println("lightDisk为空");
+        }else{
+            //关闭lightDisk
+            lightDisk.shutDown();
+            //删除session
+            HttpSession session = request.getSession();
+            session.invalidate();
+        }
+
+        try {
+            request.getRequestDispatcher("/page/login-1.html")
+                    .forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

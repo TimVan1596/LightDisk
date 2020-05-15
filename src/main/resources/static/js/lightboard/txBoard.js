@@ -8,17 +8,24 @@ function onDownloadBTN() {
     layer.prompt({title: '请输入文件秘钥', formType: 1, maxlength: 1000}, function (pass, index) {
         layer.close(index);
 
-        let encrypString = $("#tx0-data").text();
         let height = getQueryString("height");
+        //加载层-风格2
+
+        layer.load(1);
+        //此处演示关闭
+
 
         $.ajax({
             type: "post",
             url: "/block/decodeJsonFromPrivateKey",
             data: {
                 privateKey: pass
-                , data: encrypString
+                , data: decryptString
             },
             success: function (ret) {
+
+                layer.closeAll('loading');
+
                 ret = eval("(" + ret + ")");
                 if (ret['code'] === 0) {
                     let decryptString = ret["data"];
@@ -42,6 +49,7 @@ function onDownloadBTN() {
                 }
             },
             error: function () {
+                layer.closeAll('loading');
                 layer.msg("检验私钥匹配请求错误");
             }
         });
@@ -234,6 +242,8 @@ let Base64 = {
 
 let blockSession = layui.sessionData('block');
 
+let decryptString = null;
+
 $(function () {
 
 
@@ -281,9 +291,10 @@ $(function () {
     let coinbaseTimestamp = coinbase.timestamp;
     let tx0Date = formatterTime(parseInt(coinbaseTimestamp));
     let scriptString = coinbase.scriptString;
+    decryptString = coinbase.scriptString;
 
     //最长显示字符数字
-    let MAX_LENGTH = 600;
+    let MAX_LENGTH = 800;
     if(scriptString.length > MAX_LENGTH){
         scriptString = scriptString.substring(0,MAX_LENGTH);
         scriptString += "...";

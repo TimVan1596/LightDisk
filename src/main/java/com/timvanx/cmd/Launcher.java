@@ -82,10 +82,9 @@ public class Launcher {
                     lightDisk.lightBoard(isOpenTX);
                     break;
                 }
-
-
                 default: {
                     isBreakLoop = true;
+                    lightDisk.shutDown();
                     break;
                 }
             }

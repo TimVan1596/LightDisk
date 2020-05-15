@@ -31,6 +31,8 @@ public class ReqContants {
 
     /** REQ_LOGIN = 进入登录页面 /login */
     public static final String REQ_LOGIN = "/login";
+    /** REQ_SHUTDOWN = 关闭整个系统，回到登录页 /shutdown */
+    public static final String REQ_SHUTDOWN = "/shutdown";
 
     /** REQ_REGISTRY = 注册/生成新钱包 /registry */
     public static final String REQ_REGISTRY = "/registry";

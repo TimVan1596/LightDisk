@@ -70,10 +70,7 @@ function downloadFileByBase64(fileData, fileName) {
 
 //下载文件调用JS
 function onClickDownloadFileBTN() {
-
-    let fileName = $("#tx0-filename").text();
-    let fileData = $("#tx0-data").text();
-    downloadFileByBase64(fileData, fileName);
+    downloadFileByBase64(decryptFileData, decryptFileName);
 }
 
 //
@@ -87,7 +84,8 @@ function dataURLtoBlob(dataurl) {
 }
 let blockSession = layui.sessionData('block');
 let cacheSession = layui.sessionData('cache');
-
+let decryptFileName = "";
+let decryptFileData = "";
 
 $(function () {
 
@@ -97,6 +95,8 @@ $(function () {
         key: 'decodeJsonFromPrivateKey'
         ,remove: true
     });
+
+    console.log("解密数据:"+decryptString);
 
     //加载区块数据
     let height = getQueryString("height");
@@ -128,24 +128,28 @@ $(function () {
 
     let coinbaseTimestamp=  coinbase.timestamp;
     let tx0Date = formatterTime(parseInt(coinbaseTimestamp));
-    let scriptBytes = decryptString;
-
-    //最长显示字符数字
-    let MAX_LENGTH = 600;
-    if(scriptBytes.length > MAX_LENGTH){
-        scriptBytes = scriptBytes.substring(0,MAX_LENGTH);
-        scriptBytes += "...";
-    }
 
     $("#tx0-publicKey").text(coinbase.publicKey);
     $("#tx0-hash").text(coinbase.hash);
     // $("#tx0-scriptString").text(scriptBytes);
-    let file =  $.parseJSON(scriptBytes);
+    let file =  $.parseJSON(decryptString);
     let fileName = file.filename;
     let fileData = file.data;
+    decryptFileName = fileName;
+    decryptFileData = fileData;
+
+    //省略的数据
+    let omitFileData = fileData;
+
+    //最长显示字符数字
+    let MAX_LENGTH = 800;
+    if(omitFileData.length > MAX_LENGTH){
+        omitFileData = omitFileData.substring(0,MAX_LENGTH);
+        omitFileData += "...";
+    }
 
     $("#tx0-filename").text(fileName);
-    $("#tx0-data").text(fileData);
+    $("#tx0-data").text(omitFileData);
 
     $("#tx0-timestamp").text(coinbaseTimestamp);
     $("#tx0-date").text(tx0Date);

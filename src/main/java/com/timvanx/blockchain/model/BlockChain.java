@@ -1,6 +1,7 @@
 package com.timvanx.blockchain.model;
 
 import cn.hutool.core.date.DateTime;
+import com.timvanx.blockchain.util.PageUtil;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -121,6 +122,16 @@ public class BlockChain {
         System.out.println("-----------------blockChainBoard监控结束-------------------------");
 
 
+    }
+
+    /**
+     * 获取分页的本地区块
+     * @param page 当前页
+     * @param limit 每页显示的条数
+     */
+    public List<Block> getBlockListPage(int page, int limit){
+        //倒序分页
+        return PageUtil.startReversePage(this.getBlockList(),page,limit);
     }
 
     public static void main(String[] args) {

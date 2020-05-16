@@ -3,6 +3,7 @@ package com.timvanx.web.controller;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.timvanx.blockchain.model.ECKey;
+import com.timvanx.gossip.GossipCommunicateLayer;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.lightdisk.LightDisk;
 import com.timvanx.web.config.LightDiskHungrySingleton;
@@ -46,26 +47,38 @@ public class LoginController {
      * 关闭整个系统，回到登录页 /shutdown
      */
     @PostMapping(ReqContants.REQ_SHUTDOWN)
-    public void shutdown(HttpServletRequest request, HttpServletResponse response) throws IOException{
-
+    public void shutdown(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
         LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
-
-        if(ObjectUtil.isNull(lightDisk)){
-            System.out.println("lightDisk为空");
-        }else{
-            //关闭lightDisk
-            lightDisk.shutDown();
-            //删除session
-            HttpSession session = request.getSession();
-            session.invalidate();
-        }
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        //删除session
+        HttpSession session = request.getSession();
+        session.invalidate();
 
         try {
-            request.getRequestDispatcher("/page/login-1.html")
-                    .forward(request, response);
+            GossipCommunicateLayer gossip = lightDisk.getGossip();
+            if (ObjectUtil.isNull(gossip)) {
+                mjs.put("code", 1);
+                mjs.put("msg", "Gossip为空");
+            } else {
+                //关闭lightDisk
+                lightDisk.shutDown();
+                //删除session
+                session.invalidate();
+
+                mjs.put("code", 0);
+                mjs.put("msg", "获取成功");
+            }
         } catch (Exception e) {
+            mjs.put("code", 2);
+            mjs.put("msg", "LightDisk为空");
             e.printStackTrace();
         }
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
     }
 
     /**
@@ -81,8 +94,8 @@ public class LoginController {
         String uriType = request.getParameter("uriType");
         Map<String, Object> mjs = new LinkedHashMap<>();
 
-        System.out.println("publicKey="+publicKey);
-        System.out.println("privateKey="+privateKey);
+//        System.out.println("publicKey="+publicKey);
+//        System.out.println("privateKey="+privateKey);
         try {
 
             if (!ECKey.isKeyMatch(publicKey, privateKey)) {
@@ -91,18 +104,15 @@ public class LoginController {
             } else {
                 NodeURI uri = null;
 
-                if("1".equals(uriType)){
+                if ("1".equals(uriType)) {
                     uri = new NodeURI("udp://localhost:5400", "0");
-                }
-                else if("2".equals(uriType)){
+                } else if ("2".equals(uriType)) {
                     uri = new NodeURI("udp://localhost:5402", "2");
-                }
-                else if("3".equals(uriType)){
+                } else if ("3".equals(uriType)) {
                     uri = new NodeURI("udp://localhost:5403", "3");
                 }
-                System.out.println("test");
                 NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
-                LightDiskHungrySingleton.initial(uri,seedNode,publicKey,privateKey);
+                LightDiskHungrySingleton.initial(uri, seedNode, publicKey, privateKey);
 
                 genKeyMap(publicKey, privateKey, mjs);
 
@@ -113,7 +123,7 @@ public class LoginController {
             }
         } catch (Exception e) {
             mjs.put("code", 1);
-            mjs.put("msg", "错误："+e.getMessage());
+            mjs.put("msg", "错误：" + e.getMessage());
         }
 
         // 把数据转化为json格式
@@ -125,7 +135,7 @@ public class LoginController {
      * 注册/生成新钱包 /registry
      */
     @PostMapping(ReqContants.REQ_REGISTRY)
-    public void registry(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public void registry(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // get解决中文乱码
         response.setContentType("application/text; charset=utf-8");
@@ -139,12 +149,12 @@ public class LoginController {
 
         Map<String, Object> dataMap = new LinkedHashMap<>();
 
-        dataMap.put("publicKey",publicKeyStr);
-        dataMap.put("privateKey",privateKeyStr);
+        dataMap.put("publicKey", publicKeyStr);
+        dataMap.put("privateKey", privateKeyStr);
 
         mjs.put("code", 0);
         mjs.put("msg", "获取成功");
-        mjs.put("data",keyPairMap);
+        mjs.put("data", keyPairMap);
 
         // 把数据转化为json格式
         String json = JSON.toJSONString(mjs);

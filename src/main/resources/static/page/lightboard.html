@@ -36,9 +36,11 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-warm  layui-btn-sm data-add-btn" lay-event="add"> <i class="layui-icon layui-icon-diamond"></i>
+                <button class="layui-btn layui-btn-warm  layui-btn-sm data-add-btn" lay-event="add"
+                        onclick="onMineBlockBTN()"><i class="layui-icon layui-icon-diamond"></i>
 
-                    挖矿</button>
+                    挖矿
+                </button>
 
                 <!--                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>-->
                 <!--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 详情 </button>-->
@@ -54,11 +56,13 @@
     </div>
 </div>
 <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<!--<script src="../js/lay-module/layuimini/miniTab.js" charset="utf-8"></script>-->
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table;
+        // miniTab.listen();
 
         table.render({
             elem: '#currentTableId',
@@ -80,10 +84,14 @@
                 {field: 'hash', minWidth: 550, title: '块头哈希'},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
-            limits: [10, 15, 20, 25, 50, 100],
-            limit: 15,
+            limits: [10, 20, 30, 50, 100],
+            limit: 10,
             page: true,
-            skin: 'line'
+            skin: 'line',
+            initSort: {
+                field: 'height' //排序字段，对应 cols 设定的各字段名
+                ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
         });
 
         // 监听搜索操作
@@ -118,7 +126,7 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/add.html',
+                    content: '../page/mineblock.html',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -162,9 +170,9 @@
                 // console.log(parseParams(data));
 
                 //【增】：向 block 表插入一个 data.height 字段
-                    layui.sessionData('block', {
-                    key: data.height+""
-                    ,value: data
+                layui.sessionData('block', {
+                    key: data.height + ""
+                    , value: data
                 });
 
                 var index = layer.open({
@@ -174,8 +182,8 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/lightboard/txBoard.html?' +"height="
-                        +data.height ,
+                    content: '../page/lightboard/txBoard.html?' + "height="
+                        + data.height,
                 });
 
                 $(window).on("resize", function () {
@@ -191,14 +199,13 @@
         try {
             var tempArr = [];
             for (var i in data) {
-                if(Object.prototype.toString.call(data[i]) === '[object Array]'
-                ){
+                if (Object.prototype.toString.call(data[i]) === '[object Array]'
+                ) {
 
                     var key = encodeURIComponent(i);
                     var value = encodeURIComponent(JSON.stringify(data[i]));
                     tempArr.push(key + '=' + value);
-                }
-                else{
+                } else {
                     var key = encodeURIComponent(i);
                     var value = encodeURIComponent(data[i]);
                     tempArr.push(key + '=' + value);
@@ -209,6 +216,14 @@
         } catch (err) {
             return '';
         }
+    }
+
+    function onMineBlockBTN() {
+        // 打开新的窗口
+        miniTab.openNewTabByIframe({
+            href: "page/mineblock.html",
+            title: "挖矿",
+        });
     }
 
 </script>

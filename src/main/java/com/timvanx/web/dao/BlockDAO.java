@@ -18,6 +18,7 @@ import java.util.List;
 @Repository
 public class BlockDAO {
 
+    /** 获取所有的本地区块 */
     public List<Block> selectLocalBlock() {
         LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
 
@@ -29,8 +30,38 @@ public class BlockDAO {
 
         return lightDisk.getLocalBlockList();
 
+    }
 
 
+    /**
+     * 获取分页的本地区块
+     * @param page 当前页
+     * @param limit 每页显示的条数
+     */
+    public List<Block> selectLocalBlock(int page,int limit) {
+        LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
+
+        if(ObjectUtil.isNull(lightDisk)){
+            System.out.println("lightDisk为空");
+            return null;
+        }
+
+        return lightDisk.getLocalBlockList( page, limit);
+
+    }
+
+    /**
+     * 获得区块链的长度
+     */
+    public int getBlockListSize(){
+        LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
+
+        if(ObjectUtil.isNull(lightDisk)){
+            System.out.println("lightDisk为空");
+            return 0;
+        }
+
+        return lightDisk.getBlockListSize();
     }
 
     public List<Block> mineBlock() {

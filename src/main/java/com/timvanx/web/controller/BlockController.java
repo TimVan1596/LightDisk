@@ -51,17 +51,20 @@ public class BlockController {
         // get解决中文乱码
         response.setContentType("application/text; charset=utf-8");
         Map<String, Object> mjs = new LinkedHashMap<>();
+        //page: 2  limit: 10
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
 
-        mjs.put("code", 0);
-
-        List<Block> blockList = blockService.selectLocalBlock();
-        mjs.put("data", blockList);
+        List<Block> blockList = blockService.selectLocalBlock(page,limit);
         if (ObjectUtil.isNull(blockList)) {
+            mjs.put("code", 1);
             mjs.put("msg", "区块列表为空");
             mjs.put("count", 0);
         } else {
+            mjs.put("code", 0);
             mjs.put("msg", "成功");
-            mjs.put("count", blockList.size());
+            mjs.put("count", blockService.getBlockListSize());
+            mjs.put("data", blockList);
         }
 
         // 把数据转化为json格式

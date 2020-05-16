@@ -270,6 +270,19 @@ public class LightDisk {
         return blockChain.getBlockList();
     }
 
+    /**
+     * 分页获取本地区块链上区块列表
+     * @param page 当前页
+     * @param limit 每页显示的条数
+     */
+    public List<Block> getLocalBlockList(int page,int limit){
+        return blockChain.getBlockListPage(page, limit);
+    }
+
+    /** 获得区块链的长度 */
+    public int getBlockListSize(){
+        return blockChain.getBlockList().size();
+    }
     public static void main(String[] args) {
         NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
 

@@ -20,6 +20,11 @@ function logout() {
             } else {
                 layer.msg(ret['msg'], {
                 });
+
+                //延时2秒
+                setTimeout(function (){
+                    window.location.href="/";
+                }, 1500);
             }
 
         },

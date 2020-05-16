@@ -13,6 +13,8 @@ public class ReqContants {
     public static final String REQ_INDEX = "/common";
     /** REQ_BLOCK = 区块大类 */
     public static final String REQ_BLOCK = "/block";
+    /** REQ_HEARTBEAT = 心跳消息大类 */
+    public static final String REQ_HEARTBEAT = "/heartbeat";
 
 
     /**------------------------分类-主页 REQ_INDEX-------------------------*/
@@ -28,6 +30,10 @@ public class ReqContants {
     /** REQ_DECODE_JSON_FROM_PRIVATE_KEY = 测试文件是否能用私钥解码成JSON格式 */
     public static final String REQ_DECODE_JSON_FROM_PRIVATE_KEY = "/decodeJsonFromPrivateKey";
 
+
+    /**------------------------分类-心跳消息 REQ_HEARTBEAT-------------------------*/
+    /** REQ_BLOCK_GET_BLOCK_LIST = 获得心跳消息列表 */
+    public static final String REQ_HEARTBEAT_GET_HEARTBEAT_LIST = "/GetHeartbeatList";
 
     /** REQ_LOGIN = 进入登录页面 /login */
     public static final String REQ_LOGIN = "/login";

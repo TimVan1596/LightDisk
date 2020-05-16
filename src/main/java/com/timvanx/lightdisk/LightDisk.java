@@ -4,12 +4,14 @@ import com.timvanx.blockchain.model.Block;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.timvanx.blockchain.util.PageUtil;
 import com.timvanx.gossip.GossipCommunicateLayer;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.blockchain.model.BlockChain;
 import lombok.Getter;
 import com.timvanx.model.ResponseJson;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -29,6 +31,12 @@ public class LightDisk {
     GossipCommunicateLayer gossip = null;
     BlockChain blockChain = null;
     long heartBeatID;
+
+    /**
+     * 心跳消息列表
+     */
+    @Getter
+    List<HeartBeatLog> heartBeatLogs = new ArrayList<>();
 
     /**
      * THREAD_EXIT = 退出线程标志位
@@ -68,6 +76,8 @@ public class LightDisk {
                             heartBeatID++;
                             System.out.println("------消息ID=" + heartBeatID);
                             HeartBeat heartBeat = getHeartBeatFromID(heartBeatID);
+                            heartBeatLogs.add(new HeartBeatLog(heartBeat.getType()
+                                    ,heartBeatID,time+""));
                             processHeartBeatSortHandle(heartBeat);
 //                            System.out.println("type=" + heartBeat.getType());
 //                            System.out.println("message=" + heartBeat.getData());
@@ -271,18 +281,47 @@ public class LightDisk {
     }
 
     /**
-     * 分页获取本地区块链上区块列表
-     * @param page 当前页
+     * 获取本地心跳消息列表
+     */
+    public List<HeartBeatLog> getLocalHeartbeatList() {
+        return heartBeatLogs;
+    }
+
+    /**
+     * 分页获取心跳消息列表
+     *
+     * @param page  当前页
      * @param limit 每页显示的条数
      */
-    public List<Block> getLocalBlockList(int page,int limit){
+    public List<HeartBeatLog> getLocalHeartbeatList(int page, int limit){
+//倒序分页
+        return PageUtil.startReversePage(this.heartBeatLogs,page,limit);
+    }
+
+    /**
+     * 分页获取本地区块链上区块列表
+     *
+     * @param page  当前页
+     * @param limit 每页显示的条数
+     */
+    public List<Block> getLocalBlockList(int page, int limit) {
         return blockChain.getBlockListPage(page, limit);
     }
 
-    /** 获得区块链的长度 */
-    public int getBlockListSize(){
+    /**
+     * 获得区块链的长度
+     */
+    public int getBlockListSize() {
         return blockChain.getBlockList().size();
     }
+
+    /**
+     * 获得心跳消息的长度
+     */
+    public int getHeartbeatListSize() {
+        return heartBeatLogs.size();
+    }
+
     public static void main(String[] args) {
         NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
 

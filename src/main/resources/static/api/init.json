@@ -55,7 +55,7 @@
             },
             {
               "title": "心跳消息",
-              "href": "page/welcome-3.html",
+              "href": "page/heartBeatBoard.html",
               "icon": "fa fa-heart",
               "target": "_self"
             }

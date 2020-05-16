@@ -38,6 +38,22 @@
 
     <dependencies>
 
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.session</groupId>-->
+<!--            <artifactId>spring-session-data-redis</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; redis &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; redis 依赖&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.commons</groupId>-->
+<!--            <artifactId>commons-pool2</artifactId>-->
+<!--            <version>2.0</version>-->
+<!--        </dependency>-->
+
 
         <!--devtools热部署-->
         <dependency>

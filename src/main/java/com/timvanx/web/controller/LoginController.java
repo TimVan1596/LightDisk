@@ -30,7 +30,6 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-
     /**
      * 默认欢迎页 page文件夹下的login-1.html
      */
@@ -47,14 +46,17 @@ public class LoginController {
      * 关闭整个系统，回到登录页 /shutdown
      */
     @PostMapping(ReqContants.REQ_SHUTDOWN)
-    public void shutdown(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void shutdown(HttpServletRequest request, HttpServletResponse response, SessionStatus sessionStatus) throws IOException {
         // get解决中文乱码
         response.setContentType("application/text; charset=utf-8");
         LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
         Map<String, Object> mjs = new LinkedHashMap<>();
         //删除session
         HttpSession session = request.getSession();
+        session.setAttribute("publicKey", "");
+        session.setAttribute("privateKey", "");
         session.invalidate();
+        sessionStatus.setComplete();
 
         try {
             GossipCommunicateLayer gossip = lightDisk.getGossip();
@@ -64,8 +66,6 @@ public class LoginController {
             } else {
                 //关闭lightDisk
                 lightDisk.shutDown();
-                //删除session
-                session.invalidate();
 
                 mjs.put("code", 0);
                 mjs.put("msg", "获取成功");

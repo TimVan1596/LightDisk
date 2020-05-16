@@ -1,10 +1,14 @@
 package com.timvanx.web.config;
 
+import cn.hutool.core.util.StrUtil;
+import com.timvanx.gossip.GossipCommunicateLayer;
+import com.timvanx.lightdisk.LightDisk;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * <h3>BlockChain</h3>
@@ -15,16 +19,32 @@ import javax.servlet.http.HttpServletResponse;
  **/
 public class LoginHandlerInterceptor implements HandlerInterceptor {
 
-    /** 目标方法执行之前 */
+    /**
+     * 目标方法执行之前
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object user = request.getSession().getAttribute("loginUser");
-        // 如果获取的request的session中的loginUser参数为空（未登录）
-        // 就返回登录页，否则放行访问
-        if (user == null) {
-            // 未登录，给出错误信息，
-            request.setAttribute("msg","无权限请先登录");
-            // 获取request返回页面到登录页
+        HttpSession session = request.getSession();
+
+        String publickey = (String) session.getAttribute("publicKey");
+
+        if (StrUtil.hasEmpty(publickey)) {
+            return true;
+        } else if (publickey.length() < 2) {
+
+            session.setAttribute("publicKey", "");
+            session.setAttribute("privateKey", "");
+
+            try {
+                LightDisk lightDisk =
+                        LightDiskHungrySingleton.getLightDisk();
+                GossipCommunicateLayer gossip = lightDisk.getGossip();
+                //关闭lightDisk
+                lightDisk.shutDown();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             request.getRequestDispatcher("/index.html").forward(request, response);
             return false;
         } else {

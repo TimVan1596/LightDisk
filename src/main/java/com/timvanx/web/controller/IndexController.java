@@ -64,8 +64,6 @@ public class IndexController {
     }
 
 
-
-
     static void genMap(Map<String, Object> mjs, String publickey, String privatekey) {
         mjs.put("code", 0);
         mjs.put("msg", "成功");

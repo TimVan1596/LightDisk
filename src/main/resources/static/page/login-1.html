@@ -199,6 +199,11 @@
                         onclick="registry()">
                     注册
                 </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                        onclick="logout()">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    清除缓存
+                </button>
             </div>
         </div>
     </div>
@@ -206,8 +211,11 @@
 <script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
 <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="../lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
+<script src="../js/common.js"></script>
 <script>
     layui.use(['form', 'layer', 'jquery'], function () {
+        var layer = layui.layer;
+
         var form = layui.form,
             layer = parent.layer === undefined ? layui.layer : top.layer
         $ = layui.jquery;

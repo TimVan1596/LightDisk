@@ -246,6 +246,9 @@
                 return false;
             }
 
+            //登录loading
+            layer.load(1);
+
             $.ajax({
                 type: "post",
                 url: "/login",
@@ -255,6 +258,7 @@
                     , uriType: data.uri
                 },
                 success: function (ret) {
+                    layer.closeAll('loading');
                     ret = eval("(" + ret + ")");
                     if (ret['code'] === 0) {
                         layer.msg('登录成功', function () {
@@ -267,6 +271,7 @@
                     }
                 },
                 error: function () {
+                    layer.closeAll('loading');
                     layer.msg("未知错误");
                 }
             });

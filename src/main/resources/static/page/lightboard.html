@@ -76,8 +76,12 @@
             }],
             cols: [[
                 {type: "checkbox", width: 50},
-                {field: 'height', width: 100, title: '高度', sort: true},
-                {field: 'timestamp', width: 150, title: '时间戳'},
+                {field: 'height', width: 80, title: '高度', sort: true},
+                {field: 'timestamp', width: 200, title: '日期',
+                    templet: function (d) {
+                        return formatterTime(parseInt(d.timestamp));
+                    }
+                },
                 {field: 'nonce', width: 100, title: 'nonce'},
                 // {field: 'txSize', width: 100, title: '交易数量'},
                 {field: 'difficultyTarget', width: 100, title: '难度系数'},
@@ -224,6 +228,22 @@
             href: "page/mineblock.html",
             title: "挖矿",
         });
+    }
+
+    function formatterTime(timestamp) {
+        // 传入时间戳
+        let date = new Date(timestamp);
+        let year = date.getFullYear();
+        let getMonth = formatZero(date.getMonth() + 1);
+        let getDay = formatZero(date.getDate());
+        let getHours = formatZero(date.getHours());
+        let getMinutes = formatZero(date.getMinutes());
+        let getSeconds = formatZero(date.getSeconds());
+        return year + "-" + getMonth + "-" + getDay + " " + getHours + ":" + getMinutes + ":" + getSeconds;
+    }
+
+    function formatZero(num) {
+        return num < 10 ? ('0' + num) : num;
     }
 
 </script>

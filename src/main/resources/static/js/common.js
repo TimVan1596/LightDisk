@@ -16,6 +16,7 @@ function logout() {
 
             ret = eval("(" + ret + ")");
             if (ret['code'] === 0) {
+                layer.msg("清除缓存和Gossip成功");
                 window.location.href="/";
             } else {
                 layer.msg(ret['msg'], {

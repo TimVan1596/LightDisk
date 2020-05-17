@@ -4,6 +4,7 @@ import com.timvanx.blockchain.model.Block;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.timvanx.blockchain.model.Transaction;
 import com.timvanx.blockchain.util.PageUtil;
 import com.timvanx.gossip.GossipCommunicateLayer;
 import com.timvanx.gossip.model.NodeURI;
@@ -11,10 +12,7 @@ import com.timvanx.blockchain.model.BlockChain;
 import lombok.Getter;
 import com.timvanx.model.ResponseJson;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -77,7 +75,7 @@ public class LightDisk {
                             System.out.println("------消息ID=" + heartBeatID);
                             HeartBeat heartBeat = getHeartBeatFromID(heartBeatID);
                             heartBeatLogs.add(new HeartBeatLog(heartBeat.getType()
-                                    ,heartBeatID,time+""));
+                                    , heartBeatID, time + ""));
                             processHeartBeatSortHandle(heartBeat);
 //                            System.out.println("type=" + heartBeat.getType());
 //                            System.out.println("message=" + heartBeat.getData());
@@ -293,9 +291,9 @@ public class LightDisk {
      * @param page  当前页
      * @param limit 每页显示的条数
      */
-    public List<HeartBeatLog> getLocalHeartbeatList(int page, int limit){
+    public List<HeartBeatLog> getLocalHeartbeatList(int page, int limit) {
 //倒序分页
-        return PageUtil.startReversePage(this.heartBeatLogs,page,limit);
+        return PageUtil.startReversePage(this.heartBeatLogs, page, limit);
     }
 
     /**
@@ -320,6 +318,90 @@ public class LightDisk {
      */
     public int getHeartbeatListSize() {
         return heartBeatLogs.size();
+    }
+
+    /**
+     * 获得交易列表
+     */
+    public List<Transaction> getTransactionList() {
+        List<Transaction> transactions = new ArrayList<>();
+        for (Block block : getLocalBlockList()) {
+            transactions.addAll(block.getTransactions());
+        }
+        return transactions;
+    }
+
+    /**
+     * 分页获得交易列表
+     *
+     * @param page  当前页
+     * @param limit 每页显示的条数
+     */
+    public Map<String, Object> getTransactionList(int page, int limit) {
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        List<Transaction> transactions = new ArrayList<>();
+        for (Block block : getLocalBlockList()) {
+            transactions.addAll(block.getTransactions());
+        }
+
+        mjs.put("code", 0);
+        mjs.put("msg", "成功");
+        mjs.put("count", transactions.size());
+        mjs.put("data", PageUtil.startReversePage(transactions, page, limit));
+
+        return mjs;
+    }
+
+    /**
+     * 根据公钥获得交易列表
+     *
+     * @param publicKey 公钥
+     */
+    public List<Transaction> getTransactionListByPublicKey(String publicKey) {
+        List<Transaction> transactions = new ArrayList<>();
+        publicKey = publicKey.trim();
+        if (StrUtil.hasEmpty(publicKey)) {
+            return transactions;
+        } else {
+            for (Block block : getLocalBlockList()) {
+                for (Transaction transaction : block.getTransactions()) {
+                    if (transaction.getPublicKey().equals(publicKey)) {
+                        transactions.add(transaction);
+                    }
+                }
+            }
+        }
+        return transactions;
+    }
+
+    /**
+     * 根据公钥分页获得交易列表
+     *
+     * @param publicKey 公钥
+     * @param page      当前页
+     * @param limit     每页显示的条数
+     */
+    public Map<String, Object> getTransactionListByPublicKey(String publicKey
+            , int page, int limit) {
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        //交易列表
+        List<Transaction> transactions = new ArrayList<>();
+        publicKey = publicKey.trim();
+        if (!StrUtil.hasEmpty(publicKey)) {
+            for (Block block : getLocalBlockList()) {
+                for (Transaction transaction : block.getTransactions()) {
+                    if (StrUtil.contains(transaction.getPublicKey(), publicKey)) {
+                        transactions.add(transaction);
+                    }
+                }
+            }
+        }
+        mjs.put("code", 0);
+        mjs.put("msg", "成功");
+        mjs.put("count", transactions.size());
+        mjs.put("data", PageUtil.startReversePage(transactions, page, limit));
+
+        return mjs;
     }
 
     public static void main(String[] args) {

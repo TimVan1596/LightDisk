@@ -15,6 +15,8 @@ public class ReqContants {
     public static final String REQ_BLOCK = "/block";
     /** REQ_HEARTBEAT = 心跳消息大类 */
     public static final String REQ_HEARTBEAT = "/heartbeat";
+    /** REQ_TRANSACTION = 交易大类 */
+    public static final String REQ_TRANSACTION = "/transaction";
 
 
     /**------------------------分类-主页 REQ_INDEX-------------------------*/
@@ -34,6 +36,12 @@ public class ReqContants {
     /**------------------------分类-心跳消息 REQ_HEARTBEAT-------------------------*/
     /** REQ_BLOCK_GET_BLOCK_LIST = 获得心跳消息列表 */
     public static final String REQ_HEARTBEAT_GET_HEARTBEAT_LIST = "/GetHeartbeatList";
+
+
+    /**------------------------分类-交易 REQ_TRANSACTION-------------------------*/
+    /** REQ_TRANSACTION_GET_TRANSACTION_LIST = 获得交易列表 */
+    public static final String REQ_TRANSACTION_GET_TRANSACTION_LIST = "/GetTransactionList";
+
 
     /** REQ_LOGIN = 进入登录页面 /login */
     public static final String REQ_LOGIN = "/login";

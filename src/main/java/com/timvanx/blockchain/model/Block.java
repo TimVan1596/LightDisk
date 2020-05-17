@@ -140,6 +140,25 @@ public class Block {
     }
 
     /**
+     * 搜索交易的监控板
+     */
+    public static void transactionSearchBoard(List<Transaction> transactions) {
+        System.out.println("--交易监控板----");
+
+        for (Transaction transaction : transactions) {
+            System.out.println("----");
+            DateTime blockTime = new DateTime(transaction.getTimestamp());
+            System.out.println("生成时间戳:" + transaction.getTimestamp() + "(" + blockTime + ")");
+            System.out.println("交易hash:" + transaction.getHash());
+            System.out.println("收款人:" + transaction.getPublicKey());
+            System.out.println("script字符串:" + transaction.getScriptString());
+            System.out.println("----");
+        }
+
+        System.out.println("-------");
+    }
+
+    /**
      * 从JSON数据获得Block
      *
      * @return 返回JSON生成的block

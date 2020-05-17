@@ -1,12 +1,15 @@
 package com.timvanx.cmd;
 
 import cn.hutool.core.date.DateTime;
+import com.timvanx.blockchain.model.Block;
+import com.timvanx.blockchain.model.Transaction;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.blockchain.model.ECKey;
 import com.timvanx.lightdisk.LightDisk;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -45,6 +48,7 @@ public class Launcher {
             System.out.println("我的公钥:" + publicKey);
             System.out.println("\n\t 1、Gossip监控");
             System.out.println("\t 2、挖矿");
+            System.out.println("\t 3、搜索交易");
             System.out.println("\t 9、区块链监控");
             System.out.println("\t 0、退出登录");
             Scanner scanner = new Scanner(System.in);
@@ -62,9 +66,22 @@ public class Launcher {
                     System.out.println("请输出您需要存储的信息");
                     String data = scanner.next();
                     System.out.println("+++++挖矿中....");
-                    lightDisk.mineBlock(publicKey,data);
+                    lightDisk.mineBlock(publicKey, data);
                     System.out.println("+++++成功挖出");
-                    System.out.println("最新区块高度为："+lightDisk.getLocalChainHeight());
+                    System.out.println("最新区块高度为：" + lightDisk.getLocalChainHeight());
+                    break;
+                }
+                case 3: {
+                    System.out.println("请输出需要查询的公钥(搜索全部输入-1)");
+                    String option = scanner.next();
+                    if ("-1".equals(option)) {
+                        List<Transaction> transactions = lightDisk.getTransactionList();
+                        Block.transactionSearchBoard(transactions);
+                    } else {
+                        List<Transaction> transactions
+                                = lightDisk.getTransactionListByPublicKey(option);
+                        Block.transactionSearchBoard(transactions);
+                    }
                     break;
                 }
                 case 9: {
@@ -76,8 +93,8 @@ public class Launcher {
                     int data = scanner.nextInt();
                     //是否打开详细信息
                     boolean isOpenTX = false;
-                    if (data == 1){
-                        isOpenTX =true;
+                    if (data == 1) {
+                        isOpenTX = true;
                     }
                     lightDisk.lightBoard(isOpenTX);
                     break;
@@ -92,6 +109,7 @@ public class Launcher {
         }
 
     }
+
 
     private static boolean loginUI() {
         //是否终止循环

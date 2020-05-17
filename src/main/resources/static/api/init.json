@@ -9,7 +9,6 @@
     "href": "/index.html"
   },
   "menuInfo": [
-
     {
       "title": "工具",
       "icon": "fa fa-address-book",
@@ -29,12 +28,17 @@
           "target": "_self"
         },
         {
+          "title": "搜索交易",
+          "href": "page/transactionBoard.html",
+          "icon": "fa fa-search",
+          "target": "_self"
+        },
+        {
           "title": "挖矿",
           "href": "page/mineblock.html",
           "icon": "fa fa-btc",
           "target": "_self"
-        }
-      ,
+        },
         {
           "title": "监控模块",
           "href": "",

@@ -22,7 +22,8 @@ public class ReqContants {
     /**------------------------分类-主页 REQ_INDEX-------------------------*/
     /** REQ_GET_WALLTE = 获得钱包信息 */
     public static final String REQ_GET_WALLTE = "/GetWallet";
-
+    /** REQ_GET_IP_ADDRESS = 获得IP地址 */
+    public static final String REQ_GET_IP_ADDRESS = "/GetIP";
 
     /**------------------------分类-区块 REQ_BLOCK-------------------------*/
     /** REQ_BLOCK_GET_BLOCK_LIST = 获得区块列表 */

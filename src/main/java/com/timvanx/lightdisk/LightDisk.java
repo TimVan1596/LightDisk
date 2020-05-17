@@ -30,6 +30,14 @@ public class LightDisk {
     BlockChain blockChain = null;
     long heartBeatID;
 
+    /** uri=本机的URI
+     * seedNode = 种子节点的URI
+     * */
+    @Getter
+    NodeURI uri;
+    @Getter
+    NodeURI seedNode;
+
     /**
      * 心跳消息列表
      */
@@ -52,10 +60,13 @@ public class LightDisk {
      * 构造函数的初始化
      */
     public LightDisk(NodeURI uri, NodeURI seedNode) {
+        //配置初始化
         gossip = GossipCommunicateLayer
                 .getGossipExecute(uri, seedNode);
         blockChain = new BlockChain();
         heartBeatID = 0;
+        this.uri = uri;
+        this.seedNode = seedNode;
 
         listenThread = new Thread(() -> {
             while (!THREAD_EXIT) {

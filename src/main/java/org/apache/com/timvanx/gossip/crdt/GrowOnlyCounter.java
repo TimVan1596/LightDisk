@@ -18,11 +18,16 @@
 
 package org.apache.com.timvanx.gossip.crdt;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.Getter;
 import org.apache.com.timvanx.gossip.manager.GossipManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
+@JsonIgnoreProperties({"handler","kkkkk"})
 public class GrowOnlyCounter implements CrdtCounter<Long, GrowOnlyCounter> {
   
   private final Map<String, Long> counters = new HashMap<>();

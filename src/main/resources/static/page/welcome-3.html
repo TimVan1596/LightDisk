@@ -57,6 +57,24 @@
     .main_btn > p {
         height: 40px;
     }
+
+    .account-title {
+        font-size: 15px;
+        font-weight: bold;
+        margin-right: 1%;
+    }
+
+    .account-div{
+        margin-bottom: 2%;
+    }
+    .account-uri{
+        text-decoration: none;
+        cursor: pointer;
+        color: #005980;
+        line-height: 1.5;
+        text-align: left;
+        font-size: 1rem;
+    }
 </style>
 <body>
 <div class="layuimini-container">
@@ -147,21 +165,39 @@
                     <div class="layui-card-header">您的账户</div>
                     <div class="layui-card-body" style="    word-break: break-all;
     width: 65%;">
-                    <span>
-                                            公钥：<span id="public-key"></span>
-                                            <br>
-                    </span>
+                        <div class="account-div">
+                            <span class="account-title">公钥 </span>
+                            <span id="public-key"></span>
+                        </div>
+                        <div class="account-div">
+                            <div>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius" onclick="displayPrivateKey()">
+                                    <i id="privateKey-hidden-i" class="fa fa-toggle-on"></i>
+                                    <span id="privateKey-hidden-text">显示</span>
 
-                        <span>
-                                            私钥：<span id="private-key"></span>
-                                            <br>
-                    </span>
+                                </button>
+                            </div>
+
+                            <span class="account-title">私钥 </span>
+                            <span id="private-key"
+                                  style="display: none"></span>
+                            <span id="private-key-hidden"
+                            >**********</span>
+                        </div>
+                        <div class="account-div">
+                            <span class="account-title">URI </span>
+                            <span id="uri" class="account-uri"></span>
+                        </div>
+                        <div class="account-div">
+                            <span class="account-title">种子URI </span>
+                            <span id="seedNode" class="account-uri"></span>
+                        </div>
 
                         <br>
 
                         <button class="layui-btn layui-btn-danger"
                                 style="margin-top: 2%" onclick="logout()">
-                            <i class="fa fa-power-off"></i>                                                             注销
+                            <i class="fa fa-power-off"></i> 注销
                         </button>
 
                     </div>

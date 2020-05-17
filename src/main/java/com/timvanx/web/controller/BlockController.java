@@ -81,8 +81,6 @@ public class BlockController {
         response.setContentType("application/text; charset=utf-8");
         Map<String, Object> mjs = new LinkedHashMap<>();
         String dataStr = request.getParameter("data");
-
-
         HttpSession session = request.getSession();
         LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
 

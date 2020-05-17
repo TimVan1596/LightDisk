@@ -1,6 +1,9 @@
 package com.timvanx.web.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
+import com.timvanx.lightdisk.LightDisk;
+import com.timvanx.web.config.LightDiskHungrySingleton;
 import com.timvanx.web.config.ReqContants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +27,10 @@ import java.util.Map;
 @RequestMapping(value = ReqContants.REQ_INDEX)
 public class IndexController {
     /**
-     * 登录页 /login
+     * 获得钱包信息 /common/GetWallet
      */
     @PostMapping(ReqContants.REQ_GET_WALLTE)
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void GetWallet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // get解决中文乱码
         response.setContentType("application/text; charset=utf-8");
         HttpSession session = request.getSession();
@@ -56,6 +59,33 @@ public class IndexController {
         } else {
             mjs.put("code", 1);
             mjs.put("msg", "获取失败");
+        }
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
+    }
+
+    /**
+     * 获得IP地址 /common/GetIP
+     */
+    @PostMapping(ReqContants.REQ_GET_IP_ADDRESS)
+    public void getIP(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
+        Map<String, Object> mjs = new LinkedHashMap<>();
+
+        LightDisk lightDisk = LightDiskHungrySingleton.getLightDisk();
+        if (ObjectUtil.isNull(lightDisk)) {
+            mjs.put("code", 1);
+            mjs.put("msg", "获取失败,LightDisk实例异常");
+        } else {
+            mjs.put("code", 0);
+            mjs.put("msg", "");
+            Map<String, Object> uriMap = new LinkedHashMap<>();
+            uriMap.put("URI",lightDisk.getUri().getIpAddress());
+            uriMap.put("SeedNode",lightDisk.getSeedNode().getIpAddress());
+            mjs.put("data", uriMap);
         }
 
         // 把数据转化为json格式

@@ -94,8 +94,12 @@ public class LoginController {
         String uriType = request.getParameter("uriType");
         Map<String, Object> mjs = new LinkedHashMap<>();
 
-//        System.out.println("publicKey="+publicKey);
-//        System.out.println("privateKey="+privateKey);
+        privateKey = privateKey.trim();
+        publicKey = publicKey.trim();
+        uriType = uriType.trim();
+
+        //System.out.println("publicKey="+publicKey);
+        //System.out.println("privateKey="+privateKey);
         try {
 
             if (!ECKey.isKeyMatch(publicKey, privateKey)) {
@@ -104,12 +108,28 @@ public class LoginController {
             } else {
                 NodeURI uri = null;
 
-                if ("1".equals(uriType)) {
-                    uri = new NodeURI("udp://localhost:5400", "0");
-                } else if ("2".equals(uriType)) {
-                    uri = new NodeURI("udp://localhost:5402", "2");
-                } else if ("3".equals(uriType)) {
-                    uri = new NodeURI("udp://localhost:5403", "3");
+                switch (uriType) {
+                    case "0":
+                        uri = new NodeURI("udp://localhost:5400", "0");
+                        break;
+                    case "1":
+                        uri = new NodeURI("udp://localhost:5401", "1");
+                        break;
+                    case "2":
+                        uri = new NodeURI("udp://localhost:5402", "2");
+                        break;
+                    case "3":{
+                        uri = new NodeURI("udp://localhost:5403", "3");
+                        break;
+                    }
+                    case "4":{
+                        uri = new NodeURI("udp://localhost:5404", "4");
+                        break;
+                    }
+
+                    default:{
+
+                    }
                 }
                 NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
                 LightDiskHungrySingleton.initial(uri, seedNode, publicKey, privateKey);

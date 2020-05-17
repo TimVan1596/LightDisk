@@ -2,7 +2,6 @@ package com.timvanx.web.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -20,8 +19,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/index.html", "/registry","/page/login-1.html","/page/newwallet.html")
-                .excludePathPatterns("/assets/**");
+                .excludePathPatterns("/login", "/registry","/page/login-1.html","/page/newwallet.html")
+                .excludePathPatterns("/assets/**","/lib/**","/js/**"
+                        ,"/css/**","/images/**","/api/**");
 
     }
 

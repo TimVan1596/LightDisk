@@ -24,13 +24,13 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+
         HttpSession session = request.getSession();
 
         String publickey = (String) session.getAttribute("publicKey");
 
-        if (StrUtil.hasEmpty(publickey)) {
-            return true;
-        } else if (publickey.length() < 2) {
+        if (StrUtil.hasEmpty(publickey) || (publickey.length() < 2)) {
 
             session.setAttribute("publicKey", "");
             session.setAttribute("privateKey", "");
@@ -38,14 +38,16 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             try {
                 LightDisk lightDisk =
                         LightDiskHungrySingleton.getLightDisk();
-                GossipCommunicateLayer gossip = lightDisk.getGossip();
-                //关闭lightDisk
-                lightDisk.shutDown();
+                if (lightDisk != null) {
+                    //关闭lightDisk
+                    lightDisk.shutDown();
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            request.getRequestDispatcher("/index.html").forward(request, response);
+            request.getRequestDispatcher("/page/login-1.html").forward(request, response);
             return false;
         } else {
             // 已登录，放行

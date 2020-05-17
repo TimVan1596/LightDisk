@@ -28,7 +28,7 @@
           "target": "_self"
         },
         {
-          "title": "搜索交易",
+          "title": "文件搜索",
           "href": "page/transactionBoard.html",
           "icon": "fa fa-search",
           "target": "_self"

@@ -1,6 +1,7 @@
 package com.timvanx.web.controller;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.timvanx.blockchain.model.ECKey;
 import com.timvanx.gossip.GossipCommunicateLayer;
@@ -107,30 +108,12 @@ public class LoginController {
                 mjs.put("msg", "公私钥验证失败");
             } else {
                 NodeURI uri = null;
+                String ip = NodeURI.getLocalIP();
+                int port = 5400;
+                int id = RandomUtil.randomInt(1000, 2000);
+                port += Integer.parseInt(uriType);
+                uri = new NodeURI(ip, port, String.valueOf(id));
 
-                switch (uriType) {
-                    case "0":
-                        uri = new NodeURI("udp://localhost:5400", "0");
-                        break;
-                    case "1":
-                        uri = new NodeURI("udp://localhost:5401", "1");
-                        break;
-                    case "2":
-                        uri = new NodeURI("udp://localhost:5402", "2");
-                        break;
-                    case "3":{
-                        uri = new NodeURI("udp://localhost:5403", "3");
-                        break;
-                    }
-                    case "4":{
-                        uri = new NodeURI("udp://localhost:5404", "4");
-                        break;
-                    }
-
-                    default:{
-
-                    }
-                }
                 NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
                 LightDiskHungrySingleton.initial(uri, seedNode, publicKey, privateKey);
 

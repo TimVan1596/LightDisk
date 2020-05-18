@@ -18,6 +18,17 @@ public class NodeURI {
         this.id = id;
     }
 
+    /**
+     * @param ip ip地址，如192.168.1.1
+     * @param port 端口号
+     * @param id id号
+     * */
+    public NodeURI(String ip,int port, String id) {
+        //udp://localhost:5400
+        this.ipAddress = "udp://" + ip + ":" + port;
+        this.id = id;
+    }
+
 
     public String getIpAddress() {
         return ipAddress;
@@ -35,24 +46,23 @@ public class NodeURI {
         this.id = id;
     }
 
-    public static void getLocalIP() {
+    /** 获取本地IP地址 */
+    public static String getLocalIP() {
         // TODO Auto-generated method stub
         InetAddress ia=null;
         try {
             ia= InetAddress.getLocalHost();
-
-            String localname=ia.getHostName();
-            String localip=ia.getHostAddress();
-            System.out.println("本机名称是："+ localname);
-            System.out.println("本机的ip是 ："+localip);
+            return ia.getHostAddress();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return "localhost";
     }
 
     public static void main(String[] args) {
-        getLocalIP();
+
+        System.out.println(getLocalIP());
     }
 
 

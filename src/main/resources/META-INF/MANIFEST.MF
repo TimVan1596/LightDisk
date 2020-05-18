@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Main-Class: com.timvanx.cmd.Launcher
+Class-Path: spring-aop-5.0.5.RELEASE.jar bitcoinj-core-0.15.8.jar netty-
+ codec-dns-4.1.23.Final.jar spring-web-5.0.5.RELEASE.jar javax.annotatio
+ n-api-1.3.2.jar hutool-all-5.3.2.jar netty-handler-proxy-4.1.23.Final.j
+ ar slf4j-api-1.7.25.jar bcprov-jdk15to18-1.63.jar spring-boot-starter-l
+ ogging-2.0.1.RELEASE.jar hibernate-validator-6.0.9.Final.jar spring-boo
+ t-autoconfigure-2.0.1.RELEASE.jar netty-codec-socks-4.1.23.Final.jar ne
+ tty-resolver-dns-4.1.23.Final.jar spring-boot-devtools-2.0.1.RELEASE.ja
+ r spring-boot-2.0.1.RELEASE.jar tomcat-embed-core-8.5.29.jar spring-bea
+ ns-5.0.5.RELEASE.jar spring-boot-starter-tomcat-2.0.1.RELEASE.jar okio-
+ 1.15.0.jar netty-transport-4.1.23.Final.jar netty-common-4.1.23.Final.j
+ ar spring-boot-starter-2.0.1.RELEASE.jar jackson-core-2.8.5.jar netty-r
+ esolver-4.1.23.Final.jar jackson-module-parameter-names-2.8.5.jar anima
+ l-sniffer-annotations-1.17.jar snakeyaml-1.19.jar log4j-api-2.10.0.jar 
+ netty-codec-4.1.23.Final.jar tomcat-embed-websocket-8.5.29.jar jackson-
+ annotations-2.8.5.jar listenablefuture-9999.0-empty-to-avoid-conflict-w
+ ith-guava.jar jackson-datatype-jdk8-2.8.5.jar error_prone_annotations-2
+ .2.0.jar guava-27.1-jre.jar fastjson-1.2.68.jar jcip-annotations-1.0.ja
+ r protobuf-java-3.11.4.jar spring-boot-starter-json-2.0.1.RELEASE.jar g
+ son-2.8.2.jar jul-to-slf4j-1.7.25.jar log4j-1.2.17.jar logback-core-1.2
+ .3.jar netty-buffer-4.1.23.Final.jar spring-context-5.0.5.RELEASE.jar f
+ ailureaccess-1.0.1.jar log4j-to-slf4j-2.10.0.jar vertx-core-3.5.4.jar j
+ boss-logging-3.3.2.Final.jar commons-math-1.2.jar netty-codec-http-4.1.
+ 23.Final.jar validation-api-2.0.1.Final.jar jsr305-3.0.2.jar spring-exp
+ ression-5.0.5.RELEASE.jar jgossip-1.3.2.jar classmate-1.3.4.jar Base58-
+ 2019.01.27.jar metrics-core-3.1.2.jar jackson-datatype-jsr310-2.8.5.jar
+  checker-qual-2.5.2.jar bcprov-jdk15on-1.56.jar netty-handler-4.1.23.Fi
+ nal.jar j2objc-annotations-1.1.jar spring-jcl-5.0.5.RELEASE.jar jackson
+ -databind-2.8.5.jar tomcat-embed-el-8.5.29.jar netty-codec-http2-4.1.23
+ .Final.jar spring-boot-starter-web-2.0.1.RELEASE.jar logback-classic-1.
+ 2.3.jar spring-webmvc-5.0.5.RELEASE.jar commons-codec-1.12.jar spring-c
+ ore-5.0.5.RELEASE.jar okhttp-3.12.8.jar
+

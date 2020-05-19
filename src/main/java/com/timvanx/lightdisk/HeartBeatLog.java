@@ -74,4 +74,40 @@ public class HeartBeatLog {
             }
         }
     }
+
+    public HeartBeatLog(int type, long heartBeatID, String date,  String data) {
+        this.type = type;
+        this.heartBeatID = heartBeatID;
+        this.date = date;
+        switch (type){
+            case PUBLISH_NEW_BLOCK_TYPE:{
+                typeString = "PUBLISH_NEW_BLOCK_TYPE";
+                break;
+            }
+            case REQUEST_BLOCK_TYPE:{
+                typeString = "REQUEST_BLOCK_TYPE";
+                break;
+            }
+            case REQUEST_CHAIN_TYPE:{
+                typeString = "REQUEST_CHAIN_TYPE";
+                break;
+            }
+            case NORMAL_TYPE:{
+                typeString = "NORMAL_TYPE";
+                break;
+            }
+            case WRONG_TYPE:{
+                typeString = "WRONG_TYPE";
+                break;
+            }
+            default:{
+
+            }
+        }
+        this.data = data;
+    }
+
+    public String getHeartBeatLogData(){
+        return data;
+    }
 }

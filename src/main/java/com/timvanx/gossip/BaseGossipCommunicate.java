@@ -5,12 +5,14 @@ import com.timvanx.gossip.model.CrdtMap;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.model.ResponseJson;
 import org.apache.com.timvanx.gossip.GossipSettings;
+import org.apache.com.timvanx.gossip.LocalMember;
 import org.apache.com.timvanx.gossip.RemoteMember;
 import org.apache.com.timvanx.gossip.manager.GossipManager;
 import org.apache.com.timvanx.gossip.manager.GossipManagerBuilder;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * <h3>BlockChain</h3>
@@ -135,6 +137,33 @@ abstract public class BaseGossipCommunicate  {
         return resJson;
     }
 
+    /** 获得存活节点列表 */
+    public List<LocalMember> getLiveMembers() {
+        List<LocalMember> members = gossipService.getLiveMembers();
+//        if (members.isEmpty()) {
+//            System.out.println("Live: (none)");
+//            return;
+//        }
+//        System.out.println("Live: " + members.get(0));
+//        for (int i = 1; i < members.size(); i++) {
+//            System.out.println("    : " + members.get(i));
+//        }
+        return members;
+    }
+
+    /** 获得死亡节点列表 */
+    public List<LocalMember>  getDeadMembers() {
+        List<LocalMember> members = gossipService.getDeadMembers();
+//        if (members.isEmpty()) {
+//            System.out.println("Dead: (none)");
+//            return;
+//        }
+//        System.out.println("Dead: " + members.get(0));
+//        for (int i = 1; i < members.size(); i++) {
+//            System.out.println("    : " + members.get(i));
+//        }
+        return members;
+    }
 
     /**
      * 关闭Gossip

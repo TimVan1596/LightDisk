@@ -2,7 +2,9 @@ package com.timvanx.gossip;
 
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.model.ResponseJson;
+import org.apache.com.timvanx.gossip.LocalMember;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -148,6 +150,35 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
         }
         while (optionNum != -1);
     }
+
+    /**
+     * gossip监控（命令行版本）
+     */
+    public void liveDeadBoardCMD() {
+        List<LocalMember> liveMembers = getLiveMembers();
+        List<LocalMember> deadMembers = getDeadMembers();
+
+        printMemberInfo(liveMembers,"Live");
+        printMemberInfo(deadMembers,"Dead");
+    }
+
+    /**
+     * cmd打印成员节点信息
+     *
+     * @param members 节点列表
+     * @param state   状态,Live或Dead
+     */
+    private void printMemberInfo(List<LocalMember> members, String state) {
+        if (members.isEmpty()) {
+            System.out.println(state+": (none)");
+            return;
+        }
+        System.out.println(state+": " + members.get(0));
+        for (int i = 1; i < members.size(); i++) {
+            System.out.println("    : " + members.get(i));
+        }
+    }
+
 
     /**
      * 单元测试用例

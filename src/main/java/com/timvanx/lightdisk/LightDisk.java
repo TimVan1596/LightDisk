@@ -78,15 +78,19 @@ public class LightDisk {
                         Date date = new Date();
                         DateTime time = new DateTime(date);
                         System.out.println("当前时间：" + time);
-                        System.out.println("收到" + diff + "条新消息,id=" + gossipHeartBeatID);
-                        System.out.println("最新gossip上heartBeatID=" + gossipHeartBeatID);
+                        System.out.println("收到" + diff + "条新消息,id="
+                                + gossipHeartBeatID);
+                        System.out.println("最新gossip上heartBeatID="
+                                + gossipHeartBeatID);
                         System.out.println("本地heartBeatID=" + heartBeatID);
                         for (int i = 1; i <= diff; i++) {
                             heartBeatID++;
                             System.out.println("------消息ID=" + heartBeatID);
-                            HeartBeat heartBeat = getHeartBeatFromID(heartBeatID);
-                            heartBeatLogs.add(new HeartBeatLog(heartBeat.getType()
-                                    , heartBeatID, time + ""));
+                            HeartBeat heartBeat =
+                                    getHeartBeatFromID(heartBeatID);
+                            heartBeatLogs.add(new HeartBeatLog(
+                                    heartBeat.getType() , heartBeatID,
+                                    time + "",heartBeat.getData()));
                             processHeartBeatSortHandle(heartBeat);
 //                            System.out.println("type=" + heartBeat.getType());
 //                            System.out.println("message=" + heartBeat.getData());
@@ -280,6 +284,47 @@ public class LightDisk {
     public void lightBoard(boolean isOpenTX) {
         //是否打开详细交易信息
         blockChain.blockChainBoard(isOpenTX);
+    }
+
+    /**
+     * heartBeatLog监控板
+     */
+    public void heartBeatLogBoard(boolean isOpenDetail) {
+        System.out.println("-------------" +
+                "heartBeatLogBoard监控板---------------");
+        Date date = new Date();
+        DateTime time = new DateTime(date);
+        System.out.println("当前时间：" + time);
+        System.out.println("最新gossip上heartBeatID="
+                + getGossipHeartBeatID());
+        System.out.println("本地heartBeatID=" + heartBeatID);
+        System.out.println("心跳消息情况：");
+        int index = 0;
+        for (HeartBeatLog heartBeatLog : getLocalHeartbeatList()) {
+            index++;
+            System.out.println("----------");
+            System.out.println("序号:" + index);
+            System.out.println("heartBeatID = "
+                    + heartBeatLog.getHeartBeatID());
+            System.out.println("type = " + heartBeatLog.getType());
+            System.out.println("种类名= "
+                    + heartBeatLog.getTypeString());
+            System.out.println("日期 = " + heartBeatLog.getDate());
+            if (isOpenDetail){
+                System.out.println("数据="+heartBeatLog.getHeartBeatLogData());
+            }
+            System.out.println("----------");
+        }
+
+        System.out.println("-----------------" +
+                "heartBeatLogBoard监控结束-------------------------");
+    }
+
+    /**
+     * 成员节点列表
+     */
+    public void membersBoard(){
+        this.getGossip().liveDeadBoardCMD();
     }
 
     /**

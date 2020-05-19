@@ -36,12 +36,10 @@ public class KillServer {
     public static void gossipPortKill() {
         System.out.println("请输入要杀掉的windows进程的端口号，如果有多个，则以逗号相隔");
         System.out.println("Please input kill port");
-        String input = "5401,5402,5403,5404,5405";
-        String[] split = input.split(",");
         Set<Integer> ports = new HashSet<>();
 
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 0; i <= 6; i++) {
             ports.add((5400 + i));
         }
 
@@ -58,6 +56,7 @@ public class KillServer {
     public void start(int port) {
         Runtime runtime = Runtime.getRuntime();
         try {
+            System.out.println("尝试对"+port+"端口清理...");
             //查找进程号
             Process p = runtime.exec("cmd /c netstat -ano | findstr \"" + port + "\"");
             InputStream inputStream = p.getInputStream();

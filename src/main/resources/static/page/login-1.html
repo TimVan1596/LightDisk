@@ -10,137 +10,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/page/login-1.css" media="all">
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden
-        }
 
-        body {
-            background: #1E9FFF;
-        }
-
-        body:after {
-            content: '';
-            background-repeat: no-repeat;
-            background-size: cover;
-            -webkit-filter: blur(3px);
-            -moz-filter: blur(3px);
-            -o-filter: blur(3px);
-            -ms-filter: blur(3px);
-            filter: blur(3px);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-        }
-
-        .layui-container {
-            width: 100%;
-            height: 100%;
-            overflow: hidden
-        }
-
-        .admin-login-background {
-            width: 360px;
-            height: 300px;
-            position: absolute;
-            left: 50%;
-            top: 20%;
-            margin-left: -180px;
-            margin-top: -100px;
-        }
-
-        .logo-title {
-            text-align: center;
-            letter-spacing: 2px;
-            padding: 14px 0;
-        }
-
-        .logo-title h1 {
-            color: #1E9FFF;
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .logo-title h3 {
-            color: #1E9FFF;
-            font-size: 20px;
-        }
-
-        .login-form {
-            background-color: #fff;
-            border: 1px solid #fff;
-            border-radius: 3px;
-            padding: 14px 20px;
-            box-shadow: 0 0 8px #eeeeee;
-        }
-
-        .login-form .layui-form-item {
-            position: relative;
-        }
-
-        .login-form .layui-form-item label {
-            position: absolute;
-            left: 1px;
-            top: 1px;
-            width: 38px;
-            line-height: 36px;
-            text-align: center;
-            color: #d2d2d2;
-        }
-
-        .login-form .layui-form-item input {
-            padding-left: 36px;
-        }
-
-        .captcha {
-            width: 60%;
-            display: inline-block;
-        }
-
-        .captcha-img {
-            display: inline-block;
-            width: 34%;
-            float: right;
-        }
-
-        .captcha-img img {
-            height: 34px;
-            border: 1px solid #e6e6e6;
-            height: 36px;
-            width: 100%;
-        }
-
-        .layui-form-label {
-            border-color: #e6e6e6;
-            width: 110px;
-            padding: 8px 15px;
-            height: 38px;
-            line-height: 20px;
-            border-width: 1px;
-            border-style: solid;
-            border-radius: 2px 0 0 2px;
-            text-align: center;
-            background-color: #FBFBFB;
-            overflow: hidden;
-            box-sizing: border-box;
-            color: black;
-        }
-    </style>
 </head>
 <body>
 <div class="layui-container">
     <div class="admin-login-background">
         <div class="layui-form login-form">
-            <form class="layui-form" action="">
+            <form class="layui-form" action="" lay-filter="login-form">
                 <div class="layui-form-item logo-title">
                     <h1>基于区块链的存储系统</h1>
                     <h3>LightDisk</h3>
@@ -149,47 +30,112 @@
                     <label class="layui-icon layui-icon-username" for="username"></label>
                     <textarea type="text" name="username" lay-verify="required|account" placeholder="请输入您的公钥"
                               autocomplete="off" class="layui-textarea"></textarea>
-
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
                     <textarea type="password" name="password" lay-verify="required|password" placeholder="请输入您的私钥"
                               autocomplete="off" class="layui-textarea"></textarea>
                 </div>
+                <!--本地IP端口  -->
+                <!--本地节点端口号和ID  -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label" style="left: 0;top: 0;
-    width: 32%;line-height: 20px;color: #090707c9;">选择线路</label>
-                    <div class="layui-input-block">
-                        <select name="uri" lay-filter="type">
-                            <option value=""></option>
-                            <option value="0">线路5400</option>
-                            <option value="1">线路5401</option>
-                            <option value="2" selected="">线路5402</option>
-                            <option value="3">线路5403</option>
-                            <option value="4">线路5404</option>
-                        </select>
-                        <div class="layui-unselect layui-form-select">
-                            <div class="layui-select-title"><input type="text" placeholder="请选择" value="线路2" readonly=""
-                                                                   class="layui-input layui-unselect"><i
-                                    class="layui-edge"></i></div>
-                            <dl class="layui-anim layui-anim-upbit">
-                                <dd lay-value="" class="layui-select-tips">请选择</dd>
-                                <dd lay-value="0" class="">线路5400</dd>
-                                <dd lay-value="1" class="">线路5401</dd>
-                                <dd lay-value="2" class="layui-this">线路5402</dd>
-                                <dd lay-value="3" class="">线路5403</dd>
-                                <dd lay-value="4" class="">线路5404</dd>
-                            </dl>
+                    <div class="layui-inline" style="
+    width: 50%;
+    /* margin-left: 2%; */
+    ">
+                        <label class="layui-form-label" style="left: 0;
+    top: 0; width: 25%;line-height: 20px;color: #090707c9;padding-right: 1px;
+    padding-left: 1px;"> IP</label>
+                        <div class="layui-input-inline" style="margin-left: 28%;width: 74%;/* color: aliceblue; */">
+                            <input type="text" name="ip" lay-verify="port" autocomplete="off" placeholder="" disabled="" style="
+    padding-left: 5px;
+    color: #9E9E9E;
+    cursor: not-allowed;
+" class="layui-input">
                         </div>
+                    </div>
+                    <div class="layui-inline" style="
+    width: 40%;"><label class="layui-form-label" style="
+    left: 0; top: 0;width: 35%;line-height: 20px;color: #090707c9;
+    padding-right: 1px;padding-left: 1px;">
+                        端口</label>
+                        <div class="layui-input-inline" style="margin-left: 32%;width: 82%;">
+                            <select name="uriType" lay-filter="type">
+                                <option value=""></option>
+                                <option value="5400">端口5400</option>
+                                <option value="5401">端口5401</option>
+                                <option value="5402" selected="">端口5402</option>
+                                <option value="5403">端口5403</option>
+                                <option value="5404">端口5404</option>
+                            </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="端口5402" readonly="" class="layui-input layui-unselect" name=""><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="" class="layui-select-tips">请选择</dd><dd lay-value="5400" class="">端口5400</dd><dd lay-value="5401" class="">端口5401</dd><dd lay-value="5402" class="layui-this">端口5402</dd><dd lay-value="5403" class="">端口5403</dd><dd lay-value="5404" class="">端口5404</dd></dl></div>
 
+
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <!--种子节点IP地址  -->
+                <div class="layui-form-item">
+
+                    <label class="layui-form-label" style="left: 0;top: 0;
+                        width: 32%;line-height: 20px;color: #090707c9;">
+                        种子节点</label>
+                    <div class="ip-div">
+                        <input type="text" name="ip_b_1" id="ip_b_1" class="IPInput">
+                        <span>.</span>
+                        <input type="text" name="ip_b_2" id="ip_b_2" class="IPInput">
+                        <span>.</span>
+                        <input type="text" name="ip_b_3" id="ip_b_3" class="IPInput">
+                        <span>.</span>
+                        <input type="text" name="ip_b_4" id="ip_b_4" class="IPInput">
                     </div>
                 </div>
+                <!--种子节点端口号和ID  -->
                 <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-vercode" for="captcha"></label>
-                    <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码"
-                           autocomplete="off" class="layui-input verification captcha" ">
-                    <div class="captcha-img">
-                        <img id="captchaPic" src="../images/captcha.jpg">
+                    <div class="layui-inline" style="
+    width: 40%;
+"><label class="layui-form-label" style="
+    left: 0; top: 0;width: 35%;line-height: 20px;color: #090707c9;
+    padding-right: 1px;padding-left: 1px;">
+                        端口</label>
+                        <div class="layui-input-inline" style="margin-left: 32%;width: 82%;">
+                            <select name="seedPort" lay-filter="type">
+                                <option value=""></option>
+                                <option value="5400" selected="">端口5400</option>
+                                <option value="5401">端口5401</option>
+                                <option value="5402">端口5402</option>
+                                <option value="5403">端口5403</option>
+                                <option value="5404">端口5404</option>
+                            </select>
+                            <div class="layui-unselect layui-form-select">
+                                <div class="layui-select-title"><input type="text" placeholder="请选择" value="端口5402"
+                                                                       readonly="" class="layui-input layui-unselect"><i
+                                        class="layui-edge"></i></div>
+                                <dl class="layui-anim layui-anim-upbit" style="">
+                                    <dd lay-value="" class="layui-select-tips">请选择</dd>
+                                    <dd lay-value="5400" class="layui-this">端口5400</dd>
+                                    <dd lay-value="5401" class="">端口5401</dd>
+                                    <dd lay-value="5402" class="">端口5402</dd>
+                                    <dd lay-value="5403" class="">端口5403</dd>
+                                    <dd lay-value="5404" class="">端口5404</dd>
+                                </dl>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="
+    width: 50%;
+    margin-left: 2%;
+">
+                        <label class="layui-form-label" style="left: 0;
+    top: 0; width: 25%;line-height: 20px;color: #090707c9;padding-right: 1px;
+    padding-left: 1px;">
+                            ID</label>
+                        <div class="layui-input-inline" style="margin-left: 28%;width: 74%;">
+                            <input type="text" name="seedID" lay-verify="port" autocomplete="off" placeholder=""
+                                   style="" class="layui-input">
+                        </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -216,86 +162,7 @@
 <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="../lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
 <script src="../js/common.js"></script>
-<script>
-    layui.use(['form', 'layer', 'jquery'], function () {
-        var layer = layui.layer;
+<script src="../js/page/login-1.js"></script>
 
-        var form = layui.form,
-            layer = parent.layer === undefined ? layui.layer : top.layer
-        $ = layui.jquery;
-        // 登录过期的时候，跳出ifram框架
-        if (top.location != self.location) top.location = self.location;
-
-        // 粒子线条背景
-        $(document).ready(function () {
-            $('.layui-container').particleground({
-                dotColor: '#7ec7fd',
-                lineColor: '#7ec7fd'
-            });
-        });
-
-        // 进行登录操作
-        form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
-                return false;
-            }
-            if (data.password == '') {
-                layer.msg('密码不能为空');
-                return false;
-            }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-
-            //登录loading
-            layer.load(1);
-
-            $.ajax({
-                type: "post",
-                url: "/login",
-                data: {
-                    userName: data.username
-                    , passWord: data.password
-                    , uriType: data.uri
-                },
-                success: function (ret) {
-                    layer.closeAll('loading');
-                    ret = eval("(" + ret + ")");
-                    if (ret['code'] === 0) {
-                        layer.msg('登录成功', function () {
-                            window.location = '../index.html';
-                        });
-                    } else {
-                        layer.msg(ret['msg'], {
-                            time: 5000
-                        });
-                    }
-                },
-                error: function () {
-                    layer.closeAll('loading');
-                    layer.msg("未知错误");
-                }
-            });
-
-
-            return false;
-        });
-    });
-
-    function registry() {
-        //iframe层
-        layer.open({
-            type: 2,
-            title: '生成新钱包，请牢记！',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['520px', '620px'],
-            content: ['page/newwallet.html']
-        });
-    }
-</script>
 </body>
 </html>

@@ -84,7 +84,9 @@ public class IndexController {
             mjs.put("msg", "");
             Map<String, Object> uriMap = new LinkedHashMap<>();
             uriMap.put("URI",lightDisk.getUri().getIpAddress());
+            uriMap.put("id",lightDisk.getUri().getId());
             uriMap.put("SeedNode",lightDisk.getSeedNode().getIpAddress());
+            uriMap.put("SeedNodeID",lightDisk.getSeedNode().getId());
             mjs.put("data", uriMap);
         }
 
@@ -92,6 +94,8 @@ public class IndexController {
         String json = JSON.toJSONString(mjs);
         response.getWriter().write(json);
     }
+
+
 
 
     static void genMap(Map<String, Object> mjs, String publickey, String privatekey) {

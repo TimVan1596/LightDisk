@@ -89,15 +89,22 @@ public class LoginController {
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // get解决中文乱码
         response.setContentType("application/text; charset=utf-8");
-
+//        ip: 192.168.0.103
+//        uriType: 5402
+//        seedNodeIP: 192.168.0.103
+//        seedNodePort: 5400
+//        seedNodeID: 253833
         String publicKey = request.getParameter("userName");
         String privateKey = request.getParameter("passWord");
-        String uriType = request.getParameter("uriType");
+        String ip = request.getParameter("ip");
+        int port = Integer.parseInt(request.getParameter("port"));
+        String seedNodeIP = request.getParameter("seedNodeIP");
+        int seedNodePort = Integer.parseInt(request.getParameter("seedNodePort"));
+        int seedNodeID = Integer.parseInt(request.getParameter("seedNodeID"));
         Map<String, Object> mjs = new LinkedHashMap<>();
 
         privateKey = privateKey.trim();
         publicKey = publicKey.trim();
-        uriType = uriType.trim();
 
         //System.out.println("publicKey="+publicKey);
         //System.out.println("privateKey="+privateKey);
@@ -108,13 +115,13 @@ public class LoginController {
                 mjs.put("msg", "公私钥验证失败");
             } else {
                 NodeURI uri = null;
-                String ip = NodeURI.getLocalIP();
-                int port = 5400;
-                int id = RandomUtil.randomInt(1000, 2000);
-                port += Integer.parseInt(uriType);
-                uri = new NodeURI(ip, port, String.valueOf(id));
+                NodeURI seedNode = null;
+                int id = RandomUtil.randomInt(1000000, 2000000);
 
-                NodeURI seedNode = new NodeURI("udp://localhost:5400", "0");
+                uri = new NodeURI(ip, port, String.valueOf(id));
+                seedNode = new NodeURI(seedNodeIP, seedNodePort
+                        , String.valueOf(seedNodeID));
+
                 LightDiskHungrySingleton.initial(uri, seedNode, publicKey, privateKey);
 
                 genKeyMap(publicKey, privateKey, mjs);
@@ -158,6 +165,26 @@ public class LoginController {
         mjs.put("code", 0);
         mjs.put("msg", "获取成功");
         mjs.put("data", keyPairMap);
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
+    }
+
+    /**
+     * 获得本机IP地址 /getLocalIP
+     */
+    @PostMapping(ReqContants.REQ_GET_LOCAL_IP)
+    public void getLocalIP(HttpServletRequest request, HttpServletResponse response)throws IOException
+    {
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        String ip = NodeURI.getLocalIP();
+
+        mjs.put("code", 0);
+        mjs.put("msg", "");
+        mjs.put("data", ip);
 
         // 把数据转化为json格式
         String json = JSON.toJSONString(mjs);

@@ -47,7 +47,9 @@ function getIP(){
             ret = eval("(" + ret + ")");
             if (ret['code'] === 0) {
                 $("#uri").text(ret["data"]["URI"]);
+                $("#id").text(ret["data"]["id"]);
                 $("#seedNode").text(ret["data"]["SeedNode"]);
+                $("#seedNodeID").text(ret["data"]["SeedNodeID"]);
             } else {
                 layer.msg('信息加载失败');
                 logout();

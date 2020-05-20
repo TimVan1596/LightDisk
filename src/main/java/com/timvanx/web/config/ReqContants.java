@@ -51,4 +51,7 @@ public class ReqContants {
 
     /** REQ_REGISTRY = 注册/生成新钱包 /registry */
     public static final String REQ_REGISTRY = "/registry";
+    /** REQ_GET_LOCAL_IP = 获得本机IP地址  */
+    public static final String REQ_GET_LOCAL_IP= "/getLocalIP";
+
 }

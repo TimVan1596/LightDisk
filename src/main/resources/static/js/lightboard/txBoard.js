@@ -1,4 +1,4 @@
-layui.use('layer', function(){
+layui.use('layer', function () {
     var layer = layui.layer;
 
 });
@@ -31,7 +31,7 @@ function onDownloadBTN() {
                     let decryptString = ret["data"];
                     layui.sessionData('cache', {
                         key: 'decodeJsonFromPrivateKey'
-                        ,value: decryptString
+                        , value: decryptString
                     });
                     var newTab = layer.open({
                         title: '',
@@ -40,12 +40,11 @@ function onDownloadBTN() {
                         maxmin: true,
                         shadeClose: true,
                         area: ['90%', '90%'],
-                        content: 'txView.html?'+"height="
-                            +height ,
+                        content: 'txView.html?' + "height="
+                            + height,
                     });
                 } else {
-                    layer.msg(ret['msg'], {
-                    });
+                    layer.msg(ret['msg'], {});
                 }
             },
             error: function () {
@@ -53,7 +52,6 @@ function onDownloadBTN() {
                 layer.msg("检验私钥匹配请求错误");
             }
         });
-
 
 
     });
@@ -293,10 +291,14 @@ $(function () {
     let scriptString = coinbase.scriptString;
     decryptString = coinbase.scriptString;
 
+
+    $("#tx0-size").text(getFileSize(getBytesLength(decryptString)));
+
+
     //最长显示字符数字
     let MAX_LENGTH = 800;
-    if(scriptString.length > MAX_LENGTH){
-        scriptString = scriptString.substring(0,MAX_LENGTH);
+    if (scriptString.length > MAX_LENGTH) {
+        scriptString = scriptString.substring(0, MAX_LENGTH);
         scriptString += "...";
     }
 
@@ -323,3 +325,22 @@ $(function () {
     });
 
 });
+
+function getFileSize(fileByte) {
+    var fileSizeByte = fileByte;
+    var fileSizeMsg = "";
+    if (fileSizeByte < 1048576) fileSizeMsg = (fileSizeByte / 1024).toFixed(2) + "KB";
+    else if (fileSizeByte == 1048576) fileSizeMsg = "1MB";
+    else if (fileSizeByte > 1048576 && fileSizeByte < 1073741824) fileSizeMsg = (fileSizeByte / (1024 * 1024)).toFixed(2) + "MB";
+    else if (fileSizeByte > 1048576 && fileSizeByte == 1073741824) fileSizeMsg = "1GB";
+    else if (fileSizeByte > 1073741824 && fileSizeByte < 1099511627776) fileSizeMsg = (fileSizeByte / (1024 * 1024 * 1024)).toFixed(2) + "GB";
+    else fileSizeMsg = "文件超过1TB";
+    return fileSizeMsg;
+}
+
+function getBytesLength(str) {
+// 在GBK编码里，除了ASCII字符，其它都占两个字符宽
+    return str.replace(/[^\x00-\xff]/g, 'xx').length;
+}
+
+

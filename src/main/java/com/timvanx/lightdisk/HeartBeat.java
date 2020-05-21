@@ -14,6 +14,7 @@ import lombok.Getter;
  **/
 @Getter
 public class HeartBeat {
+    private int heartBeatID;
     private int type;
     private String data;
 
@@ -35,6 +36,12 @@ public class HeartBeat {
         this.data = data;
     }
 
+    public HeartBeat(int heartBeatID, int type, String data) {
+        this.heartBeatID = heartBeatID;
+        this.type = type;
+        this.data = data;
+    }
+
     /**
      * 打包新区块的心跳消息
      *
@@ -42,6 +49,15 @@ public class HeartBeat {
      */
     public static HeartBeat packPublishNewBlock(String data) {
         return new HeartBeat(PUBLISH_NEW_BLOCK_TYPE, data);
+    }
+
+    /**
+     * 打包新区块的心跳消息
+     *
+     * @return 返回心跳实体
+     */
+    public static HeartBeat packPublishNewBlock(int heartBeatID,String data) {
+        return new HeartBeat(heartBeatID,PUBLISH_NEW_BLOCK_TYPE, data);
     }
 
     /**
@@ -71,6 +87,17 @@ public class HeartBeat {
      */
     public static String packPublishNewBlockBase64(String data) {
         HeartBeat heartBeat = packPublishNewBlock(data);
+        String json = JSON.toJSONString(heartBeat);
+        return Base64.encode(json);
+    }
+
+    /**
+     * 打包新区块的心跳消息
+     * @param data 信息
+     * @return 返回心跳实体JSON的Base64编码信息
+     */
+    public static String packPublishNewBlockBase64(int heartBeatID,String data) {
+        HeartBeat heartBeat = packPublishNewBlock(heartBeatID,data);
         String json = JSON.toJSONString(heartBeat);
         return Base64.encode(json);
     }

@@ -18,9 +18,9 @@ layui.use(['form', 'table'], function () {
             {field: 'key', width: 130, title: '键名'},
             // {field: 'txSize', width: 100, title: '交易数量'},
             {
-                field: 'value', width: 800, title: '值', templet: function (d) {
+                field: 'value', width: 850, title: '值', templet: function (d) {
                     //最长显示字符数字
-                    let MAX_LENGTH = 140;
+                    let MAX_LENGTH = 110;
                     let scriptString = d.value;
                     scriptString = Base64.decode(scriptString);
                     if(scriptString.length > MAX_LENGTH){

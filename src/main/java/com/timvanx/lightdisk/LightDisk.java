@@ -31,9 +31,10 @@ public class LightDisk {
     BlockChain blockChain = null;
     long heartBeatID;
 
-    /** uri=本机的URI
+    /**
+     * uri=本机的URI
      * seedNode = 种子节点的URI
-     * */
+     */
     @Getter
     NodeURI uri;
     @Getter
@@ -90,8 +91,8 @@ public class LightDisk {
                             HeartBeat heartBeat =
                                     getHeartBeatFromID(heartBeatID);
                             heartBeatLogs.add(new HeartBeatLog(
-                                    heartBeat.getType() , heartBeatID,
-                                    time + "",heartBeat.getData()));
+                                    heartBeat.getType(), heartBeatID,
+                                    time + "", heartBeat.getData()));
                             processHeartBeatSortHandle(heartBeat);
 //                            System.out.println("type=" + heartBeat.getType());
 //                            System.out.println("message=" + heartBeat.getData());
@@ -137,14 +138,8 @@ public class LightDisk {
          * NORMAL_TYPE = 9-普通信息-种类
          * WRONG_TYPE = 0-发生错误
          */
-        switch (type) {
-            case HeartBeat.PUBLISH_NEW_BLOCK_TYPE: {
-                processNewBlockHeartBeatHandle(heartBeat);
-                break;
-            }
-            default: {
-                break;
-            }
+        if (type == HeartBeat.PUBLISH_NEW_BLOCK_TYPE) {
+            processNewBlockHeartBeatHandle(heartBeat);
         }
     }
 
@@ -172,9 +167,11 @@ public class LightDisk {
             Block genesisBlock = BlockChain.generatorGenesisBlock();
             blockChain.addBlock(genesisBlock);
             String json = JSON.toJSONString(genesisBlock);
-            String base64 = HeartBeat.packPublishNewBlockBase64(json);
+            //获取当前Gossip上的心跳消息编号
+            int heartBeatID = (int) (getGossipHeartBeatID() + 1);
+            String base64 = HeartBeat.packPublishNewBlockBase64(heartBeatID, json);
             //向所有的节点发送这个消息
-            sendAllNodeHeartMsg(base64);
+            sendAllNodeHeartMsg(heartBeatID, base64);
         }
     }
 
@@ -217,9 +214,12 @@ public class LightDisk {
         verifyHasGenesisBlock();
         Block block = blockChain.mineBlock(publicKey, data);
         String json = JSON.toJSONString(block);
-        String base64 = HeartBeat.packPublishNewBlockBase64(json);
+
+        //获取当前Gossip上的心跳消息编号
+        int heartBeatID = (int) (getGossipHeartBeatID() + 1);
+        String base64 = HeartBeat.packPublishNewBlockBase64(heartBeatID, json);
         //向所有的节点发送这个消息
-        sendAllNodeHeartMsg(base64);
+        sendAllNodeHeartMsg(heartBeatID, base64);
 
         return block;
     }
@@ -236,10 +236,10 @@ public class LightDisk {
      *
      * @param message 待发送的信息(base64压缩过的HeartBeat实体JSON)
      */
-    public void sendAllNodeHeartMsg(String message) {
+    public void sendAllNodeHeartMsg(int heartBeatID, String message) {
         //获取当前Gossip上的心跳消息编号
         long gossipHeartBeatNum = getGossipHeartBeatID();
-        gossip.add(message, HEART_BEAT_KEY_PREFIX + (gossipHeartBeatNum + 1));
+        gossip.add(message, HEART_BEAT_KEY_PREFIX + heartBeatID);
         gossip.accAdd("1", "heartbeat");
     }
 
@@ -311,8 +311,8 @@ public class LightDisk {
             System.out.println("种类名= "
                     + heartBeatLog.getTypeString());
             System.out.println("日期 = " + heartBeatLog.getDate());
-            if (isOpenDetail){
-                System.out.println("数据="+heartBeatLog.getHeartBeatLogData());
+            if (isOpenDetail) {
+                System.out.println("数据=" + heartBeatLog.getHeartBeatLogData());
             }
             System.out.println("----------");
         }
@@ -324,7 +324,7 @@ public class LightDisk {
     /**
      * 成员节点列表监视器CMD
      */
-    public void membersBoardCMD(){
+    public void membersBoardCMD() {
         this.getGossip().liveDeadBoardCMD();
     }
 
@@ -501,11 +501,10 @@ public class LightDisk {
      * @param page  当前页
      * @param limit 每页显示的条数
      */
-    public List<Map<String,String>> getCrdt(int page, int limit) {
+    public List<Map<String, String>> getCrdt(int page, int limit) {
 
         return PageUtil.startReversePage(gossip.getCrdtList(), page, limit);
     }
-
 
 
     /**

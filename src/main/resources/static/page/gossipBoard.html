@@ -13,7 +13,25 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-warm  layui-btn-sm data-add-btn" lay-event="add"
+                            onclick="onMineBlockBTN()"><i class="layui-icon layui-icon-diamond"></i>
+
+                        挖矿
+                    </button>
+
+                    <!--                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>-->
+                    <!--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 详情 </button>-->
+                </div>
+            </script>
+
+            <fieldset class="table-search-fieldset">
+
+            </fieldset>
             <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+
 
             <script type="text/html" id="currentTableBar">
                 <a class="layui-btn layui-btn-normal layui-btn-sm data-count-view" lay-event="view"> 详情 </a>

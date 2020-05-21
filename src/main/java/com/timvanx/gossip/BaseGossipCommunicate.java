@@ -11,8 +11,8 @@ import org.apache.com.timvanx.gossip.manager.GossipManager;
 import org.apache.com.timvanx.gossip.manager.GossipManagerBuilder;
 
 import java.net.URI;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * <h3>BlockChain</h3>
@@ -35,6 +35,9 @@ abstract public class BaseGossipCommunicate  {
      * */
     private GossipManager gossipService  = null;
     private CrdtMap crdtMap = null;
+
+    public static Pattern pattern
+            = Pattern.compile("^[-\\+]?[\\d]*$");
 
     /**
      * 构造函数
@@ -166,10 +169,66 @@ abstract public class BaseGossipCommunicate  {
     }
 
     /**
+     * 获得CRDT列表
+     */
+    public List<Map<String, String>> getCrdtList() {
+
+        String keySetStr = crdtMap.get("ALL_KEY_NAME_SPACE");
+        if (StrUtil.hasEmpty(keySetStr)) {
+            keySetStr = "[]";
+        }
+        keySetStr = keySetStr.substring(1, keySetStr.length() - 1);
+        String[] strArray = keySetStr.split(",");
+        List<Map<String, String>> mapList = new ArrayList<>();
+
+        for (int i = 0; i < strArray.length; i++) {
+            Map<String, String> hashMap = new HashMap<>();
+            String key = strArray[i].trim();
+            String valueSetStr = crdtMap.get(key);
+            if (StrUtil.hasEmpty(valueSetStr)) {
+                valueSetStr = "[]";
+            }else if(isInteger(valueSetStr)){
+                valueSetStr = "["+valueSetStr+"]";
+            }
+
+            valueSetStr = valueSetStr.substring(1, valueSetStr.length() - 1);
+            String[] valueArr = valueSetStr.split(",");
+            hashMap.put("key", key);
+            hashMap.put("value", valueArr[0]);
+
+//            ResponseJson retCache = this.get(key);
+//            String values = null;
+//            if (ret.getCode() == 0) {
+//                values = retCache.getData();
+//            } else {
+//                values = "[]";
+//            }
+//            values = values.substring(1, values.length() - 1);
+//            String[] valueArr = values.split(",");
+//            hashMap.put("key", key);
+//            hashMap.put("value", valueArr[0]);
+
+            mapList.add(hashMap);
+        }
+        return mapList;
+    }
+
+    /**
      * 关闭Gossip
      * */
     public void close(){
         gossipService.shutdown();
     }
 
+    /*
+     * 判断是否为整数
+     * @param str 传入的字符串
+     * @return 是整数返回true,否则返回false
+     */
+
+
+    public static boolean isInteger(String str) {
+
+        return pattern.matcher(str).matches();
+    }
 }

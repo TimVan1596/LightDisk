@@ -88,6 +88,7 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
             System.out.println("\t 3、根据key查value");
             System.out.println("\t 4、添加累加器");
             System.out.println("\t 5、根据key查累加器");
+            System.out.println("\t 6、查看CRDT列表");
             System.out.println("\t 输入-1退出gossip监控");
             System.out.println("------------------------------------");
             optionNum = scanner.nextInt();
@@ -98,7 +99,6 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
                     System.out.println((String) ret.getData());
                     break;
                 }
-
                 case 2: {
                     System.out.println("请输入key");
                     String key = scanner.next();
@@ -110,12 +110,8 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
                 case 3: {
                     System.out.println("请输入key");
                     String key = scanner.next();
-                    ResponseJson ret = this.get(key);
-                    if (ret.getCode() == 0) {
-                        System.out.println(key + "=>" + ret.getData());
-                    } else {
-                        System.out.println("无此键值");
-                    }
+
+                    System.out.println(key + "=>" + getValue(key));
 
                     break;
                 }
@@ -129,7 +125,6 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
 
                     break;
                 }
-
                 case 5: {
                     System.out.println("请输入累加器名称");
                     String key = scanner.next();
@@ -138,6 +133,18 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
                         System.out.println(key + "=>" + ret.getData());
                     } else {
                         System.out.println("无此累加器");
+                    }
+
+                    break;
+                }
+                case 6: {
+                    List<Map<String, String>> mapList = getCrdtList();
+                    int i = 0;
+                    for (Map<String, String> map : mapList) {
+                        System.out.println((i++) + "=>{");
+                        System.out.println("\tkey=" + map.get("key"));
+                        System.out.println("\tvalue=" + map.get("value"));
+                        System.out.println("}");
                     }
 
                     break;
@@ -152,43 +159,25 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
         while (optionNum != -1);
     }
 
-    /**
-     * 获得CRDT列表
-     */
-    public List<Map<String,String>> getCrdtList(){
-        ResponseJson ret = this.get("ALL_KEY_NAME_SPACE");
-        String keySetStr =  ret.getData();
-        keySetStr = keySetStr.substring(1, keySetStr.length() - 1);
-        String[] strArray = keySetStr.split(",");
-        List<Map<String,String>> mapList = new ArrayList<>();
-
-        for (int i = 0; i < strArray.length; i++) {
-            Map<String,String> crdtMap  = new HashMap<>();
-            ResponseJson responseJson = this.get(strArray[i]);
-            String data =  responseJson.getData();
-            if(StrUtil.hasEmpty(data)){
-                String value ="";
-                crdtMap.put("key",strArray[i]);
-                crdtMap.put("value",value);
-            }else{
-                data = data.substring(1, data.length() - 1);
-                String[] values = data.split(",");
-                String value = values[0];
-                crdtMap.put("key",strArray[i]);
-                crdtMap.put("value",value);
-            }
-
-            mapList.add(crdtMap);
+    private String getValue(String key) {
+        ResponseJson ret = this.get(key);
+        if (ret.getCode() == 0) {
+            return ret.getData();
+        } else {
+            return "[]";
         }
-        return mapList;
     }
+
+
+
+
 
     /**
      * 获得CRDT列表的节点个数
      */
-    public int getCrdtListSize(){
+    public int getCrdtListSize() {
         ResponseJson ret = this.get("ALL_KEY_NAME_SPACE");
-        String keySetStr =  ret.getData();
+        String keySetStr = ret.getData();
         keySetStr = keySetStr.substring(1, keySetStr.length() - 1);
         String[] strArray = keySetStr.split(",");
         return strArray.length;
@@ -201,8 +190,8 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
         List<LocalMember> liveMembers = getLiveMembers();
         List<LocalMember> deadMembers = getDeadMembers();
 
-        printMemberInfo(liveMembers,"Live");
-        printMemberInfo(deadMembers,"Dead");
+        printMemberInfo(liveMembers, "Live");
+        printMemberInfo(deadMembers, "Dead");
     }
 
     /**
@@ -213,10 +202,10 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
      */
     private void printMemberInfo(List<LocalMember> members, String state) {
         if (members.isEmpty()) {
-            System.out.println(state+": (none)");
+            System.out.println(state + ": (none)");
             return;
         }
-        System.out.println(state+": " + members.get(0));
+        System.out.println(state + ": " + members.get(0));
         for (int i = 1; i < members.size(); i++) {
             System.out.println("    : " + members.get(i));
         }

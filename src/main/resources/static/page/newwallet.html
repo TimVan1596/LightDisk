@@ -13,7 +13,22 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header"
-                     style="color: #FD482C">请牢记您的账户</div>
+                     style="color: #FD482C">
+
+                    <span>请牢记您的账户</span>
+                    <span style="float: right;">
+                        <button type="button" class="layui-btn layui-btn-sm"
+                                onclick="onCopyBtn()">
+                        <i class="layui-icon layui-icon-form">复制</i></button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"
+                            onclick="onSaveKeyBTN()">
+                        <i class="layui-icon layui-icon-download-circle">
+                            保存</i>
+                    </button>
+                    </span>
+
+
+                </div>
                 <div class="layui-card-body" style="    word-break: break-all;
     width: 400px;">
 
@@ -27,12 +42,12 @@
                                             <br>
                     </span>
 
-<!--                    <div style="margin-top: 2%">-->
-<!--                        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal">-->
-<!--                            <i class="fa fa-clipboard"></i>-->
-<!--                            点击复制-->
-<!--                        </button>-->
-<!--                    </div>-->
+                    <!--                    <div style="margin-top: 2%">-->
+                    <!--                        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal">-->
+                    <!--                            <i class="fa fa-clipboard"></i>-->
+                    <!--                            点击复制-->
+                    <!--                        </button>-->
+                    <!--                    </div>-->
 
                 </div>
             </div>
@@ -45,20 +60,72 @@
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
+    layui.use('layer', function(){
+        var layer = layui.layer;
+
+    });
+
+
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+    function onCopyBtn() {
+        let publicKey = $("#public-key").text();
+        let privateKey = $("#private-key").text();
+        let content = "公钥\n" + publicKey + "\n私钥\n" + privateKey;
+        copy(content); //传递文本
+        //提示层
+        layer.msg('已复制');
+    }
+
+
+    function copy(value) {
+        let transfer = document.createElement('textarea');
+        document.body.appendChild(transfer);
+        transfer.value = value;  // 这里表示想要复制的内容
+        transfer.focus();
+        transfer.select();
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+        }
+        transfer.blur();
+        document.body.removeChild(transfer);
+
+    }
+
+    function onSaveKeyBTN() {
+
+        let publicKey = $("#public-key").text();
+        let privateKey = $("#private-key").text();
+        let content = "公钥\n" + publicKey + "\n私钥\n" + privateKey;
+        download("key.txt", content);
+    }
+
+
     $(function () {
         $.post("/registry"
-            ,function(ret){
+            , function (ret) {
                 ret = eval("(" + ret + ")");
-                if(ret['code']===0) {
+                if (ret['code'] === 0) {
                     $("#public-key").text(ret["data"]["publickey"]);
                     $("#private-key").text(ret["data"]["privatekey"]);
-                }else{
+                } else {
                     layer.msg('加载失败');
                 }
             });
     });
 </script>
-
 
 
 </body>

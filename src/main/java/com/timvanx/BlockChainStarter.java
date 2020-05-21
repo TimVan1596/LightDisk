@@ -11,7 +11,12 @@ import java.io.IOException;
  **/
 public class BlockChainStarter {
     public static void main(String[] args) throws IOException {
+        String ip = "192.168.0.103";
+        int port = 5401;
+        String[] split = ip.split("\\.");
+        String id = split[3]+port;
 
+        System.out.println("id="+id);
 
     }
 }

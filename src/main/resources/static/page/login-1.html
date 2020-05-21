@@ -91,15 +91,15 @@
                         <input type="text" name="ip_b_4" id="ip_b_4" class="IPInput">
                     </div>
                 </div>
-                <!--种子节点端口号和ID  -->
+                <!--种子节点端口号  -->
                 <div class="layui-form-item">
-                    <div class="layui-inline" style="
-    width: 40%;
+                    <div class="layui-block" style="
+    /* width: 40%; */
 "><label class="layui-form-label" style="
     left: 0; top: 0;width: 35%;line-height: 20px;color: #090707c9;
     padding-right: 1px;padding-left: 1px;">
-                        端口</label>
-                        <div class="layui-input-inline" style="margin-left: 32%;width: 82%;">
+                        种子端口</label>
+                        <div class="layui-input-block" style="margin-left: 32%;/* width: 82%; */">
                             <select name="seedPort" lay-filter="type">
                                 <option value=""></option>
                                 <option value="5400" selected="">端口5400</option>
@@ -107,36 +107,12 @@
                                 <option value="5402">端口5402</option>
                                 <option value="5403">端口5403</option>
                                 <option value="5404">端口5404</option>
-                            </select>
-                            <div class="layui-unselect layui-form-select">
-                                <div class="layui-select-title"><input type="text" placeholder="请选择" value="端口5402"
-                                                                       readonly="" class="layui-input layui-unselect"><i
-                                        class="layui-edge"></i></div>
-                                <dl class="layui-anim layui-anim-upbit" style="">
-                                    <dd lay-value="" class="layui-select-tips">请选择</dd>
-                                    <dd lay-value="5400" class="layui-this">端口5400</dd>
-                                    <dd lay-value="5401" class="">端口5401</dd>
-                                    <dd lay-value="5402" class="">端口5402</dd>
-                                    <dd lay-value="5403" class="">端口5403</dd>
-                                    <dd lay-value="5404" class="">端口5404</dd>
-                                </dl>
-                            </div>
+                            </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="端口5400" readonly="" class="layui-input layui-unselect" name=""><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="" class="layui-select-tips">请选择</dd><dd lay-value="5400" class="layui-this">端口5400</dd><dd lay-value="5401" class="">端口5401</dd><dd lay-value="5402" class="">端口5402</dd><dd lay-value="5403" class="">端口5403</dd><dd lay-value="5404" class="">端口5404</dd></dl></div>
+
 
                         </div>
                     </div>
-                    <div class="layui-inline" style="
-    width: 50%;
-    margin-left: 2%;
-">
-                        <label class="layui-form-label" style="left: 0;
-    top: 0; width: 25%;line-height: 20px;color: #090707c9;padding-right: 1px;
-    padding-left: 1px;">
-                            ID</label>
-                        <div class="layui-input-inline" style="margin-left: 28%;width: 74%;">
-                            <input type="text" name="seedID" lay-verify="port" autocomplete="off" placeholder=""
-                                   style="" class="layui-input">
-                        </div>
-                    </div>
+
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit=""

@@ -2,10 +2,12 @@ package com.timvanx.web.service;
 
 import com.timvanx.lightdisk.HeartBeatLog;
 import com.timvanx.web.dao.HeartBeatDAO;
+import org.apache.com.timvanx.gossip.LocalMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <h3>BlockChain</h3>
@@ -49,11 +51,60 @@ public class HeartBeatServiceImpl {
         return heartBeatList;
     }
 
+
     /**
-     * 获得区块链的长度
+     * 获取存活节点成员列表
+     * @param page 当前页
+     * @param limit 每页显示的条数
+     */
+    public List<LocalMember> selectLiveMember(int page, int limit){
+        List<LocalMember> liveMemberList = heartBeatDAO.selectLiveMember(page,limit);
+//        // 倒序排列
+//        Collections.reverse(blockList);
+        return liveMemberList;
+    }
+
+    /**
+     * 获取死亡节点成员列表
+     * @param page 当前页
+     * @param limit 每页显示的条数
+     */
+    public List<LocalMember> selectDeadMember(int page, int limit){
+        List<LocalMember> liveMemberList = heartBeatDAO.selectDeadMember(page,limit);
+//        // 倒序排列
+//        Collections.reverse(blockList);
+        return liveMemberList;
+    }
+
+    /**
+     * 获得CRDT数据结构列表
+     * @param page 当前页
+     * @param limit 每页显示的条数
+     */
+    public List<Map<String,String>> selectCrdt(int page, int limit){
+        //        // 倒序排列
+//        Collections.reverse(blockList);
+        return heartBeatDAO.selectCrdt(page,limit);
+    }
+
+    /**
+     * 获得心跳消息长度
      */
     public int getHeartbeatListSize(){
         return heartBeatDAO.getHeartbeatListSize();
     }
 
+    /**
+     * 获得存活结点总个数
+     */
+    public int getLiveMemberListSize(){
+        return heartBeatDAO.getLiveMemberListSize();
+    }
+
+    /**
+     * 获得CRDT总个数
+     */
+    public int getCrdtListSize(){
+        return heartBeatDAO.getCrdtListSize();
+    }
 }

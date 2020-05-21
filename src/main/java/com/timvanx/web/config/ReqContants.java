@@ -33,11 +33,15 @@ public class ReqContants {
     /** REQ_DECODE_JSON_FROM_PRIVATE_KEY = 测试文件是否能用私钥解码成JSON格式 */
     public static final String REQ_DECODE_JSON_FROM_PRIVATE_KEY = "/decodeJsonFromPrivateKey";
 
-
     /**------------------------分类-心跳消息 REQ_HEARTBEAT-------------------------*/
     /** REQ_BLOCK_GET_BLOCK_LIST = 获得心跳消息列表 */
     public static final String REQ_HEARTBEAT_GET_HEARTBEAT_LIST = "/GetHeartbeatList";
-
+    /** REQ_BLOCK_GET_BLOCK_LIST = 获得存活节点列表 */
+    public static final String REQ_HEARTBEAT_GET_LIVE_MEMBER_LIST = "/GetLiveMemberList";
+    /** REQ_HEARTBEAT_GET_DEAD_MEMBER_LIST = 获得死亡节点列表 */
+    public static final String REQ_HEARTBEAT_GET_DEAD_MEMBER_LIST = "/GetDeadMemberList";
+    /** REQ_HEARTBEAT_GET_CRDT_LIST = 获得CRDT数据结构列表 */
+    public static final String REQ_HEARTBEAT_GET_CRDT_LIST = "/GetCrdtList";
 
     /**------------------------分类-交易 REQ_TRANSACTION-------------------------*/
     /** REQ_TRANSACTION_GET_TRANSACTION_LIST = 获得交易列表 */

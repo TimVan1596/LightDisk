@@ -47,13 +47,13 @@
           "child": [
             {
               "title": "Gossip监控",
-              "href": "page/welcome-1.html",
+              "href": "page/gossipBoard.html",
               "icon": "fa fa-connectdevelop",
               "target": "_self"
             },
             {
-              "title": "后台提示",
-              "href": "page/welcome-2.html",
+              "title": "节点详细",
+              "href": "page/memberBoard.html",
               "icon": "fa fa-th-large",
               "target": "_self"
             },

@@ -11,6 +11,7 @@ import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.blockchain.model.BlockChain;
 import lombok.Getter;
 import com.timvanx.model.ResponseJson;
+import org.apache.com.timvanx.gossip.LocalMember;
 
 import java.util.*;
 
@@ -321,10 +322,36 @@ public class LightDisk {
     }
 
     /**
-     * 成员节点列表
+     * 成员节点列表监视器CMD
      */
-    public void membersBoard(){
+    public void membersBoardCMD(){
         this.getGossip().liveDeadBoardCMD();
+    }
+
+    /**
+     * 获取存活节点成员列表
+     *
+     * @param page  当前页
+     * @param limit 每页显示的条数
+     */
+    public List<LocalMember> getLiveMemberList(int page, int limit) {
+
+        List<LocalMember> members = this.getGossip().getLiveMembers();
+        //倒序分页
+        return PageUtil.startReversePage(members, page, limit);
+    }
+
+    /**
+     * 获取死亡节点成员列表
+     *
+     * @param page  当前页
+     * @param limit 每页显示的条数
+     */
+    public List<LocalMember> getDeadMember(int page, int limit) {
+
+        List<LocalMember> members = this.getGossip().getDeadMembers();
+        //倒序分页
+        return PageUtil.startReversePage(members, page, limit);
     }
 
     /**
@@ -374,6 +401,13 @@ public class LightDisk {
      */
     public int getHeartbeatListSize() {
         return heartBeatLogs.size();
+    }
+
+    /**
+     * 获得存活结点总个数
+     */
+    public int getLiveMemberListSize() {
+        return getGossip().getLiveMembers().size();
     }
 
     /**
@@ -458,6 +492,27 @@ public class LightDisk {
         mjs.put("data", PageUtil.startReversePage(transactions, page, limit));
 
         return mjs;
+    }
+
+
+    /**
+     * 获得CRDT数据结构列表
+     *
+     * @param page  当前页
+     * @param limit 每页显示的条数
+     */
+    public List<Map<String,String>> getCrdt(int page, int limit) {
+
+        return PageUtil.startReversePage(gossip.getCrdtList(), page, limit);
+    }
+
+
+
+    /**
+     * 获得CRDT总个数
+     */
+    public int getCrdtListSize() {
+        return gossip.getCrdtListSize();
     }
 
     public static void main(String[] args) {

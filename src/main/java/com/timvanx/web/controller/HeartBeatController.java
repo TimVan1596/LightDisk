@@ -7,6 +7,7 @@ import com.timvanx.lightdisk.HeartBeat;
 import com.timvanx.lightdisk.HeartBeatLog;
 import com.timvanx.web.config.ReqContants;
 import com.timvanx.web.service.HeartBeatServiceImpl;
+import org.apache.com.timvanx.gossip.LocalMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,7 @@ public class HeartBeatController {
     }
 
     /**
-     * 获得区块列表 /heartbeat/GetHeartbeatList
+     * 获得心跳消息列表 /heartbeat/GetHeartbeatList
      */
     @PostMapping(ReqContants.REQ_HEARTBEAT_GET_HEARTBEAT_LIST)
     public void GetBlockList(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -69,7 +70,92 @@ public class HeartBeatController {
         response.getWriter().write(json);
     }
 
+    /**
+     * 获得存活节点列表 /heartbeat/GetLiveMemberList
+     */
+    @PostMapping(ReqContants.REQ_HEARTBEAT_GET_LIVE_MEMBER_LIST)
+    public void GetLiveMemberList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        //page: 2  limit: 10
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
 
+        List<LocalMember> liveMemberList = heartBeatService.selectLiveMember(page,limit);
+        if (ObjectUtil.isNull(liveMemberList)) {
+            mjs.put("code", 1);
+            mjs.put("msg", "存活节点列表为空");
+            mjs.put("count", 0);
+        } else {
+            mjs.put("code", 0);
+            mjs.put("msg", "成功");
+            mjs.put("count", heartBeatService.getLiveMemberListSize());
+            mjs.put("data", liveMemberList);
+        }
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
+    }
+
+    /**
+     * 获得死亡节点列表 /heartbeat/GetDeadMemberList
+     */
+    @PostMapping(ReqContants.REQ_HEARTBEAT_GET_DEAD_MEMBER_LIST)
+    public void GetDeadMemberList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        //page: 2  limit: 10
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
+
+        List<LocalMember> liveMemberList = heartBeatService.selectDeadMember(page,limit);
+        if (ObjectUtil.isNull(liveMemberList)) {
+            mjs.put("code", 1);
+            mjs.put("msg", "死亡节点列表为空");
+            mjs.put("count", 0);
+        } else {
+            mjs.put("code", 0);
+            mjs.put("msg", "成功");
+            mjs.put("count", heartBeatService.getLiveMemberListSize());
+            mjs.put("data", liveMemberList);
+        }
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
+    }
+
+    /**
+     * 获得CRDT数据结构列表 /heartbeat/GetCrdtList
+     */
+    @PostMapping(ReqContants.REQ_HEARTBEAT_GET_CRDT_LIST)
+    public void GetCrdtList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        // get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
+        Map<String, Object> mjs = new LinkedHashMap<>();
+        //page: 2  limit: 10
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
+
+        List<Map<String,String>> mapList = heartBeatService.selectCrdt(page,limit);
+        if (ObjectUtil.isNull(mapList)) {
+            mjs.put("code", 1);
+            mjs.put("msg", "Gossip网络CRDT列表为空");
+            mjs.put("count", 0);
+        } else {
+            mjs.put("code", 0);
+            mjs.put("msg", "成功");
+            mjs.put("count", heartBeatService.getCrdtListSize());
+            mjs.put("data", mapList);
+        }
+
+        // 把数据转化为json格式
+        String json = JSON.toJSONString(mjs);
+        response.getWriter().write(json);
+    }
     public static void main(String[] args) {
         String dataStr = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAB9SURBVDhPnZCxEYAgDEXBEezttNF9HNJ9tHIGVlA+wl0CIaKPO0jz+Ens5TE/+Cy6YQpvF+5GkgSIuPvTTpG4WhsrDk0DYqt5ci6BQtz8rpZYa7xuVUoD6lZrEqiKudQfZ6we1EQNcUaalpLcPLLUQpTmogI+AKxVbRkcY240rS8WT1LaOAAAAABJRU5ErkJggg==";
         String publickey = "Vj75CuZgqYqhewfDfF9KQEdejjqbnoDiRjuXUnwFDsa5tP2JN5uKR2nMsM3LPtCcW5QH8J8sTjS9aHVTgUAPMGxvpj5baTwrtYng2XM8ozopQgScinkncaxJLAppao2RQqBFTNzB1RKd9CJNMvHa7FoAJmDrfYiehSj5AfGwAHTy5DjzRiNHKbqWpaje2pKu6knJMiXQVphp5wNpnfnWVVWmD43SQ";

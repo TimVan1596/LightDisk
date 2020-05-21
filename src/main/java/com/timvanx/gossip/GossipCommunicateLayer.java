@@ -1,11 +1,12 @@
 package com.timvanx.gossip;
 
+import cn.hutool.Hutool;
+import cn.hutool.core.util.StrUtil;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.model.ResponseJson;
 import org.apache.com.timvanx.gossip.LocalMember;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * <h3>BlockChain</h3>
@@ -149,6 +150,48 @@ public class GossipCommunicateLayer extends BaseGossipCommunicate {
 
         }
         while (optionNum != -1);
+    }
+
+    /**
+     * 获得CRDT列表
+     */
+    public List<Map<String,String>> getCrdtList(){
+        ResponseJson ret = this.get("ALL_KEY_NAME_SPACE");
+        String keySetStr =  ret.getData();
+        keySetStr = keySetStr.substring(1, keySetStr.length() - 1);
+        String[] strArray = keySetStr.split(",");
+        List<Map<String,String>> mapList = new ArrayList<>();
+
+        for (int i = 0; i < strArray.length; i++) {
+            Map<String,String> crdtMap  = new HashMap<>();
+            ResponseJson responseJson = this.get(strArray[i]);
+            String data =  responseJson.getData();
+            if(StrUtil.hasEmpty(data)){
+                String value ="";
+                crdtMap.put("key",strArray[i]);
+                crdtMap.put("value",value);
+            }else{
+                data = data.substring(1, data.length() - 1);
+                String[] values = data.split(",");
+                String value = values[0];
+                crdtMap.put("key",strArray[i]);
+                crdtMap.put("value",value);
+            }
+
+            mapList.add(crdtMap);
+        }
+        return mapList;
+    }
+
+    /**
+     * 获得CRDT列表的节点个数
+     */
+    public int getCrdtListSize(){
+        ResponseJson ret = this.get("ALL_KEY_NAME_SPACE");
+        String keySetStr =  ret.getData();
+        keySetStr = keySetStr.substring(1, keySetStr.length() - 1);
+        String[] strArray = keySetStr.split(",");
+        return strArray.length;
     }
 
     /**

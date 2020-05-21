@@ -45,7 +45,6 @@ layui.use(['form', 'layer', 'jquery'], function () {
                 , port: data.uriType
                 , seedNodeIP: seedNodeIP
                 , seedNodePort: data.seedPort
-                , seedNodeID: data.seedID
             },
             success: function (ret) {
                 layer.closeAll('loading');

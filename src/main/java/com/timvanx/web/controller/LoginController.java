@@ -100,7 +100,7 @@ public class LoginController {
         int port = Integer.parseInt(request.getParameter("port"));
         String seedNodeIP = request.getParameter("seedNodeIP");
         int seedNodePort = Integer.parseInt(request.getParameter("seedNodePort"));
-        int seedNodeID = Integer.parseInt(request.getParameter("seedNodeID"));
+
         Map<String, Object> mjs = new LinkedHashMap<>();
 
         privateKey = privateKey.trim();
@@ -116,8 +116,10 @@ public class LoginController {
             } else {
                 NodeURI uri = null;
                 NodeURI seedNode = null;
-                int id = RandomUtil.randomInt(1000000, 2000000);
-
+                int id = Integer.parseInt(ip.split("\\.")[3]+port);
+                int seedNodeID = Integer.parseInt(seedNodeIP
+                        .split("\\.")[3]+seedNodePort);
+                
                 uri = new NodeURI(ip, port, String.valueOf(id));
                 seedNode = new NodeURI(seedNodeIP, seedNodePort
                         , String.valueOf(seedNodeID));

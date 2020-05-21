@@ -7,7 +7,6 @@ import com.timvanx.blockchain.model.Transaction;
 import com.timvanx.gossip.KillServer;
 import com.timvanx.gossip.model.NodeURI;
 import com.timvanx.blockchain.model.ECKey;
-import com.timvanx.lightdisk.HeartBeatLog;
 import com.timvanx.lightdisk.LightDisk;
 
 
@@ -112,7 +111,7 @@ public class Launcher {
                 }
                 //查看节点列表
                 case 5: {
-                    lightDisk.membersBoard();
+                    lightDisk.membersBoardCMD();
                     break;
                 }
                 case 9: {
@@ -171,7 +170,7 @@ public class Launcher {
             case 1: {
                 System.out.println("请输入作为种子节点的端口号");
                 port = scanner.nextInt();
-                id = RandomUtil.randomInt(1, 1000000);
+                id = Integer.parseInt(ip.split("\\.")[3]+port);
                 uri = new NodeURI(ip, port, String.valueOf(id));
                 seedNode = uri;
 
@@ -184,15 +183,14 @@ public class Launcher {
 
                 System.out.println("请输入您的端口号");
                 port = scanner.nextInt();
-                id = RandomUtil.randomInt(1000000, 2000000);
+                id = Integer.parseInt(ip.split("\\.")[3]+port);
 
                 System.out.println("请输入种子节点IP地址");
                 String seedNodeIP = scanner.next();
                 System.out.println("请输入种子节点端口号");
                 int seedNodePort = scanner.nextInt();
-                System.out.println("请输入种子节点ID");
-                int seedNodeID = scanner.nextInt();
-
+                int seedNodeID = Integer.parseInt(seedNodeIP
+                        .split("\\.")[3]+seedNodePort);
                 uri = new NodeURI(ip, port, String.valueOf(id));
                 seedNode = new NodeURI(seedNodeIP, seedNodePort
                         , String.valueOf(seedNodeID));

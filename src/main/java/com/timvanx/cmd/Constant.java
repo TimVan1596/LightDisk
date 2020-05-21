@@ -13,6 +13,6 @@ public class Constant {
      * VERSION = 版本号
      * SOFT_NAME = 软件名
      * */
-    final static String VERSION = "0.3D";
+    final static String VERSION = "0.4";
     final static String SOFT_NAME = "LightDisk命令行";
 }

@@ -291,9 +291,7 @@ $(function () {
     let scriptString = coinbase.scriptString;
     decryptString = coinbase.scriptString;
 
-
     $("#tx0-size").text(getFileSize(getBytesLength(decryptString)));
-
 
     //最长显示字符数字
     let MAX_LENGTH = 800;

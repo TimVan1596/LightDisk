@@ -28,12 +28,14 @@ public class HeartBeatLog {
      * PUBLISH_NEW_BLOCK_TYPE = 1-发布新区块-种类
      * REQUEST_BLOCK_TYPE = 2-请求某一区块-种类
      * REQUEST_CHAIN_TYPE = 3-请求整个链的信息-种类
+     * PUBLISH_NEW_TRANSACTION_TYPE = 4-发布新交易-种类
      * NORMAL_TYPE = 9-普通信息-种类
      * WRONG_TYPE = 0-发生错误
      */
     public final static int PUBLISH_NEW_BLOCK_TYPE = 1;
     public final static int REQUEST_BLOCK_TYPE = 2;
     public final static int REQUEST_CHAIN_TYPE = 3;
+    public final static int PUBLISH_NEW_TRANSACTION_TYPE = 4;
     public final static int NORMAL_TYPE = 9;
     public final static int WRONG_TYPE = 0;
 
@@ -98,6 +100,11 @@ public class HeartBeatLog {
             }
             case WRONG_TYPE:{
                 typeString = "WRONG_TYPE";
+                break;
+            }
+
+            case PUBLISH_NEW_TRANSACTION_TYPE:{
+                typeString = "PUBLISH_NEW_TRANSACTION_TYPE";
                 break;
             }
             default:{

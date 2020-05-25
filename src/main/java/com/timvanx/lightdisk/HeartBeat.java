@@ -22,12 +22,14 @@ public class HeartBeat {
      * PUBLISH_NEW_BLOCK_TYPE = 1-发布新区块-种类
      * REQUEST_BLOCK_TYPE = 2-请求某一区块-种类
      * REQUEST_CHAIN_TYPE = 3-请求整个链的信息-种类
+     * PUBLISH_NEW_TRANSACTION_TYPE = 4-发布新交易-种类
      * NORMAL_TYPE = 9-普通信息-种类
      * WRONG_TYPE = 0-发生错误
      */
     public final static int PUBLISH_NEW_BLOCK_TYPE = 1;
     public final static int REQUEST_BLOCK_TYPE = 2;
     public final static int REQUEST_CHAIN_TYPE = 3;
+    public final static int PUBLISH_NEW_TRANSACTION_TYPE = 4;
     public final static int NORMAL_TYPE = 9;
     public final static int WRONG_TYPE = 0;
 
@@ -61,6 +63,16 @@ public class HeartBeat {
     }
 
     /**
+     * 打包新交易的心跳消息
+     *
+     * @return 返回心跳实体
+     */
+    public static HeartBeat packPublishTransaction(int heartBeatID,String data) {
+        return new HeartBeat(heartBeatID,PUBLISH_NEW_TRANSACTION_TYPE, data);
+    }
+
+
+    /**
      * 将心跳的Base64编码解码成心跳实体
      *
      * @return 返回心跳实体
@@ -90,6 +102,18 @@ public class HeartBeat {
         String json = JSON.toJSONString(heartBeat);
         return Base64.encode(json);
     }
+
+    /**
+     * 发新交易
+     * @param data 信息
+     * @return 返回心跳实体JSON的Base64编码信息
+     */
+    public static String packPublishNewTransactionBase64(int heartBeatID,String data) {
+        HeartBeat heartBeat = packPublishTransaction(heartBeatID,data);
+        String json = JSON.toJSONString(heartBeat);
+        return Base64.encode(json);
+    }
+
 
     /**
      * 打包新区块的心跳消息

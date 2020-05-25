@@ -57,6 +57,7 @@ public class Launcher {
             System.out.println("\t 3、搜索交易");
             System.out.println("\t 4、心跳消息监控");
             System.out.println("\t 5、查看节点列表");
+            System.out.println("\t 6、发布交易");
             System.out.println("\t 9、区块链监控");
             System.out.println("\t 0、退出登录");
             Scanner scanner = new Scanner(System.in);
@@ -70,13 +71,15 @@ public class Launcher {
                     lightDisk.getGossip().gossipBoardCMD();
                     break;
                 }
+                //挖矿
                 case 2: {
-                    System.out.println("请输出您需要存储的信息");
+                    System.out.println("请输出您需要存储的CoinBase信息");
                     String data = scanner.next();
                     System.out.println("+++++挖矿中....");
                     lightDisk.mineBlock(publicKey, data);
                     System.out.println("+++++成功挖出");
-                    System.out.println("最新区块高度为：" + lightDisk.getLocalChainHeight());
+                    System.out.println("最新区块高度为："
+                            + lightDisk.getLocalChainHeight());
                     break;
                 }
                 case 3: {
@@ -112,6 +115,13 @@ public class Launcher {
                 //查看节点列表
                 case 5: {
                     lightDisk.membersBoardCMD();
+                    break;
+                }
+                //发布交易
+                case 6:{
+                    System.out.println("请输出您需要存储的信息");
+                    String data = scanner.next();
+                    lightDisk.addTransaction(publicKey, data);
                     break;
                 }
                 case 9: {

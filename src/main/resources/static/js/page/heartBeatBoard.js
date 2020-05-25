@@ -6,7 +6,8 @@ layui.use(['form', 'table'], function () {
 
     table.render({
         elem: '#currentTableId',
-        url: '/heartbeat/GetCrdtList',
+        url: '/heartbeat/GetHeartbeatList',
+        toolbar: '#toolbarDemo',
         method: 'post',
         defaultToolbar: ['filter', 'exports', 'print', {
             title: '提示',
@@ -15,27 +16,70 @@ layui.use(['form', 'table'], function () {
         }],
         cols: [[
             {type: "checkbox", width: 50},
-            {field: 'key', width: 130, title: '键名'},
+            {field: 'heartBeatID', width: 150, title: '心跳ID', sort: true},
+            {field: 'date', width: 250, title: '接收日期'},
+            {field: 'type', width: 150, title: '类型'},
+            {field: 'typeString', width: 300, title: '类型名称'},
             // {field: 'txSize', width: 100, title: '交易数量'},
-            {
-                field: 'value', width: 850, title: '值', templet: function (d) {
-                    //最长显示字符数字
-                    let MAX_LENGTH = 110;
-                    let scriptString = d.value;
-                    scriptString = Base64.decode(scriptString);
-                    if(scriptString.length > MAX_LENGTH){
-                        scriptString = scriptString.substring(0,MAX_LENGTH);
-                        scriptString += "...";
-                    }
-                    return scriptString;
-                }
-            },
             {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
         ]],
-        limits: [10, 15, 25, 50, 100],
+        limits: [10, 20, 30, 50, 100],
         limit: 10,
         page: true,
         skin: 'line',
+        initSort: {
+            field: 'heartBeatID' //排序字段，对应 cols 设定的各字段名
+            , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+        }
+    });
+
+    // 监听搜索操作
+    form.on('submit(data-search-btn)', function (data) {
+        var result = JSON.stringify(data.field);
+        layer.alert(result, {
+            title: '最终的搜索信息'
+        });
+
+        //执行搜索重载
+        table.reload('currentTableId', {
+            page: {
+                curr: 1
+            }
+            , where: {
+                searchParams: result
+            }
+        }, 'data');
+
+        return false;
+    });
+
+    /**
+     * toolbar监听事件
+     */
+    table.on('toolbar(currentTableFilter)', function (obj) {
+        if (obj.event === 'add') {  // 监听添加操作
+            var index = layer.open({
+                title: '挖矿操作',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['100%', '100%'],
+                content: '../page/mineblock.html',
+            });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
+        } else if (obj.event === 'delete') {  // 监听删除操作
+            var checkStatus = table.checkStatus('currentTableId')
+                , data = checkStatus.data;
+            layer.alert(JSON.stringify(data));
+        }
+    });
+
+    //监听表格复选框选择
+    table.on('checkbox(currentTableFilter)', function (obj) {
+        console.log(obj)
     });
 
     table.on('tool(currentTableFilter)', function (obj) {
@@ -65,17 +109,23 @@ layui.use(['form', 'table'], function () {
             // console.log(parseParams(data));
 
             var index = layer.open({
-                title: 'CRDT的Value详情',
+                title: '心跳消息详情',
                 type: 2,
                 shade: 0.2,
                 maxmin: true,
                 shadeClose: true,
                 area: ['60%', '60%'],
-                content: 'gossipBoard/gossipDetail.html?'
-                    + "key="
-                    + data.key
-                    + "&value="
-                    + data.value,
+                content: 'heartBeatBoard/heartBeatDetail.html?'
+                    + "date="
+                    + Base64.encode(data.date)
+                    + "&heartBeatID="
+                    + data.heartBeatID
+                    + "&heartBeatLogData="
+                    +  Base64.encode(data.heartBeatLogData)
+                    + "&type="
+                    +  data.type
+                    + "&typeString="
+                    +  Base64.encode(data.typeString),
             });
 
             $(window).on("resize", function () {
@@ -87,7 +137,36 @@ layui.use(['form', 'table'], function () {
 
 });
 
+function parseParams(data) {
+    try {
+        var tempArr = [];
+        for (var i in data) {
+            if (Object.prototype.toString.call(data[i]) === '[object Array]'
+            ) {
 
+                var key = encodeURIComponent(i);
+                var value = encodeURIComponent(JSON.stringify(data[i]));
+                tempArr.push(key + '=' + value);
+            } else {
+                var key = encodeURIComponent(i);
+                var value = encodeURIComponent(data[i]);
+                tempArr.push(key + '=' + value);
+            }
+
+        }
+        return tempArr.join('&');
+    } catch (err) {
+        return '';
+    }
+}
+
+function onMineBlockBTN() {
+    // 打开新的窗口
+    miniTab.openNewTabByIframe({
+        href: "page/mineblock.html",
+        title: "挖矿",
+    });
+}
 
 let Base64 = {
 

@@ -131,14 +131,20 @@ public class LightDisk {
      */
     private void processHeartBeatSortHandle(HeartBeat heartBeat) {
         int type = heartBeat.getType();
-        /*  心跳消息的类型
+        /*
          * PUBLISH_NEW_BLOCK_TYPE = 1-发布新区块-种类
          * REQUEST_BLOCK_TYPE = 2-请求某一区块-种类
          * REQUEST_CHAIN_TYPE = 3-请求整个链的信息-种类
+         * PUBLISH_NEW_TRANSACTION_TYPE = 4-发布新交易-种类
          * NORMAL_TYPE = 9-普通信息-种类
          * WRONG_TYPE = 0-发生错误
          */
+        //发布新区块
         if (type == HeartBeat.PUBLISH_NEW_BLOCK_TYPE) {
+            processNewBlockHeartBeatHandle(heartBeat);
+        }
+        //发布新交易
+        else if(type == HeartBeat.PUBLISH_NEW_TRANSACTION_TYPE){
             processNewBlockHeartBeatHandle(heartBeat);
         }
     }
@@ -150,6 +156,22 @@ public class LightDisk {
      * @param heartBeat 接收的心跳消息
      */
     private boolean processNewBlockHeartBeatHandle(HeartBeat heartBeat) {
+        Block block = Block.getBlockFromJson(heartBeat.getData());
+        boolean isLegalBlock = verifyBlock(block);
+        if (isLegalBlock) {
+            blockChain.addBlock(block);
+        }
+        return isLegalBlock;
+    }
+
+
+    /**
+     * 发布收到的新交易的心跳消息
+     * PUBLISH_NEW_TRANSACTION_TYPE = 4-发布新交易-种类
+     *
+     * @param heartBeat 接收的心跳消息
+     */
+    private boolean processNewTransactionHeartBeatHandle(HeartBeat heartBeat){
         Block block = Block.getBlockFromJson(heartBeat.getData());
         boolean isLegalBlock = verifyBlock(block);
         if (isLegalBlock) {
@@ -222,6 +244,23 @@ public class LightDisk {
         sendAllNodeHeartMsg(heartBeatID, base64);
 
         return block;
+    }
+
+    /**
+     * 添加交易
+     */
+    public Transaction addTransaction(String publicKey, String data){
+
+        //生成一个交易
+        Transaction transaction = new Transaction(publicKey, data);
+        String json = JSON.toJSONString(transaction);
+        //获取当前Gossip上的心跳消息编号
+        int heartBeatID = (int) (getGossipHeartBeatID() + 1);
+        String base64 = HeartBeat.packPublishNewTransactionBase64(heartBeatID, json);
+        //向所有的节点发送这个消息
+        sendAllNodeHeartMsg(heartBeatID, base64);
+
+        return null;
     }
 
     /**

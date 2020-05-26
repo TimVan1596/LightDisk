@@ -170,9 +170,6 @@ public class Block {
         List<Transaction> txList = JSONObject.parseArray(jsonObject
                 .getString("transactions"), Transaction.class);
         block.setTransactions(txList);
-
-
-
         return block;
     }
 

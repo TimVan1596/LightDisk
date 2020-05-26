@@ -114,7 +114,7 @@ layui.use(['form', 'table'], function () {
                 shade: 0.2,
                 maxmin: true,
                 shadeClose: true,
-                area: ['60%', '60%'],
+                area: ['60%', '80%'],
                 content: 'heartBeatBoard/heartBeatDetail.html?'
                     + "date="
                     + Base64.encode(data.date)

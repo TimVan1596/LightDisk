@@ -4,9 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 /**
  * <h3>BlockChain</h3>
@@ -79,6 +81,15 @@ public class Transaction {
         txHeader.put("time", this.timestamp);
         Digester sha256 = new Digester(DigestAlgorithm.SHA256);
         this.hash = sha256.digestHex(JSON.toJSONString(txHeader));
+    }
+
+    /**
+     * 从JSON数据获得Transaction
+     *
+     * @return 返回JSON生成的block
+     */
+    public static Transaction getTransactionFromJson(String json) {
+        return JSON.parseObject(json, Transaction.class);
     }
 
     public static void main(String[] args) {

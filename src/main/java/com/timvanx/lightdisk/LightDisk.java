@@ -45,6 +45,15 @@ public class LightDisk {
      */
     @Getter
     List<HeartBeatLog> heartBeatLogs = new ArrayList<>();
+    /**
+     * 未打包交易列表
+     * 1、在Thread线程中进行检验交易是否合法（交易结构合法，交易是否已被打包）
+     * 2、如果交易合法则进入 unPackTransactionList
+     * 3、在挖矿时逐个更新是否交易已被打包
+     * 4、已被打包则退出 unPackTransactionList
+     */
+    @Getter
+    List<Transaction> unPackTransactionList = new ArrayList<>();
 
     /**
      * THREAD_EXIT = 退出线程标志位
@@ -145,7 +154,7 @@ public class LightDisk {
         }
         //发布新交易
         else if(type == HeartBeat.PUBLISH_NEW_TRANSACTION_TYPE){
-            processNewBlockHeartBeatHandle(heartBeat);
+            processNewTransactionHeartBeatHandle(heartBeat);
         }
     }
 
@@ -172,12 +181,16 @@ public class LightDisk {
      * @param heartBeat 接收的心跳消息
      */
     private boolean processNewTransactionHeartBeatHandle(HeartBeat heartBeat){
-        Block block = Block.getBlockFromJson(heartBeat.getData());
-        boolean isLegalBlock = verifyBlock(block);
-        if (isLegalBlock) {
-            blockChain.addBlock(block);
+        Transaction transaction = Transaction
+                .getTransactionFromJson(heartBeat.getData());
+        //验证交易数据结构是否合法
+        boolean isLegalTransaction = verifyTransaction(transaction);
+        //验证交易是否已被打包
+        boolean isPackageTransaction = verifyTransactionPackage(transaction);
+        if (isLegalTransaction &&(!isPackageTransaction)) {
+            unPackTransactionList.add(transaction);
         }
-        return isLegalBlock;
+        return isLegalTransaction &&(!isPackageTransaction);
     }
 
     /**
@@ -208,6 +221,29 @@ public class LightDisk {
         isLegalBlock = true;
         return isLegalBlock;
     }
+
+    /**
+     * 验证交易数据结构是否合法
+     *
+     * @param transaction 待验证的交易
+     */
+    private boolean verifyTransaction(Transaction transaction) {
+        boolean isLegalBlock = false;
+        isLegalBlock = true;
+        return isLegalBlock;
+    }
+
+    /**
+     * 验证交易是否已被打包
+     *
+     * @param transaction 待验证的交易
+     */
+    private boolean verifyTransactionPackage(Transaction transaction) {
+        boolean isLegalBlock = false;
+//        isLegalBlock = true;
+        return isLegalBlock;
+    }
+
 
     /**
      * 获取本地区块链高度

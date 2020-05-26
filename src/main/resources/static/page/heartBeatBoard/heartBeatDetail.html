@@ -4,169 +4,90 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <style>
+        #heartBeatLogData {
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            margin-top: 1%;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-col-md12">
     <div class="layui-card">
-        <div class="layui-card-header" id="key"></div>
-        <div class="layui-card-body" style="height: 200px;word-wrap:break-word;
-    word-break:break-all;
-    overflow: hidden; " id="value">
+        <div class="layui-card-header">
+            <span><i class="layui-icon layui-icon-heart"></i>heartBeatID</span>
+            <span id="heartBeatID"></span>
+        </div>
+        <div class="layui-card-body" style="">
+
+            <div class="layui-container">
+                <div class="layui-row">
+                    <div class="layui-col-xs4">
+                        <div class="grid-demo grid-demo-bg1">
+                            <div>
+                                <div>
+                                    日期
+                                </div>
+                                <div id="date">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <div class="grid-demo">
+                            <div>
+                                <div>
+                                    种类
+                                </div>
+                                <div id="type">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <div class="grid-demo grid-demo-bg1">
+                            <div>
+                                <div>
+                                    种类名
+                                </div>
+                                <div id="typeString">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-xs12">
+                        <div class="grid-demo grid-demo-bg1">
+                            <div>
+                                <div>
+                                    内容
+                                </div>
+                                <div id="heartBeatLogData">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
 </div>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
-<script>
-    layui.use('layer', function(){
-        var layer = layui.layer;
+<script src="../../js/dist/json/jquery.xml2json.js" charset="utf-8"></script>
+<script src="../../js/dist/json/jquery.json2xml.js" charset="utf-8"></script>
+<script src="../../js/dist/json/jsonlint.js" charset="utf-8"></script>
+<script src="../../js/dist/json/jquery.json.js" charset="utf-8"></script>
+<script src="../../js/page/heartBeatBoard/heartBeatDetail.js" charset="utf-8"></script>
 
-    });
-    $(function () {
-        let key = getQueryString("key");
-        let value = getQueryString("value");
-        $('#key').text(key);
-        //将字符串转换成json对象
-        let result = JSON.stringify(
-            JSON.parse(Base64.decode(value)), null, 2);
-
-        $('#value').text(result);
-    });
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-    let Base64 = {
-
-        // private property
-        _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-
-        // public method for encoding
-        , encode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-            var i = 0;
-
-            input = Base64._utf8_encode(input);
-
-            while (i < input.length) {
-                chr1 = input.charCodeAt(i++);
-                chr2 = input.charCodeAt(i++);
-                chr3 = input.charCodeAt(i++);
-
-                enc1 = chr1 >> 2;
-                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                enc4 = chr3 & 63;
-
-                if (isNaN(chr2)) {
-                    enc3 = enc4 = 64;
-                } else if (isNaN(chr3)) {
-                    enc4 = 64;
-                }
-
-                output = output +
-                    this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
-                    this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
-            } // Whend
-
-            return output;
-        } // End Function encode
-
-
-        // public method for decoding
-        , decode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3;
-            var enc1, enc2, enc3, enc4;
-            var i = 0;
-
-            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-            while (i < input.length) {
-                enc1 = this._keyStr.indexOf(input.charAt(i++));
-                enc2 = this._keyStr.indexOf(input.charAt(i++));
-                enc3 = this._keyStr.indexOf(input.charAt(i++));
-                enc4 = this._keyStr.indexOf(input.charAt(i++));
-
-                chr1 = (enc1 << 2) | (enc2 >> 4);
-                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-                chr3 = ((enc3 & 3) << 6) | enc4;
-
-                output = output + String.fromCharCode(chr1);
-
-                if (enc3 != 64) {
-                    output = output + String.fromCharCode(chr2);
-                }
-
-                if (enc4 != 64) {
-                    output = output + String.fromCharCode(chr3);
-                }
-
-            } // Whend
-
-            output = Base64._utf8_decode(output);
-
-            return output;
-        } // End Function decode
-
-
-        // private method for UTF-8 encoding
-        , _utf8_encode: function (string) {
-            var utftext = "";
-            string = string.replace(/\r\n/g, "\n");
-
-            for (var n = 0; n < string.length; n++) {
-                var c = string.charCodeAt(n);
-
-                if (c < 128) {
-                    utftext += String.fromCharCode(c);
-                } else if ((c > 127) && (c < 2048)) {
-                    utftext += String.fromCharCode((c >> 6) | 192);
-                    utftext += String.fromCharCode((c & 63) | 128);
-                } else {
-                    utftext += String.fromCharCode((c >> 12) | 224);
-                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                    utftext += String.fromCharCode((c & 63) | 128);
-                }
-
-            } // Next n
-
-            return utftext;
-        } // End Function _utf8_encode
-
-        // private method for UTF-8 decoding
-        , _utf8_decode: function (utftext) {
-            var string = "";
-            var i = 0;
-            var c, c1, c2, c3;
-            c = c1 = c2 = 0;
-
-            while (i < utftext.length) {
-                c = utftext.charCodeAt(i);
-
-                if (c < 128) {
-                    string += String.fromCharCode(c);
-                    i++;
-                } else if ((c > 191) && (c < 224)) {
-                    c2 = utftext.charCodeAt(i + 1);
-                    string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-                    i += 2;
-                } else {
-                    c2 = utftext.charCodeAt(i + 1);
-                    c3 = utftext.charCodeAt(i + 2);
-                    string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-                    i += 3;
-                }
-
-            } // Whend
-
-            return string;
-        } // End Function _utf8_decode
-
-    }
-</script>
 </body>
 </html>

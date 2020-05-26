@@ -58,6 +58,7 @@ public class Launcher {
             System.out.println("\t 4、心跳消息监控");
             System.out.println("\t 5、查看节点列表");
             System.out.println("\t 6、发布交易");
+            System.out.println("\t 7、查看未打包交易列表");
             System.out.println("\t 9、区块链监控");
             System.out.println("\t 0、退出登录");
             Scanner scanner = new Scanner(System.in);
@@ -124,6 +125,12 @@ public class Launcher {
                     lightDisk.addTransaction(publicKey, data);
                     break;
                 }
+                //显示未打包的交易列表
+                case 7:{
+                        unPackTransactionListBoard(
+                                lightDisk.getUnPackTransactionList());
+                    break;
+                }
                 case 9: {
                     Date date = new Date();
                     DateTime time = new DateTime(date);
@@ -150,6 +157,21 @@ public class Launcher {
 
     }
 
+    /** 显示未打包的交易列表 */
+    private static void unPackTransactionListBoard(List<Transaction> unPackTransactionList){
+        System.out.println("--未打包的交易列表 UnPackTransactionList----");
+        for (Transaction transaction : unPackTransactionList){
+            System.out.println("----");
+            DateTime blockTime = new DateTime(transaction.getTimestamp());
+            System.out.println("生成时间戳:" + transaction.getTimestamp() + "(" + blockTime + ")");
+            System.out.println("交易hash:" + transaction.getHash());
+            System.out.println("收款人:" + transaction.getPublicKey());
+            System.out.println("script字符串:" + transaction.getScriptString());
+            System.out.println("----");
+        }
+        System.out.println("-------");
+
+    }
 
     private static boolean loginUI() {
         //是否终止循环

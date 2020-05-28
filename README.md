@@ -10,8 +10,9 @@ The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.
 3、仅支持Coinbase交易（普通交易开发中）
 
 #### 软件架构
-JDK 1.8+
-Spring Boot 2.0.1
+JDK 1.8+  
+Spring Boot 2.0.1  
+[Apache Gossip](https://gitee.com/TimVanX/incubator-retired-gossip)
 
 #### 安装教程
 1、命令行界面：配置JDK或JRE本地环境变量（版本号1.8+），解压并打开运行“open.bat”。
@@ -23,7 +24,7 @@ Spring Boot 2.0.1
 2.  若存在种子节点，可以选择“作为普通节点登入”，并输入种子节点的IP地址与端口号。
 ![命令行界面](https://images.gitee.com/uploads/images/2020/0528/114044_075ad114_1464254.jpeg "控制台.jpg")
 ##### Web本地操作台
-基本功能同上
+基本功能同上  
 ![登录](https://images.gitee.com/uploads/images/2020/0528/114151_cbbfbde0_1464254.jpeg "登录.jpg")
 ![主页](https://images.gitee.com/uploads/images/2020/0528/114205_bcc49299_1464254.jpeg "主页.jpg")
 ![挖矿（上传文件）](https://images.gitee.com/uploads/images/2020/0528/114220_54149cad_1464254.jpeg "挖矿.jpg")

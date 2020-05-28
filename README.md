@@ -1,4 +1,5 @@
 # LightDisk
+The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.
 
 #### 介绍
 一个基于区块链的存储系统，可以在多个节点（设备）中，为用户生成非对称加密的公私钥对，并使用此密钥对，对数据进行加密上传，和解密下载。

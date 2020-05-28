@@ -32,8 +32,11 @@ Spring Boot 2.0.1
 
 #### 结构与框架
 1、流程图  
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0528/121839_565cfe2a_1464254.jpeg "流程图‘.jpg")
 2、区块链结构图，类似于比特币的数据结构，文件作为每组Merkle树的叶子节点数据的来源  
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0528/121855_5fd1e006_1464254.jpeg "区块链结构图.jpg")
 3、技术框架
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0528/121904_40af6539_1464254.jpeg "技术框架.jpg")
 
 #### 参与贡献
 1、TimVan

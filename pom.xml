@@ -24,7 +24,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- dependency versions -->
-        <jackson.version>2.11.0</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
         <metrics.version>3.1.2</metrics.version>
         <commons-math.version>1.2</commons-math.version>
         <junit.jupiter.version>5.0.0-M2</junit.jupiter.version>
